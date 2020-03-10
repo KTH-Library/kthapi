@@ -1,0 +1,71 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# kthapi
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: end -->
+
+The goal of the `kthapi` R package is to provide an API wrapper for APIs used at KTH, The Royal Institute of Technology, which can be used directly in R. 
+
+The KTH APIs provides information about employee profiles, published web content, places, course schemas and program catalogues. This R package interfaces with the API, making data available to use directly from R.
+
+## Installation
+
+You can install the development version of kthapi from GitHub with:
+
+``` r
+#install.packages("devtools)
+devtools::install_github("KTH-Library/kthapi", dependencies = TRUE)
+```
+
+## Example usage
+
+This API wrapper / client is pre-configured with a set of API endpoints:
+
+```{r example}
+library(kthapi)
+library(knitr)
+suppressPackageStartupMessages(library(dplyr)) 
+
+# display the default API config
+config()
+
+# how to change the config
+my_cfg <- config()
+my_cfg$ua <- "My own user agent string"
+```
+
+This is a basic example which shows you how to make a lookup using the v 1.1 "legacy" Profiles API, where we get contact information for a KTH employee using an account name:
+
+```{r}
+profile <- 
+  kth_profile_legacy("hoyce") %>% 
+  .$content 
+
+# inspect this record
+profile %>% glimpse()
+
+# pivot into long format and display as a table
+profile %>% t() %>% as.data.frame() %>%  
+  cbind(rownames(.)) %>% setNames(nm = c("value", "key")) %>% as_tibble() %>%
+  select(key, value) %>%
+  kable()
+
+
+# NB: some valid account names do not return data
+tryCatch(kth_profile_legacy("markussk"), error = function(e) e)
+```

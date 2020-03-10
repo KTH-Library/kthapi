@@ -1,0 +1,30 @@
+Package: kthapi
+Title: Data from KTH APIs
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Markus",
+           family = "Skyttner",
+           role = c("cre", "aut"),
+           email = "markussk@kth.se")
+Description: The KTH APIs provides information about employee
+    profiles, published web content, places, course schemas and program
+    catalogues. This R package interfaces with the API, making data
+    available to use from R.
+License: MIT + file LICENSE
+URL: https://github.com/KTH-Library/kthapi
+BugReports: https://github.com/KTH-Library/kthapi/issues
+Imports: 
+    attempt,
+    dplyr,
+    curl,
+    httr,
+    jsonlite,
+    progress,
+    purrr,
+    tibble
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 2.1.0)
+RoxygenNote: 7.0.2
+Roxygen: list(markdown = TRUE)

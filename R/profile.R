@@ -49,7 +49,7 @@ kth_profile_legacy <- function(
   check_internet()
   stop_if_all(args, is.null, "You need to specify at least one argument")
   stop_if_not(is.character(userid) && nchar(userid) > 0,
-              msg = "Please provide a query, see http://librishelp.libris.kb.se/help/search_language_swe.jsp")
+              msg = "Please provide a userid (accountname or kthid)")
 
   if (any(missing(config), is.null(config)))
     config <- config()

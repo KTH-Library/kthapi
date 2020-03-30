@@ -1,0 +1,48 @@
+---
+title: "KTH-Departments-from-Altmetric-Explorer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{KTH-Departments-from-Altmetric-Explorer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(dplyr)
+library(kthapi)
+
+departments <- 
+  altmetric_explorer %>% 
+  select(-altmetric_id) %>%
+  mutate(link = sprintf("<a href='%s' title='%s'>%s</a>", href, level, desc)) %>%
+  select(`Altmetric URL` = link, `DiVA Unit` = diva_id, Count = count)
+
+```
+
+The following departments are listed with their DiVA Unit identifiers at https://www.altmetric.com/explorer/institution/departments.
+
+This dataset has been bundled into the package at `r Sys.Date()` under the name `altmetric_explorer`.
+
+```{r, fig.show='hold', echo=FALSE}
+
+knitr::kable(departments)
+
+#TODO: determine altmetrics parent id for each category, then display as tree...
+
+#https://www.r-bloggers.com/jstree-htmlwidget/
+#install.packages("jsTree")
+
+#library(jsTree)
+
+#j0 <- jsTree(obj = departments$hierarchy, width = "100%", height = "100%",
+#  core = list(themes = list(variant = "small", dots = FALSE, icons = FALSE)))
+
+#j0
+```

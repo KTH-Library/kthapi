@@ -39,7 +39,8 @@ This API wrapper / client is pre-configured with a set of API endpoints:
 ```{r example}
 library(kthapi)
 library(knitr)
-suppressPackageStartupMessages(library(dplyr)) 
+library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 
 # display the default API config
 config()

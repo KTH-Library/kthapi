@@ -33,7 +33,16 @@ This API wrapper / client is pre-configured with a set of API endpoints:
 ``` r
 library(kthapi)
 library(knitr)
-suppressPackageStartupMessages(library(dplyr)) 
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+suppressPackageStartupMessages(library(dplyr))
 
 # display the default API config
 config()

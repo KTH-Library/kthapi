@@ -24,3 +24,9 @@
 # needed for use of . in magrittr pipelines
 utils::globalVariables(c("."))
 NULL
+
+#' Public data with KTH Departments at Altmetric
+#'
+#' A table from Altmetric at https://www.altmetric.com/explorer/institution/departments.
+#' Departments at KTH are listed with their DiVA Unit identifiers and English names.
+"altmetric_explorer"

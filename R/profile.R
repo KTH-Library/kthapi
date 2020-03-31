@@ -72,6 +72,18 @@ kth_profile_legacy <- function(
 }
 
 
+#' Retrieve display name given kthid
+#'
+#' @param kthid a string with the account name or KTH user id
+#' @param cfg configuration setting for the KTH APIs including base URL etc, by default from config()
+#' @export
+kth_displayname <- function(kthid, cfg = config()) {
+  profile <- kth_profile_legacy(kthid, cfg)$content
+  accountname <- gsub("(.*?)@.*?$", "\\1", profile$email)
+  sprintf("%s %s (%s)",
+    profile$givenName, profile$familyName, accountname)
+}
+
 #' @export
 print.kthapi <- function(x, ...) {
   stopifnot(inherits(x, 'kthapi'))

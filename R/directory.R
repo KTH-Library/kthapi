@@ -23,6 +23,7 @@ kth_directory <- function(config = NULL, path = "root")
 
   check_internet()
   stop_if_all(args, is.null, "You need to specify at least one argument")
+
 #  stop_if_not(is.character(userid) && nchar(userid) > 0,
 #              msg = "Please provide a userid (accountname or kthid)")
 
@@ -33,6 +34,8 @@ kth_directory <- function(config = NULL, path = "root")
 
   message("Getting url: ", url)
   resp <- GET(url, config$ua, add_headers(api_key = config$api_key))
+
+
   check_status(resp)
   if (http_type(resp) != "application/json") {
     stop("API did not return json", call. = FALSE)

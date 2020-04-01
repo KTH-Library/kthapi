@@ -92,15 +92,41 @@
 
     
     
-<p>The schools and departments can be retrieved with <code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code>:</p>
+<div id="organizational-belonging-for-a-given-kth-user-account-or-kthid" class="section level2">
+<h2 class="hasAnchor">
+<a href="#organizational-belonging-for-a-given-kth-user-account-or-kthid" class="anchor"></a>Organizational belonging for a given KTH user account or kthid</h2>
+<p>Given an account name or “kthid”, how can we look up the organizational belonging?</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(kthapi)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#  filter(is.na(`_id`)) %&gt;%</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">row =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(.)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(row, slug, <span class="dt">desc =</span> <span class="st">`</span><span class="dt">description.en</span><span class="st">`</span>, website) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb1-4" data-line-number="4">user &lt;-<span class="st"> "hoyce"</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">unit_codes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/kth_profile_school_dep.html">kth_profile_school_dep</a></span>(user)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># organizational belonging for user "hoyce"</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">unit_codes</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt; [1] "t"    "tj"   "tjd"  "tjda"</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># use the first two levels of the hierarchy</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">slug &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="dt">collapse =</span> <span class="st">"/"</span>, unit_codes[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co"># look up the english lang description for this "slug"</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">unit2 &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(<span class="dt">slug =</span> slug)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(slug, <span class="dt">desc =</span> <span class="st">`</span><span class="dt">description.en</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(desc)</a></code></pre></div>
+<p>Via the so called “Legacy Profile API v 1.1” we have now looked up that <strong>hoyce</strong> belongs to the organizational unit <strong>IT</strong>.</p>
+</div>
+<div id="level-1-and-2-organizational-units" class="section level2">
+<h2 class="hasAnchor">
+<a href="#level-1-and-2-organizational-units" class="anchor"></a>Level 1 and 2 organizational units</h2>
+<p>The KTH schools and departments (in this case for the first two levels of the org hierarchy) can be retrieved with <code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code>.</p>
+<p>In the listing we exclude the <code>kthid</code> identifier, but it exists also for organizational units.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#  filter(is.na(`_id`)) %&gt;%</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">row =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(.)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(row, slug, <span class="dt">desc =</span> <span class="st">`</span><span class="dt">description.en</span><span class="st">`</span>, website) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">row</th>
@@ -508,9 +534,18 @@
 </tbody>
 </table>
 </div>
+  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
 
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#organizational-belonging-for-a-given-kth-user-account-or-kthid">Organizational belonging for a given KTH user account or kthid</a></li>
+      <li><a href="#level-1-and-2-organizational-units">Level 1 and 2 organizational units</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

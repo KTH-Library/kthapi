@@ -15,25 +15,16 @@ test_that("query for root lookup works", {
 
 })
 
+test_that("query for KTH schools and departments catalog works", {
+    api_slugs <- kth_school_dep()$slug
+    valid_slugs <- unlist(strsplit("acjmst", ""))
+    is_valid <- all(valid_slugs %in% api_slugs)
+    expect_true(is_valid)
+})
+
 test_that("query for catalog from slug works", {
 
-  a <-
-    GET(sprintf("%s/lookup/%s/", config()$url_directory, "a"),
-        query = list(slug = "a", l = "sv"),
-        add_headers(api_key = config()$api_key))
-
-  aa <- httr::content(a)
-  aa$catalogs
-
-  b <-
-    GET(sprintf("%s/catalog/%s", config()$url_directory, "a"),
-        query = list(slug = "a", l = "sv"),
-        add_headers(api_key = config()$api_key))
-
-  bb <- httr::content(b)
-  bb$catalogs
-
-  c <-
+    c <-
     GET(sprintf("%s/catalog/%s/*", config()$url_directory, "a"),
         query = list(slug = "a", l = "sv"),
         add_headers(api_key = config()$api_key))

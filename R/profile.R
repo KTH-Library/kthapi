@@ -72,7 +72,7 @@ kth_profile_legacy <- function(
 }
 
 
-#' Retrieve display name given kthid
+#' Retrieve display name given kthid or accountname
 #'
 #' @param kthid a string with the account name or KTH user id
 #' @param cfg configuration setting for the KTH APIs including base URL etc, by default from config()
@@ -82,6 +82,23 @@ kth_displayname <- function(kthid, cfg = config()) {
   accountname <- gsub("(.*?)@.*?$", "\\1", profile$email)
   sprintf("%s %s (%s)",
     profile$givenName, profile$familyName, accountname)
+}
+
+#' Retrieve organizational unit for a given kthid or accountname
+#'
+#' @param kthid a string with the account name or KTH user id
+#' @param cfg configuration setting for the KTH APIs including base URL etc, by default from config()
+#' @export
+#' @examples
+#' \dontrun{
+#' kth_profile_school_dep("u1z88syr")
+#' kth_profile_legacy("hoyce")
+#' }
+kth_profile_school_dep <- function(kthid, cfg = config()) {
+  cfg <- config()
+  profile <- kth_profile_legacy(kthid, cfg)$content
+  units <- gsub("https://www\\.kth\\.se/directory/(.*?)$", "\\1", profile$`worksFor.url`)
+  strsplit(units, "/") %>% unlist()
 }
 
 #' @export

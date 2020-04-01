@@ -14,12 +14,41 @@ knitr::opts_chunk$set(
 )
 ```
 
-The schools and departments can be retrieved with `kth_school_dep()`:
+## Organizational belonging for a given KTH user account or kthid
 
-```{r setup, message=FALSE}
+Given an account name or "kthid", how can we look up the organizational belonging?
+
+```{r, message=FALSE}
 library(kthapi)
 library(dplyr)
 
+user <- "hoyce"
+unit_codes <- kth_profile_school_dep(user)
+
+# organizational belonging for user "hoyce"
+unit_codes
+
+# use the first two levels of the hierarchy
+slug <- paste0(collapse = "/", unit_codes[1:2])
+
+# look up the english lang description for this "slug"
+unit2 <- 
+  kth_school_dep() %>% 
+  inner_join(tibble(slug = slug)) %>%
+  select(slug, desc = `description.en`) %>%
+  pull(desc)
+
+```
+
+Via the so called "Legacy Profile API v 1.1" we have now looked up that __`r user`__ belongs to the organizational unit __`r unit2`__.
+
+## Level 1 and 2 organizational units
+
+The KTH schools and departments (in this case for the first two levels of the org hierarchy) can be retrieved with `kth_school_dep()`.
+
+In the listing we exclude the `kthid` identifier, but it exists also for organizational units.
+
+```{r, message=FALSE}
 kth_school_dep() %>% 
 #  filter(is.na(`_id`)) %>%
   mutate(row = 1:nrow(.)) %>%

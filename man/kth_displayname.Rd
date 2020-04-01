@@ -2,7 +2,7 @@
 % Please edit documentation in R/profile.R
 \name{kth_displayname}
 \alias{kth_displayname}
-\title{Retrieve display name given kthid}
+\title{Retrieve display name given kthid or accountname}
 \usage{
 kth_displayname(kthid, cfg = config())
 }
@@ -12,5 +12,5 @@ kth_displayname(kthid, cfg = config())
 \item{cfg}{configuration setting for the KTH APIs including base URL etc, by default from config()}
 }
 \description{
-Retrieve display name given kthid
+Retrieve display name given kthid or accountname
 }

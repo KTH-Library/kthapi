@@ -94,6 +94,9 @@
     <li>
       <a href="../articles/KTH-Departments-from-Altmetric-Explorer.html">KTH-Departments-from-Altmetric-Explorer</a>
     </li>
+    <li>
+      <a href="../articles/Schools-Departments-from-KTH-Directory-API.html">Schools-Departments-from-KTH-Directory-API</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -126,7 +129,7 @@
     <p>See details at <a href='https://api.kth.se/api/directory/swagger/'>https://api.kth.se/api/directory/swagger/</a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>kth_directory</span>(<span class='kw'>config</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"root"</span>)</pre>
+    <pre class="usage"><span class='fu'>kth_directory</span>(<span class='kw'>config</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>path</span>, <span class='no'>lang</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,6 +141,10 @@
     <tr>
       <th>path</th>
       <td><p>slug for directory, by default "root"</p></td>
+    </tr>
+    <tr>
+      <th>lang</th>
+      <td><p>language to use, by default "en"</p></td>
     </tr>
     </table>
 

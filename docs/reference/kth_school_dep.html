@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>KTH APIs — kthapis • kthapi</title>
+<title>Retrieve units in the KTH Directory for the first two levels (school, dep) — kth_school_dep • kthapi</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,8 @@
 
 
 
-<meta property="og:title" content="KTH APIs — kthapis" />
-<meta property="og:description" content="KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R." />
+<meta property="og:title" content="Retrieve units in the KTH Directory for the first two levels (school, dep) — kth_school_dep" />
+<meta property="og:description" content="Retrieve units in the KTH Directory for the first two levels (school, dep)" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,38 +120,41 @@ available to use from R." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>KTH APIs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/package-kthapis.R'><code>R/package-kthapis.R</code></a></small>
-    <div class="hidden name"><code>kthapis.Rd</code></div>
+    <h1>Retrieve units in the KTH Directory for the first two levels (school, dep)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/directory.R'><code>R/directory.R</code></a></small>
+    <div class="hidden name"><code>kth_school_dep.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R.</p>
+    <p>Retrieve units in the KTH Directory for the first two levels (school, dep)</p>
     </div>
 
+    <pre class="usage"><span class='fu'>kth_school_dep</span>(<span class='no'>cfg</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>cfg</th>
+      <td><p>a configuration setting for the KTH APIs including base URL etc, by default from config()</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An overview of the KTH APIs can be found here: <a href='https://www.kth.se/api'>https://www.kth.se/api</a></p>
-<p>Individual APIs are documented here:</p><ul>
-<li><p>Course schema API: <a href='https://www.kth.se/api/schema/v2/apidoc.html'>https://www.kth.se/api/schema/v2/apidoc.html</a></p></li>
-<li><p>Program catalogue API: <a href='https://api.kth.se/api/kopps/v2/'>https://api.kth.se/api/kopps/v2/</a></p></li>
-<li><p>Profiles API (personal contact info): <a href='https://api.kth.se/api/profile/swagger/'>https://api.kth.se/api/profile/swagger/</a></p></li>
-<li><p>Directory API : <a href='https://api.kth.se/api/directory/swagger/'>https://api.kth.se/api/directory/swagger/</a></p></li>
-<li><p>Places API: <a href='https://api.kth.se/api/places/swagger/'>https://api.kth.se/api/places/swagger/</a></p></li>
-<li><p>Publications API: <a href='https://api.kth.se/api/publications/swagger/'>https://api.kth.se/api/publications/swagger/</a></p></li>
-</ul>
+    <p>results records returned from the search</p>
 
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>kth_school_dep</span>()
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#details">Details</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

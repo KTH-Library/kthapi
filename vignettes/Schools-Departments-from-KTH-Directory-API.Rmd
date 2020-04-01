@@ -1,0 +1,29 @@
+---
+title: "Schools-Departments-from-KTH-Directory-API"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Schools-Departments-from-KTH-Directory-API}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The schools and departments can be retrieved with `kth_school_dep()`:
+
+```{r setup, message=FALSE}
+library(kthapi)
+library(dplyr)
+
+kth_school_dep() %>% 
+#  filter(is.na(`_id`)) %>%
+  mutate(row = 1:nrow(.)) %>%
+  select(row, slug, desc = `description.en`, website) %>%
+  knitr::kable()
+
+```

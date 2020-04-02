@@ -114,19 +114,31 @@
 <a class="sourceLine" id="cb1-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb1-17" data-line-number="17"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(<span class="dt">slug =</span> slug)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb1-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(slug, <span class="dt">desc =</span> <span class="st">`</span><span class="dt">description.en</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(desc)</a></code></pre></div>
-<p>Via the so called “Legacy Profile API v 1.1” we have now looked up that <strong>hoyce</strong> belongs to the organizational unit <strong>IT</strong>.</p>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(desc)</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">unit2</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">#&gt; [1] "IT"</span></a></code></pre></div>
+<p>Via the so called “Legacy Profile API v 1.1” we have now looked up that <strong>hoyce</strong> belongs to the organizational unit <strong>IT</strong>, at the second level (institutional level) of the organizational hierarchy.</p>
+<p>A function that wraps the above calls and returns a data frame is provided for convenience:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/kth_belonging_institutional.html">kth_belonging_institutional</a></span>(<span class="st">"hoyce"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; Getting url: https://api.kth.se/api/directory/v1/root</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Joining, by = "slug"</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; # A tibble: 1 x 3</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt;   kthid slug  desc </span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; 1 hoyce t/tj  IT</span></a></code></pre></div>
+<p>The <code><a href="../reference/kth_profile_legacy.html">kth_profile_legacy()</a></code> function returns a field called <code>worksFor.name-en</code> which represents the lowest level (often level 4) organizational unit name, sometimes provided in Swedish instead of in English, so cannot directly be used to determine institutional belonging.</p>
 </div>
 <div id="level-1-and-2-organizational-units" class="section level2">
 <h2 class="hasAnchor">
 <a href="#level-1-and-2-organizational-units" class="anchor"></a>Level 1 and 2 organizational units</h2>
 <p>The KTH schools and departments (in this case for the first two levels of the org hierarchy) can be retrieved with <code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code>.</p>
 <p>In the listing we exclude the <code>kthid</code> identifier, but it exists also for organizational units.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#  filter(is.na(`_id`)) %&gt;%</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">row =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(.)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(row, slug, <span class="dt">desc =</span> <span class="st">`</span><span class="dt">description.en</span><span class="st">`</span>, website) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#  filter(is.na(`_id`)) %&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">row =</span> <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(.)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(row, slug, <span class="dt">desc =</span> <span class="st">`</span><span class="dt">description.en</span><span class="st">`</span>, website) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">row</th>
@@ -432,7 +444,7 @@
 <tr class="even">
 <td align="right">50</td>
 <td align="left">t/ta</td>
-<td align="left">GVS ÖVERGRIPANDE</td>
+<td align="left">UNIVERSITETSLEDNING</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">

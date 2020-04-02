@@ -38,9 +38,19 @@ unit2 <-
   select(slug, desc = `description.en`) %>%
   pull(desc)
 
+unit2
+
 ```
 
-Via the so called "Legacy Profile API v 1.1" we have now looked up that __`r user`__ belongs to the organizational unit __`r unit2`__.
+Via the so called "Legacy Profile API v 1.1" we have now looked up that __`r user`__ belongs to the organizational unit __`r unit2`__, at the second level (institutional level) of the organizational hierarchy.
+
+A function that wraps the above calls and returns a data frame is provided for convenience:
+
+```{r}
+kth_belonging_institutional("hoyce")
+```
+
+The `kth_profile_legacy()` function returns a field called `worksFor.name-en` which represents the lowest level (often level 4) organizational unit name, sometimes provided in Swedish instead of in English, so cannot directly be used to determine institutional belonging.
 
 ## Level 1 and 2 organizational units
 

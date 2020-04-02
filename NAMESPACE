@@ -2,6 +2,7 @@
 
 S3method(print,kthapi)
 export(config)
+export(kth_belonging_institutional)
 export(kth_directory)
 export(kth_displayname)
 export(kth_profile_legacy)

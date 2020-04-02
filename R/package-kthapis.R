@@ -22,7 +22,7 @@
 #' @aliases package-kthapis
 #'
 # needed for use of . in magrittr pipelines
-utils::globalVariables(c("."))
+utils::globalVariables(c(".", "description.en"))
 NULL
 
 #' Public data with KTH Departments at Altmetric

@@ -101,6 +101,37 @@ kth_profile_school_dep <- function(kthid, cfg = config()) {
   strsplit(units, "/") %>% unlist()
 }
 
+#' Retrieve organizational belonging for a given kthid or accountname at
+#' institutional level (assumed to be the second highest hierarchical level)
+#'
+#' @param kthid a string with the account name or KTH user id
+#' @param cfg configuration setting for the KTH APIs including base URL etc, by default from config()
+#' @import dplyr
+#' @return a tibble with the userid, the "slug" and the org unit description
+#' @export
+#' @examples
+#' \dontrun{
+#' kth_belonging_institutional("u1z88syr")
+#' kth_belonging_institutional("hoyce")
+#' }
+kth_belonging_institutional <- function(kthid, cfg = config()) {
+
+  unit_codes <- kth_profile_school_dep(kthid)
+
+  # use the first two levels of the hierarchy
+  # for "organizational belonging at level 2 ie institutional level"
+  slug <- paste0(collapse = "/", unit_codes[1:2])
+
+  # look up the english lang description for this "slug"
+  unit2 <-
+    kth_school_dep() %>%
+    rename(desc = `description.en`) %>%
+    inner_join(tibble(slug = slug, by = c("slug"))) %>%
+    select(slug, desc)
+
+  tibble(kthid = kthid) %>% bind_cols(unit2)
+}
+
 #' @export
 print.kthapi <- function(x, ...) {
   stopifnot(inherits(x, 'kthapi'))

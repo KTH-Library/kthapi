@@ -1,0 +1,73 @@
+---
+title: "Potential-Heads"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Potential-Heads}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This example shows how to use the `kth_school_dep()` function to enumerate some organizational unit "slugs".
+
+For these slugs, associated KTH employees with the word "HEAD" in their titles are listed.
+
+This creates a list of potentially responsible heads for this set of organizational units at KTH.
+
+For most units there are several potential matches.
+
+```{r setup}
+library(kthapi)
+library(dplyr)
+library(stringr)
+library(purrr)
+library(tibble)
+
+# some slugs of relevance
+slugs <- 
+  kth_school_dep() %>% 
+  # we look for schools (ie slugs containing a slash character)
+  mutate(is_dep = stringr::str_detect(slug, "/")) %>% 
+  # we exclude t, vg, zaa and m/m slugs ()
+  mutate(is_excluded = stringr::str_detect(slug, "t/|vg/|/zaa|m/m")) %>%
+  # retain just the deps and non-excluded slugs
+  filter(is_dep, !is_excluded) %>% 
+  pull(slug)
+
+slugs <- setNames(nm = slugs)
+
+# a function to flag potential heads (containing the word HEAD in the english descr)
+dep_heads <- function(slug)
+  kth_catalog(slug = slug)$users %>% 
+  mutate(is_head = grepl("HEAD", `title.en`)) %>%
+  filter(is_head)
+  
+# iterate over all slugs to locate potential heads
+potential_heads <- 
+  slugs %>% purrr::map_dfr(dep_heads, .id = "slug")
+
+# display some of the results
+display <- 
+  potential_heads %>% 
+  select(slug, username, title = `title.en`) %>%
+  inner_join(kth_school_dep()) %>%
+  select(slug, slug_id = kthid, desc = `description.en`, username, title)
+
+display <- 
+  display %>% 
+  slice(sample(nrow(display), size = 5))
+
+knitr::kable(display)
+
+# for each potential head, additional info can be looked up, like this:
+kth_profile_legacy(display$username[1])$content %>% 
+  select(url, worksfor = `worksFor.url`) %>%
+  glimpse()
+
+```

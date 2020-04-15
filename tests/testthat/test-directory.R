@@ -1,10 +1,10 @@
-test_that("query for slugs works", {
-  slugs <- kth_directory(path = "root")$content$slug
+test_that("query for root slugs works", {
+  slugs <- kth_root(path = "root")$content$slug
   expect_gt(length(slugs), 5)
 })
 
-test_that("query for root lookup works", {
-  lookup <- kth_directory(path = "root")$content
+test_that("query for root works", {
+  lookup <- kth_root(path = "root")$content
 
   t1 <- bind_cols(with(lookup, list(
     slug, parent_id, imported, kthid, location,
@@ -22,16 +22,15 @@ test_that("query for KTH schools and departments catalog works", {
     expect_true(is_valid)
 })
 
-test_that("query for catalog from slug works", {
+test_that("query for catalog from slug 's/sa' works", {
 
-    c <-
-    GET(sprintf("%s/catalog/%s/*", config()$url_directory, "a"),
-        query = list(slug = "a", l = "sv"),
-        add_headers(api_key = config()$api_key))
+  sa <- kth_catalog(slug = "s/sa")
+  n_users <- nrow(sa$users)
+  n_catalogs <- nrow(sa$catalogs)
+  is_valid_parent <- sa$parent$slug == "s"
 
-  cc <- httr::content(c)
-  cc$catalogs
-
+  is_valid <- n_users > 10 && n_catalogs == 2 && is_valid_parent
+  expect_true(is_valid)
 })
 
 
@@ -47,4 +46,3 @@ test_that("query for catalog from slug works", {
 # I Mac-fallet importeras namnen...
 #
 # De två första av fyra är skola och institution, sedan kommer avdelning
-

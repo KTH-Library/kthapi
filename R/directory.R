@@ -1,4 +1,4 @@
-#' Retrieve data from KTH Directory API
+#' Retrieve root data from KTH Directory API
 #'
 #' See details at <https://api.kth.se/api/directory/swagger/>
 #'
@@ -17,9 +17,9 @@
 #' @return results records returned from the search
 #' @examples
 #' \dontrun{
-#' kth_directory()
+#' kth_root()
 #' }
-kth_directory <- function(config = NULL, path, lang)
+kth_root <- function(config = NULL, path, lang)
 {
 
   check_internet()
@@ -108,7 +108,7 @@ kth_school_dep <- function(cfg) {
 
   }
 
-  lookup <- kth_directory(cfg)$content
+  lookup <- kth_root(cfg)$content
 
   bind_rows(
     lookup,
@@ -117,5 +117,77 @@ kth_school_dep <- function(cfg) {
 
 }
 
+#' Retrieve catalog data from the KTH Directory API given a slug for an organizational unit
+#'
+#' @param cfg a configuration setting for the KTH APIs including base URL etc, by default from config()
+#' @param slug the slug (a kind of human readable organizational identifer used at KTH) to enumerate
+#' @param lang language, by default "en" is used, can also be set to "sv"
+#' @importFrom tibble as_tibble
+#' @importFrom purrr map_df
+#' @import tibble dplyr
+#' @importFrom attempt stop_if_all stop_if_not stop_if
+#' @importFrom httr GET http_type status_code add_headers
+#' @importFrom tibble as_tibble
+#' @export
+#'
+#' @return results records returned from the search
+#' @examples
+#' \dontrun{
+#' kth_catalog("s")
+#' }
+kth_catalog <- function(cfg = NULL, slug = NULL, lang = NULL) {
+
+  check_internet()
+  stop_if_all(args, is.null, "You need to specify at least one argument")
+
+  is_valid_slug <- function(slug)
+    nchar(slug > 0) && !is.null(slug)
+
+  stop_if(!is_valid_slug(slug), msg = "Please specify a valid slug (use kth_school_dep)")
+
+  if (any(missing(cfg), is.null(cfg))) cfg <- config()
+
+  q <- list(
+    slug = slug,
+    lang = ifelse(is.null(lang), "en", lang)
+  )
+
+  resp <-
+    GET(sprintf("%s/catalog/%s/*", cfg$url_directory, q$slug),
+        query = list(slug = slug, lang = q$lang),
+        add_headers(api_key = cfg$api_key))
+
+  check_status(resp)
+  if (http_type(resp) != "application/json") {
+    stop("API did not return json", call. = FALSE)
+  }
+
+  cc <- httr::content(resp)
+
+  if (status_code(resp) != 200) {
+    stop(
+      sprintf(
+        "API request failed [%s]\n%s\n<%s>",
+        status_code(resp),
+        cc$message,
+        cc$documentation_url
+      ),
+      call. = FALSE
+    )
+  }
+
+  to_df <- function(x)
+    x %>%
+    purrr::map_df(function(y) as.data.frame(y, stringsAsFactors = FALSE)) %>%
+    as_tibble()
+
+  list(
+      catalogs = cc$catalogs %>% to_df(),
+      users = cc$users %>% to_df(),
+      info = cc$info %>% as.data.frame(),
+      parent = cc$parents %>% to_df()
+    )
+
+}
 
 

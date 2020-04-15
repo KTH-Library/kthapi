@@ -3,5 +3,6 @@ pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   KTH-Departments-from-Altmetric-Explorer: KTH-Departments-from-Altmetric-Explorer.html
+  Potential-Heads: Potential-Heads.html
   Schools-Departments-from-KTH-Directory-API: Schools-Departments-from-KTH-Directory-API.html
 

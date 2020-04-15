@@ -30,3 +30,11 @@ NULL
 #' A table from Altmetric at https://www.altmetric.com/explorer/institution/departments.
 #' Departments at KTH are listed with their DiVA Unit identifiers and English names.
 "altmetric_explorer"
+
+#' Public data for KTH organizational units used in the Annual Bibliometric Monitoring.
+#'
+#' A table combining data from the `bibliomatrix` package with the KTH Directory API and
+#' the Altmetric Exlorer dataset.
+#' Departments at KTH used in the ABM application are listed with their
+#' DiVA Unit identifiers, kthid identifiers and Altmetric identifiers.
+"abm_units"

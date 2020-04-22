@@ -8,5 +8,10 @@ config()
 }
 \description{
 This function provides a list with settings for the base url and user agent
-used in API calls.
+used in API calls, and the relevant API keys required.
+}
+\details{
+Please edit your ~./Renviron file and set values for environment variables
+KTH_API_KEY_DIRECTORY, KTH_API_KEY_PROFILES and KTH_API_KEY_PUBLICATIONS
+you can use file.edit("~/.Renviron"); readRenviron("~/.Renviron"))
 }

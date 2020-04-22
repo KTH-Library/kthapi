@@ -2,15 +2,17 @@
 % Please edit documentation in R/profile.R
 \name{kth_displayname}
 \alias{kth_displayname}
-\title{Retrieve display name given kthid or accountname}
+\title{Retrieve display name given user (kthid or accountname) using authenticated Profiles v1 API}
 \usage{
-kth_displayname(kthid, cfg = config())
+kth_displayname(user, type = c("kthid", "username"), cfg = config())
 }
 \arguments{
-\item{kthid}{a string with the account name or KTH user id}
+\item{user}{a string with the account name or KTH user id}
+
+\item{type}{one of "kthid" or "username", where "kthid" is the default if not specified}
 
 \item{cfg}{configuration setting for the KTH APIs including base URL etc, by default from config()}
 }
 \description{
-Retrieve display name given kthid or accountname
+Retrieve display name given user (kthid or accountname) using authenticated Profiles v1 API
 }

@@ -35,7 +35,7 @@ slugs <-
   # we look for schools (ie slugs containing a slash character)
   mutate(is_dep = stringr::str_detect(slug, "/")) %>% 
   # we exclude t, vg, zaa and m/m slugs ()
-  mutate(is_excluded = stringr::str_detect(slug, "t/|vg/|/zaa|m/m")) %>%
+  mutate(is_excluded = stringr::str_detect(slug, "t/|vg/|zaa/|m/m")) %>%
   # retain just the deps and non-excluded slugs
   filter(is_dep, !is_excluded) %>% 
   pull(slug)
@@ -71,3 +71,33 @@ kth_profile_legacy(display$username[1])$content %>%
   glimpse()
 
 ```
+
+
+# Division level data
+
+What divisions (KTH -> School -> Department (sv: Institution) -> Division (sv: Avdelning)) are there?
+
+```{r}
+
+# get some relevant schools and departments
+ksd <- 
+  kth_school_dep()  %>% 
+  mutate(is_excluded = ifelse(nchar(stringr::str_match(slug, "t|vg|zaa")) > 0, TRUE, FALSE)) %>%
+  # retain just the deps and non-excluded slugs
+  filter(is.na(is_excluded)) %>% 
+  arrange(-desc(slug)) %>% 
+  select(slug, desc = `description.en`)
+
+knitr::kable(ksd %>% slice(1:5))
+
+# use one of the slugs
+
+ai <- 
+  kth_catalog(slug = "a/ai")
+
+# users can now be enumerated, for example:
+#knitr::kable(ai$users %>% slice(1:5))
+
+
+```
+

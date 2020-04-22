@@ -35,7 +35,7 @@ kth_profile_legacy <- function(
   if (any(missing(config), is.null(config)))
     config <- config()
 
-  resp <- GET(sprintf("%s/%s", config$url_profiles, userid), config$ua)
+  resp <- GET(sprintf("%s/%s", config$url_profiles_legacy, userid), config$ua)
   check_status(resp)
   if (http_type(resp) != "application/json") {
     stop("API did not return json", call. = FALSE)
@@ -72,17 +72,118 @@ kth_profile_legacy <- function(
 }
 
 
-#' Retrieve display name given kthid or accountname
+#' Retrieve data for KTH Profiles
+#'
+#' See details at <https://api.kth.se/api/profile/swagger/?url=/api/profile/swagger.json#/v1.1/getPublicProfile_v11>
+#' @param kthid the kthId for the user profile
+#' @param orcid the ORC identifier for the user profile
+#' @param socialid the social id for the user profile
+#' @param username the accountname for the user profile
+#' @param config a configuration setting for the KTH APIs including base URL etc, by default from config()
+#'
+#' @importFrom attempt stop_if_all stop_if_not
+#' @importFrom jsonlite fromJSON flatten
+#' @importFrom httr GET http_type status_code
+#' @importFrom tibble as_tibble
+#' @importFrom progress progress_bar
+#' @import tibble dplyr
+#' @export
+#'
+#' @return results records returned from the search
+#' @examples
+#' \dontrun{
+#' kth_profile(username = "hoyce")
+#' kth_profile(username = "agnel")
+#' kth_profile(username = "markussk")
+#' }
+kth_profile <- function(kthid = NULL, orcid = NULL, socialid = NULL, username = NULL,
+  config = NULL)
+{
+
+  check_internet()
+  stop_if_all(args, is.null, "You need to specify at least one argument")
+
+  if (any(missing(config), is.null(config)))
+    config <- config()
+
+  is_valid_arg <- function(x) !is.null(x) && nchar(x) > 0
+
+  if (is_valid_arg(kthid)) {
+    path <- sprintf("kthid/%s", kthid)
+  } else if (is_valid_arg(orcid)) {
+    path <- sprintf("orcid/%s", orcid)
+  } else if (is_valid_arg(socialid)) {
+    path <- sprintf("socialId/%s", socialid)
+  } else if (is_valid_arg(username)) {
+    path <- sprintf("user/%s", username)
+  } else {
+    stop("Please provide a valid kthid, orcid, socialid or username", call. = FALSE)
+  }
+
+  url <- sprintf("%s/%s", config$url_profiles, path)
+  message("Sending GET to url: ", url)
+  resp <- GET(url, config$ua, add_headers(api_key = config$api_key_profiles))
+
+  check_status(resp)
+  if (http_type(resp) != "application/json") {
+    stop("API did not return json", call. = FALSE)
+  }
+
+  parsed <- fromJSON(rawToChar(resp$content)) #, flatten = TRUE)
+
+  if (status_code(resp) != 200) {
+    stop(
+      sprintf(
+        "API request failed [%s]\n%s\n<%s>",
+        status_code(resp),
+        parsed$message,
+        parsed$documentation_url
+      ),
+      call. = FALSE
+    )
+  }
+
+  # parse nested json into tabular format
+  content <-
+    parsed
+
+  structure(
+    list(
+      content = content,
+      query = path
+    ),
+    class = "kthapiprofile"
+  )
+}
+
+
+#' Retrieve display name given kthid or accountname using the non-authed Profiles v 1.1 legacy API
 #'
 #' @param kthid a string with the account name or KTH user id
 #' @param cfg configuration setting for the KTH APIs including base URL etc, by default from config()
 #' @export
-kth_displayname <- function(kthid, cfg = config()) {
+kth_displayname_legacy <- function(kthid, cfg = config()) {
   profile <- kth_profile_legacy(kthid, cfg)$content
   accountname <- gsub("(.*?)@.*?$", "\\1", profile$email)
   sprintf("%s %s (%s)",
     profile$givenName, profile$familyName, accountname)
 }
+
+#' Retrieve display name given user (kthid or accountname) using authenticated Profiles v1 API
+#'
+#' @param user a string with the account name or KTH user id
+#' @param type one of "kthid" or "username", where "kthid" is the default if not specified
+#' @param cfg configuration setting for the KTH APIs including base URL etc, by default from config()
+#' @export
+kth_displayname <- function(user, type = c("kthid", "username"), cfg = config()) {
+  if (missing(type)) type <- "kthid"
+  profile <- switch(type,
+                    kthid = kth_profile(kthid = user)$content,
+                    username = kth_profile(username = user)$content)
+  sprintf("%s %s (%s)",
+          profile$firstName, profile$lastName, profile$username)
+}
+
 
 #' Retrieve organizational unit for a given kthid or accountname
 #'
@@ -137,5 +238,13 @@ print.kthapi <- function(x, ...) {
   stopifnot(inherits(x, 'kthapi'))
   cat(sprintf("<KTH API call for %s>\n",x$query))
   print(tibble::as_tibble(x$content))
+  invisible(x)
+}
+
+#' @export
+print.kthapiprofile <- function(x, ...) {
+  stopifnot(inherits(x, 'kthapiprofile'))
+  cat(sprintf("<KTH API call for %s>\n",x$query))
+  print(x$content)
   invisible(x)
 }

@@ -70,3 +70,32 @@ profile %>% t() %>% as.data.frame() %>%
 # NB: some valid account names do not return data
 tryCatch(kth_profile_legacy("markussk"), error = function(e) e)
 ```
+
+## More examples
+
+This is a basic example which shows how to make a lookup using the authenticated Profiles API:
+
+```{r}
+
+profile <- 
+  kth_profile(username = "hoyce") %>%
+  .$content
+
+# organizational belonging
+profile$worksFor$items %>% 
+  tibble::as_tibble() %>%
+  select(path, name, nameEn) %>%
+  knitr::kable()
+
+# corresponding "slugs"
+profile$worksFor$items$path
+
+# displayname used in ABM app
+kth_displayname("hoyce", type = "username")
+
+# NB: this (authenticated API call) does not throw an error for non-employees
+kth_displayname("markussk", type = "username")
+
+```
+
+For more usage examples, please see the package vignettes.

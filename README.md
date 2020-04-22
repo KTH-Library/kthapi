@@ -52,11 +52,14 @@ config()
 #> $url_kopps
 #> [1] "https://api.kth.se/api/kopps/v2"
 #> 
-#> $url_profiles
+#> $url_profiles_legacy
 #> [1] "https://api.kth.se/api/profile/1.1"
 #> 
+#> $url_profiles
+#> [1] "https://api.kth.se/api/profile/v1"
+#> 
 #> $url_directory
-#> [1] "https://api.kth.se/api/directory/"
+#> [1] "https://api.kth.se/api/directory/v1"
 #> 
 #> $url_places
 #> [1] "https://api.kth.se/api/places"
@@ -68,6 +71,15 @@ config()
 #> <request>
 #> Options:
 #> * useragent: http://github.com/hadley/httr
+#> 
+#> $api_key_profiles
+#> [1] "***REMOVED***"
+#> 
+#> $api_key_directory
+#> [1] "***REMOVED***"
+#> 
+#> $api_key_publications
+#> [1] "***REMOVED***"
 
 # how to change the config
 my_cfg <- config()
@@ -85,8 +97,8 @@ profile <-
 
 # inspect this record
 profile %>% glimpse()
-#> Observations: 1
-#> Variables: 12
+#> Rows: 1
+#> Columns: 12
 #> $ givenName          <chr> "Niklas"
 #> $ familyName         <chr> "Olsson"
 #> $ url                <chr> "https://www.kth.se/profile/hoyce"
@@ -129,3 +141,47 @@ profile %>% t() %>% as.data.frame() %>%
 tryCatch(kth_profile_legacy("markussk"), error = function(e) e)
 #> <simpleError: The API returned an error>
 ```
+
+## More examples
+
+This is a basic example which shows how to make a lookup using the
+authenticated Profiles API:
+
+``` r
+
+profile <- 
+  kth_profile(username = "hoyce") %>%
+  .$content
+#> Sending GET to url: https://api.kth.se/api/profile/v1/user/hoyce
+
+# organizational belonging
+profile$worksFor$items %>% 
+  tibble::as_tibble() %>%
+  select(path, name, nameEn) %>%
+  knitr::kable()
+```
+
+| path          | name                    | nameEn |
+| :------------ | :---------------------- | :----- |
+| t/tj          | IT-AVDELNINGEN          | IT     |
+| t/tj/tjd      | SYSTEMFÖRV & UTVECKLING |        |
+| t/tj/tjd/tjda | FÖRVALTNING             |        |
+
+``` r
+
+# corresponding "slugs"
+profile$worksFor$items$path
+#> [1] "t/tj"          "t/tj/tjd"      "t/tj/tjd/tjda"
+
+# displayname used in ABM app
+kth_displayname("hoyce", type = "username")
+#> Sending GET to url: https://api.kth.se/api/profile/v1/user/hoyce
+#> [1] "Niklas Olsson (hoyce)"
+
+# NB: this (authenticated API call) does not throw an error for non-employees
+kth_displayname("markussk", type = "username")
+#> Sending GET to url: https://api.kth.se/api/profile/v1/user/markussk
+#> [1] "Markus Skyttner (markussk)"
+```
+
+For more usage examples, please see the package vignettes.

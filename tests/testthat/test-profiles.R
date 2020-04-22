@@ -38,3 +38,15 @@ test_that("Legacy Profiles API returns institutional belonging for accountid and
   expect_true(is_valid)
 
 })
+
+test_that("Profiles API returns organizational belonging for a specific kthid", {
+  p1 <- kth_profile(kthid = "u1rh0c9q")$content$worksFor$items
+  is_valid <- rev(p1$path)[1] == "t/tj/tjd/tjda"
+  expect_true(is_valid)
+})
+
+test_that("Profiles API returns kthid given accountname", {
+  p1 <- kth_profile(username = "markussk")$content$kthId
+  is_valid <- p1 == "u1o2ujjd"
+  expect_true(is_valid)
+})

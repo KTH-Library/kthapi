@@ -38,7 +38,7 @@ kth_root <- function(config = NULL, path, lang)
   url <- sprintf("%s/%s", config$url_directory, q$path)
 
   message("Getting url: ", url)
-  resp <- GET(url, config$ua, add_headers(api_key = config$api_key))
+  resp <- GET(url, config$ua, add_headers(api_key = config$api_key_directory))
 
 
   check_status(resp)
@@ -99,7 +99,7 @@ kth_school_dep <- function(cfg) {
     deps <-
       GET(sprintf("%s/catalog/%s", cfg$url_directory, id),
           query = list(slug = id, l = "en"),
-          add_headers(api_key = cfg$api_key)) %>%
+          add_headers(api_key = cfg$api_key_directory)) %>%
       httr::content()
 
     deps$catalogs %>%
@@ -155,7 +155,7 @@ kth_catalog <- function(cfg = NULL, slug = NULL, lang = NULL) {
   resp <-
     GET(sprintf("%s/catalog/%s/*", cfg$url_directory, q$slug),
         query = list(slug = slug, lang = q$lang),
-        add_headers(api_key = cfg$api_key))
+        add_headers(api_key = cfg$api_key_directory))
 
   check_status(resp)
   if (http_type(resp) != "application/json") {

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve catalog data from the KTH Directory API given a slug for an organizational unit — kth_catalog • kthapi</title>
+<title>Retrieve data for KTH Publications — kth_publications • kthapi</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Retrieve catalog data from the KTH Directory API given a slug for an organizational unit — kth_catalog" />
-<meta property="og:description" content="Retrieve catalog data from the KTH Directory API given a slug for an organizational unit" />
+<meta property="og:title" content="Retrieve data for KTH Publications — kth_publications" />
+<meta property="og:description" content="See details at https://api.kth.se/api/publications/swagger/?url=/api/publications/swagger.json#/" />
 
 
 
@@ -129,31 +129,67 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve catalog data from the KTH Directory API given a slug for an organizational unit</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/directory.R'><code>R/directory.R</code></a></small>
-    <div class="hidden name"><code>kth_catalog.Rd</code></div>
+    <h1>Retrieve data for KTH Publications</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/publications.R'><code>R/publications.R</code></a></small>
+    <div class="hidden name"><code>kth_publications.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Retrieve catalog data from the KTH Directory API given a slug for an organizational unit</p>
+    <p>See details at <a href='https://api.kth.se/api/publications/swagger/?url=/api/publications/swagger.json#/'>https://api.kth.se/api/publications/swagger/?url=/api/publications/swagger.json#/</a></p>
     </div>
 
-    <pre class="usage"><span class='fu'>kth_catalog</span>(<span class='kw'>cfg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>slug</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>kth_publications</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"filteredPublications"</span>, <span class='st'>"userstatus"</span>, <span class='st'>"stats"</span>, <span class='st'>"activePublicUsers"</span>,
+    <span class='st'>"activeNotPublicUsers"</span>, <span class='st'>"activeUsersWithPublications"</span>,
+    <span class='st'>"activeUsersWithoutPublications"</span>, <span class='st'>"organisation"</span>, <span class='st'>"organisations"</span>),
+  <span class='kw'>username</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>orgid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>is_html</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>l</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>style</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>divaUri</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>q</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>config</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cfg</th>
+      <th>path</th>
+      <td><p>one of a set of valid API calls</p></td>
+    </tr>
+    <tr>
+      <th>username</th>
+      <td><p>the accountname parameter to use</p></td>
+    </tr>
+    <tr>
+      <th>orgid</th>
+      <td><p>the organisation identifier to use</p></td>
+    </tr>
+    <tr>
+      <th>is_html</th>
+      <td><p>boolean to indicate if HTML should be returned</p></td>
+    </tr>
+    <tr>
+      <th>l</th>
+      <td><p>the language code (one of "en" or "sv")</p></td>
+    </tr>
+    <tr>
+      <th>style</th>
+      <td><p>the style to use (when requesting organisation path)</p></td>
+    </tr>
+    <tr>
+      <th>divaUri</th>
+      <td><p>the diva URI to use (when requesting organisation/diva path)</p></td>
+    </tr>
+    <tr>
+      <th>q</th>
+      <td><p>regexp filter (when requesting organizations path)</p></td>
+    </tr>
+    <tr>
+      <th>config</th>
       <td><p>a configuration setting for the KTH APIs including base URL etc, by default from config()</p></td>
-    </tr>
-    <tr>
-      <th>slug</th>
-      <td><p>the slug (a kind of human readable organizational identifer used at KTH) to enumerate</p></td>
-    </tr>
-    <tr>
-      <th>lang</th>
-      <td><p>language, by default "en" is used, can also be set to "sv"</p></td>
     </tr>
     </table>
 
@@ -163,7 +199,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>kth_catalog</span>(<span class='st'>"s"</span>)
+<span class='fu'>kth_publications</span>(<span class='kw'>username</span> <span class='kw'>=</span> <span class='st'>"hoyce"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

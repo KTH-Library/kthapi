@@ -98,6 +98,11 @@ ai <-
 # users can now be enumerated, for example:
 #knitr::kable(ai$users %>% slice(1:5))
 
+# divisions can be enumerated for each of the departments, for example:
+
+ai$catalog %>% 
+  select(slug, `description.en`, kthid) %>%
+  knitr::kable()
 
 ```
 

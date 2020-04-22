@@ -161,38 +161,38 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">j/jh</td>
-<td align="left">u2a8gr7e</td>
-<td align="left">DEPARTMENT OF COMPUTER SCIENCE</td>
-<td align="left">karlm</td>
+<td align="left">c/cm</td>
+<td align="left">u2q564do</td>
+<td align="left">DEPARTMENT OF ENGINEERING PEDAGOGICS</td>
+<td align="left">stn</td>
+<td align="left">LECTURER, HEAD OF DEPARTMENT</td>
+</tr>
+<tr class="even">
+<td align="left">c/cg</td>
+<td align="left">u2hmae9o</td>
+<td align="left">DEPARTMENT OF FIBRE AND POLYMER TECHNOLOGY</td>
+<td align="left">monicaek</td>
+<td align="left">PROFESSOR, HEAD OF DIVISION</td>
+</tr>
+<tr class="odd">
+<td align="left">c/cf</td>
+<td align="left">u21880mm</td>
+<td align="left">DEPARTMENT OF CHEMICAL ENGINEERING</td>
+<td align="left">gnli</td>
 <td align="left">PROFESSOR, HEAD OF DIVISION</td>
 </tr>
 <tr class="even">
-<td align="left">j/jh</td>
-<td align="left">u2a8gr7e</td>
-<td align="left">DEPARTMENT OF COMPUTER SCIENCE</td>
-<td align="left">gk</td>
-<td align="left">PROF., DEPUTY HEAD OF DIVISION</td>
+<td align="left">c/cac</td>
+<td align="left">u2op8eqb</td>
+<td align="left">CBH ADMINISTRATION</td>
+<td align="left">mala</td>
+<td align="left">HEAD OF ADMINISTRATION</td>
 </tr>
 <tr class="odd">
-<td align="left">a/ag</td>
-<td align="left">u2uo2cht</td>
-<td align="left">URBAN PLANNING AND ENVIRONMENT</td>
-<td align="left">yifang</td>
-<td align="left">PROFESSOR, HEAD OF DIV</td>
-</tr>
-<tr class="even">
-<td align="left">c/ce</td>
-<td align="left">u2rr4ui3</td>
-<td align="left">DEPARTMENT OF CHEMISTRY</td>
-<td align="left">percl</td>
-<td align="left">PROFESSOR, HEAD OF DIVISON</td>
-</tr>
-<tr class="odd">
-<td align="left">c/cj</td>
-<td align="left">u2ust6e3</td>
-<td align="left">DEPARTMENT OF PROTEIN SCIENCE</td>
-<td align="left">aman</td>
+<td align="left">c/cd</td>
+<td align="left">u2gz9qs6</td>
+<td align="left">DEPARTMENT OF BIOMEDICAL ENGINEERING AND HEALTH SYSTEMS</td>
+<td align="left">sveink</td>
 <td align="left">PROFESSOR, HEAD OF DIVISON</td>
 </tr>
 </tbody>
@@ -204,8 +204,8 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>()
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 2</span>
-<span class="co">#&gt; $ url      &lt;chr&gt; "https://www.kth.se/profile/karlm"</span>
-<span class="co">#&gt; $ worksfor &lt;chr&gt; "https://www.kth.se/directory/j/jh/jht"</span></pre></body></html></div>
+<span class="co">#&gt; $ url      &lt;chr&gt; "https://www.kth.se/profile/stn"</span>
+<span class="co">#&gt; $ worksfor &lt;chr&gt; "https://www.kth.se/directory/c/cm/cma"</span></pre></body></html></div>
 <div id="division-level-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#division-level-data" class="anchor"></a>Division level data</h1>
@@ -257,7 +257,52 @@
   <span class="fu"><a href="../reference/kth_catalog.html">kth_catalog</a></span>(<span class="kw">slug</span> <span class="kw">=</span> <span class="st">"a/ai"</span>)
 
 <span class="co"># users can now be enumerated, for example:</span>
-<span class="co">#knitr::kable(ai$users %&gt;% slice(1:5))</span></pre></body></html></div>
+<span class="co">#knitr::kable(ai$users %&gt;% slice(1:5))</span>
+
+<span class="co"># divisions can be enumerated for each of the departments, for example:</span>
+
+<span class="no">ai</span>$<span class="no">catalog</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">slug</span>, <span class="no">`description.en`</span>, <span class="no">kthid</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()</pre></body></html></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">slug</th>
+<th align="left">description.en</th>
+<th align="left">kthid</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">a/ai/aia</td>
+<td align="left">DIVISION OF REAL ESTATE AND CONSTRUCTION MANAGEMENT</td>
+<td align="left">u2n3dep0</td>
+</tr>
+<tr class="even">
+<td align="left">a/ai/aib</td>
+<td align="left">DIVISION OF REAL ESTATE ECONOMICS AND FINANCE</td>
+<td align="left">u2vce7hj</td>
+</tr>
+<tr class="odd">
+<td align="left">a/ai/aic</td>
+<td align="left">DIVISION OF REAL ESTATE PLANNING AND LAND LAW</td>
+<td align="left">u2yhezo5</td>
+</tr>
+<tr class="even">
+<td align="left">a/ai/aid</td>
+<td align="left">DIVISION OF CONSTRUCTION AND FACILITIES MANAGEMENT</td>
+<td align="left">u2ctw8g8</td>
+</tr>
+<tr class="odd">
+<td align="left">a/ai/aie</td>
+<td align="left">DIVISION OF REAL ESTATE BUSINESS AND FINANCIAL SYSTEMS</td>
+<td align="left">u21evul2</td>
+</tr>
+<tr class="even">
+<td align="left">a/ai/aig</td>
+<td align="left">DIVISION OF GEODESY AND SATELLITE POSITIONING</td>
+<td align="left">u21ttfwm</td>
+</tr>
+</tbody>
+</table>
 </div>
   </div>
 

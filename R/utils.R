@@ -39,7 +39,7 @@ config <- function() {
     url_profiles = "https://api.kth.se/api/profile/v1",
     url_directory = "https://api.kth.se/api/directory/v1",
     url_places = "https://api.kth.se/api/places",
-    url_publications = "https://api.kth.se/api/publications",
+    url_publications = "https://api.kth.se/api/publications/v1",
     ua = httr::user_agent("http://github.com/hadley/httr"),
     api_key_profiles = key_profiles,
     api_key_directory = key_directory,

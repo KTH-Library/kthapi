@@ -19,9 +19,13 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of the `kthapi` R package is to provide an API wrapper for APIs used at KTH, The Royal Institute of Technology, which can be used directly in R. 
+The goal of the `kthapi` R package is to provide an API wrapper for some of the APIs used at KTH, The Royal Institute of Technology, which can be used directly in R. 
 
-The KTH APIs provides information about employee profiles, published web content, places, course schemas and program catalogues. This R package interfaces with the API, making data available to use directly from R.
+The KTH APIs are described here:
+
+<https://www.kth.se/api/anvand-data-fran-kth-1.57059>
+
+The KTH APIs provide information about employee profiles, published web content, places, course schemas and program catalogues. This R package interfaces with the API, making data available to use directly from R.
 
 ## Installation
 

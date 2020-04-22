@@ -5,6 +5,8 @@
 #' catalogues. This R package interfaces with the API, making data
 #' available to use from R.
 #'
+#' An introduction to the KTH APIs in Swedish is available here: <https://www.kth.se/api/anvand-data-fran-kth-1.57059>
+#'
 #' An overview of the KTH APIs can be found here: <https://www.kth.se/api>
 #'
 #' Individual APIs are documented here:

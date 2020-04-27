@@ -6,6 +6,14 @@ org <- bibliomatrix::abm_public_kth$meta
 a <- org$unit_long_en
 b <- kth_school_dep()$`description.en`
 
+# what "catalogs" are available under "m/m"?
+#c <- kth_catalog(slug = "m/m")
+#c$catalogs
+
+# if I want to merge w "b"
+#additions <- c$catalogs %>% pull(`description.en`)
+#b <- c(b, additions)
+
 # there are some direct matches
 a[toupper(a) %in% b]
 

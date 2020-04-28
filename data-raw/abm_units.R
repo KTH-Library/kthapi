@@ -76,6 +76,7 @@ connexions <-
 
 abm_units <- bind_rows(abm_public_kth$meta %>% slice(1), connexions)
 
+
 # fill Altmetric root node values (for all of KTH) "manually"
 
 abm_units[1, ]$description.en <- abm_units[1, ]$unit_long_en

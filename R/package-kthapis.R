@@ -29,13 +29,14 @@ NULL
 
 #' Public data with KTH Departments at Altmetric
 #'
-#' A table from Altmetric at https://www.altmetric.com/explorer/institution/departments.
 #' Departments at KTH are listed with their DiVA Unit identifiers and English names.
+#'
+#' @source \url{https://www.altmetric.com/explorer/institution/departments}
 "altmetric_explorer"
 
 #' Public data with KTH Altmetric Highlights summary indicators
 #'
-#' A table from Altmetric at https://www.altmetric.com/explorer/highlights.
+#' @source \url{https://www.altmetric.com/explorer/highlights}
 "altmetric_explorer_highlights"
 
 #' Public data for KTH organizational units used in the Annual Bibliometric Monitoring.

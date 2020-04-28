@@ -7,11 +7,13 @@
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 590 rows and 6 columns.
 }
+\source{
+\url{https://www.altmetric.com/explorer/institution/departments}
+}
 \usage{
 altmetric_explorer
 }
 \description{
-A table from Altmetric at https://www.altmetric.com/explorer/institution/departments.
 Departments at KTH are listed with their DiVA Unit identifiers and English names.
 }
 \keyword{datasets}

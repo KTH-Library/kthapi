@@ -11,7 +11,7 @@ test_that("query for root works", {
     fax, phone, website, version, `description.en`
   )))
 
-  expect_gt(nrow(t1), 7)
+  expect_gt(nrow(t1), 6)
 
 })
 
@@ -33,6 +33,26 @@ test_that("query for catalog from slug 's/sa' works", {
   expect_true(is_valid)
 })
 
+
+test_that("current bundled data 'abm_units' matches w Directory API results for schools and institutions", {
+
+  # get current data on schools and institutions from the Directory API
+  kds <- kth_school_dep()
+
+  # find mismatch through an antijoin
+  non_matches <-
+    abm_units %>%
+    anti_join(kth_school_dep(), by = "slug")
+
+  is_mismatched <- (nrow(non_matches) > 0)
+
+  if (is_mismatched) {
+    message("Found inconsistencies between current abm_units and the Directory API:")
+    print(non_matches)
+  }
+
+  expect_false(is_mismatched)
+})
 
 #a$info %>% purrr::map_df(function(x) as.data.frame(x) %>% flatten %>% as_tibble)
 #a$parents %>% purrr::map_df(function(x) as.data.frame(x) %>% flatten %>% as_tibble)

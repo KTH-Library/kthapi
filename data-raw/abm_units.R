@@ -73,4 +73,6 @@ connexions <-
 
 abm_units <- bind_rows(abm_public_kth$meta %>% slice(1), connexions)
 
+#View(abm_units)
+
 usethis::use_data(abm_units)

@@ -76,13 +76,23 @@ connexions <-
 
 abm_units <- bind_rows(abm_public_kth$meta %>% slice(1), connexions)
 
-# root node
-abm_units[1, ]$href <- "https://www.altmetric.com/explorer/highlights"
+# fill Altmetric root node values (for all of KTH) "manually"
+
+abm_units[1, ]$description.en <- abm_units[1, ]$unit_long_en
 abm_units[1, ]$desc <- abm_units[1, ]$unit_long_en
+
 abm_units[1, ]$count <-
   altmetric_explorer_highlights %>%
   filter(indicator == "Outputs with attention") %>%
   pull(value)
+
+altmetric_id_root <- "a76346801b570c19effb1ae8692c87fc"
+abm_units[1, ]$level <- "department root"
+abm_units[1, ]$altmetric_id <- altmetric_id_root
+abm_units[1, ]$href <- sprintf(
+    paste0("https://www.altmetric.com/explorer/outputs",
+    "?department_id=9fa9aaf7-92b0-4911-9718-cf2a7e34a2f1",
+    ":department:%s"), altmetric_id_root)
 
 #View(abm_units)
 

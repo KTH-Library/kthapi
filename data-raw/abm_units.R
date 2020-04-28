@@ -43,19 +43,18 @@ lookup <-
 df <- as.data.frame(lookup)
 
 # manual attempts to correct some mappings, TODO: needs review!
-df[10,]$idx <- 34
-df[12,]$idx <- 36
-df[13,]$idx <- 37
-df[22,]$idx <- 24
-df[24,]$idx <- 27
-df[26,]$idx <- 28
-df[29,]$idx <- 35 # NB: Check this!
-df[30,]$idx <- 38 # NB: Check this!
-df[31,]$idx <- 54 # NB: Check this!
-df[32,]$idx <- 38 # NB: Check this!
-df[33,]$idx <- 45
-df[34,]$idx <- 12 # NB: Check this!
-df[35,]$idx <- 19 # NB: Check this!
+df[7,]$idx <- 17
+df[10,]$idx <- 32
+df[11,]$idx <- 33
+df[12,]$idx <- 34
+df[13,]$idx <- 35
+df[16,]$idx <- 61
+df[21,]$idx <- 23
+df[22,]$idx <- 22
+df[24,]$idx <- 25
+df[25,]$idx <- 27
+df[26,]$idx <- 26
+df[31,]$idx <- 44
 
 mapping <-
   tibble(a = df$a, idx = df$idx) %>%

@@ -59,10 +59,48 @@ parse_altmetric_explorer <- function(html_file) {
 
 }
 
+parse_highlights <- function(html_file) {
+  # this html file comes from a manual download (due to loginwall) of
+  # https://www.altmetric.com/explorer/highlights
+  if (missing(html_file))
+    html_file <- "Altmetric Explorer Highlights"
+
+  aeh <-
+    read_html(html_file) %>%
+    html_nodes(".stats")
+
+  # fcns to scrape department data
+  indicators <- c("mentions", "mentioned_outputs", "total_outputs")
+
+  x_stat_title <- function(x, indicator)
+    x %>% html_nodes(sprintf(".stat.%s .content .title", indicator)) %>%
+    html_text()
+
+  x_stat_count <- function(x, indicator)
+    x %>% html_nodes(sprintf(".stat.%s .content .count", indicator)) %>%
+    html_text() %>%
+    readr::parse_number()
+
+
+  df_indicator <- function(x)
+    tibble(
+      indicator = aeh %>% x_stat_title(x),
+      value = aeh %>% x_stat_count(x)
+    )
+
+  indicators %>% map_df(df_indicator)
+
+}
+
+
+
 library(here)
 
 html_file <- file.path(here(), "data-raw", "Altmetric Explorer.html")
 altmetric_explorer <- parse_altmetric_explorer(html_file)
-
 usethis::use_data(altmetric_explorer, overwrite = TRUE)
+
+html_file <- file.path(here(), "data-raw", "Altmetric Explorer Highlights.html")
+altmetric_explorer_highlights <- parse_highlights(html_file)
+usethis::use_data(altmetric_explorer_highlights, overwrite = TRUE)
 

@@ -1,3 +1,5 @@
+# NB: This depends on first having the altmetric_explorer_highlights dataset present!
+
 library(bibliomatrix)
 library(kthapi)
 
@@ -42,7 +44,8 @@ lookup <-
 
 df <- as.data.frame(lookup)
 
-# manual attempts to correct some mappings, TODO: needs review!
+# manual attempts to correct some mappings
+
 df[7,]$idx <- 17
 df[10,]$idx <- 32
 df[11,]$idx <- 33
@@ -73,6 +76,14 @@ connexions <-
 
 abm_units <- bind_rows(abm_public_kth$meta %>% slice(1), connexions)
 
+# root node
+abm_units[1, ]$href <- "https://www.altmetric.com/explorer/highlights"
+abm_units[1, ]$desc <- abm_units[1, ]$unit_long_en
+abm_units[1, ]$count <-
+  altmetric_explorer_highlights %>%
+  filter(indicator == "Outputs with attention") %>%
+  pull(value)
+
 #View(abm_units)
 
-usethis::use_data(abm_units)
+usethis::use_data(abm_units, overwrite = TRUE)

@@ -4,9 +4,7 @@
 \name{abm_units}
 \alias{abm_units}
 \title{Public data for KTH organizational units used in the Annual Bibliometric Monitoring.}
-\format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 35 rows and 19 columns.
-}
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 35 rows and 19 columns.}
 \usage{
 abm_units
 }

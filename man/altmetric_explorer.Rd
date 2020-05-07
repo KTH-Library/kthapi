@@ -4,9 +4,7 @@
 \name{altmetric_explorer}
 \alias{altmetric_explorer}
 \title{Public data with KTH Departments at Altmetric}
-\format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 590 rows and 6 columns.
-}
+\format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 593 rows and 6 columns.}
 \source{
 \url{https://www.altmetric.com/explorer/institution/departments}
 }

@@ -39,6 +39,13 @@ NULL
 #' @source \url{https://www.altmetric.com/explorer/highlights}
 "altmetric_explorer_highlights"
 
+#' Public data with KTH Altmetric Outputs with Attention
+#'
+#' Data fetched from Altmetric Explorer API
+#'
+#' @source \url{https://www.altmetric.com/explorer/api/research_outputs/attention}
+"altmetric_explorer_attention"
+
 #' Public data for KTH organizational units used in the Annual Bibliometric Monitoring.
 #'
 #' A table combining data from the `bibliomatrix` package with the KTH Directory API and

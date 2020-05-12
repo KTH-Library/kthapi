@@ -6,6 +6,7 @@ library(tibble)
 library(dplyr)
 library(readr)
 library(here)
+library(rjson)
 
 parse_altmetric_explorer <- function(html_file, verbose = FALSE) {
 
@@ -162,7 +163,7 @@ altmetrics_get_attention <- function(json_file, verbose = FALSE) {
 }
 
 
-altmetric_explorer <- parse_altmetric_explorer()
+altmetric_explorer <- parse_altmetric_explorer(verbose = FALSE)
 usethis::use_data(altmetric_explorer, overwrite = TRUE)
 
 altmetric_explorer_attention <- altmetrics_get_attention()

@@ -46,3 +46,42 @@ config <- function() {
     api_key_publications = key_publications
   )
 }
+
+#' Status message related to db availability
+#' @return list with two slots for status message and status
+#' @export
+status_kthapi <- function() {
+
+  r_environ_path <- normalizePath("~/.Renviron", mustWork = FALSE)
+  envvars <- c("KTH_API_KEY_DIRECTORY", "KTH_API_KEY_PROFILES", "KTH_API_KEY_PUBLICATIONS")
+
+  if (any(Sys.getenv(envvars) == "")) {
+    msg <- paste("Please use an .Renviron at", r_environ_path,
+                 "with all of these envvars set", paste(envvars))
+    return (list (msg = msg, status = FALSE))
+  }
+
+  # KTH Profiles API legacy check
+  unit_code <- kth_profile_school_dep("hoyce")
+  is_valid_1 <- length(unit_code) > 1
+  if (!is_valid_1)
+    warning("KTH Profiles Legacy API check failed - connectivity issue?")
+
+  # KTH Profiles API check
+  profile <- kth_profile(username = "hoyce")
+  is_valid_2 <- profile$content$emailAddress == "hoyce@kth.se"
+  if (!is_valid_2)
+    warning("KTH Profiles API check failed - connectivity issue?")
+
+  # KTH Directory API check
+  api_slugs <- kth_school_dep()$slug
+  valid_slugs <- unlist(strsplit("acjmst", ""))
+  is_valid_3 <- all(valid_slugs %in% api_slugs)
+  if (!is_valid_3)
+    warning("KTH Directory API check failed - connectivity issue?")
+
+  if (all(is_valid_1, is_valid_2, is_valid_3))
+    return (list (msg = "OK", status = TRUE))
+
+  list(msg = "Issue with KTH APIs", status = FALSE)
+}

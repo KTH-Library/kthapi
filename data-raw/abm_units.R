@@ -70,11 +70,12 @@ connexions <-
   slice(-1) %>%
   left_join(kth_school_dep()) %>%
   select(unit_long_en, `description.en`, kthid, slug) %>%
-  left_join(bibliomatrix::abm_public_kth$meta) %>%
+  left_join(bibliomatrix::abm_public_kth$meta %>% select(-starts_with("altmetric"))) %>%
   left_join(altmetric_explorer, by = c("Diva_org_id" = "diva_id")) %>%
-  select(unit_long_en, `description.en`, kthid, slug, altmetric_id, desc, count, href, everything())
+  select(unit_long_en, `description.en`, kthid, slug, desc, count, href, everything())
 
-abm_units <- bind_rows(abm_public_kth$meta %>% slice(1), connexions)
+abm_units <- bind_rows(
+  abm_public_kth$meta %>% slice(1) %>% select(-starts_with("altmetric")), connexions)
 
 
 # fill Altmetric root node values (for all of KTH) "manually"
@@ -99,4 +100,45 @@ abm_units[1, ]$href <- sprintf(
 
 #View(abm_units)
 
+abm_units <-
+  abm_units %>%
+  dplyr::rename(
+    "altmetric_level" = level,
+    "altmetric_count" = count,
+    "altmetric_href" = href,
+    "altmetric_desc" = desc) %>%
+  mutate(description_en = `description.en`) %>%
+  select(-`description.en`)
+
+check <-
+  bibliomatrix::abm_public_kth$meta ==
+  abm_units %>% select(names(bibliomatrix::abm_public_kth$meta))
+
+if (length(which(check == FALSE)) > 0) {
+  warning("Found difference in data, recommending data base update/sync")
+  View(check)
+}
+
+#setdiff(
+#  abm_units %>% select(contains("altmetric")),
+#  bibliomatrix::abm_public_kth$meta %>% select(contains("altmetric"))
+#)
+
 usethis::use_data(abm_units, overwrite = TRUE)
+
+
+
+# TODO sync with the database
+
+update_mssql_abm_units <- function() {
+
+  library(odbc)
+
+  con_bibmon <- dbConnect(odbc(), driver = "ODBC Driver 17 for SQL Server",
+    server = Sys.getenv("DBHOST"), database = Sys.getenv("DBNAME"),
+    Port = 1433, UID = Sys.getenv("DBUSER"), PWD = Sys.getenv("DBPASS"))
+
+  dbWriteTable(con_bibmon, "abm_org_info", abm_units, overwrite = TRUE)
+
+}
+

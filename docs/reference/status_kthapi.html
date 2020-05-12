@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve data for KTH Profiles — kth_profile_legacy • kthapi</title>
+<title>Status message related to db availability — status_kthapi • kthapi</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Retrieve data for KTH Profiles — kth_profile_legacy" />
-<meta property="og:description" content="This API does supports the existing profile api, version 1.1 and has no access key requirements." />
+<meta property="og:title" content="Status message related to db availability — status_kthapi" />
+<meta property="og:description" content="Status message related to db availability" />
 
 
 
@@ -129,43 +129,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve data for KTH Profiles</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/profile.R'><code>R/profile.R</code></a></small>
-    <div class="hidden name"><code>kth_profile_legacy.Rd</code></div>
+    <h1>Status message related to db availability</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>status_kthapi.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This API does supports the existing profile api, version 1.1 and has no access key requirements.</p>
+    <p>Status message related to db availability</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kth_profile_legacy</span>(<span class='kw'>userid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>config</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>status_kthapi</span>()</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>userid</th>
-      <td><p>a string with the account name or KTH user id</p></td>
-    </tr>
-    <tr>
-      <th>config</th>
-      <td><p>a configuration setting for the KTH APIs including base URL etc, by default from config()</p></td>
-    </tr>
-    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>results records returned from the search</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>list with two slots for status message and status</p>
 
-    <p>See details at <a href='https://api.kth.se/api/profile/swagger/?url=/api/profile/swagger.json#/v1.1/getPublicProfile_v11'>https://api.kth.se/api/profile/swagger/?url=/api/profile/swagger.json#/v1.1/getPublicProfile_v11</a></p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>kth_profile_legacy</span>(<span class='st'>"hoyce"</span>)
-<span class='fu'>kth_profile_legacy</span>(<span class='st'>"agnel"</span>)
-<span class='co'># kth_profile_legacy("markussk")  # error</span>
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

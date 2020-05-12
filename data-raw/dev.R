@@ -68,3 +68,10 @@ pkgdown::build_site()
 #library(dplyr)
 #me <- bibliomatrix::ad_kthid("markussk")
 #bibliomatrix:::ad_search_kthid(kthid = me, bibliomatrix:::ldap_config()) %>% View()
+
+# updating embedded data
+
+source("data-raw/altmetric_explorer.R")
+source("data-raw/abm_units.R")
+
+# TODO add function that can be used to update the database...

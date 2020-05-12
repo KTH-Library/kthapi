@@ -4,7 +4,9 @@
 \name{altmetric_explorer_attention}
 \alias{altmetric_explorer_attention}
 \title{Public data with KTH Altmetric Outputs with Attention}
-\format{An object of class \code{numeric} of length 1.}
+\format{
+An object of class \code{numeric} of length 1.
+}
 \source{
 \url{https://www.altmetric.com/explorer/api/research_outputs/attention}
 }

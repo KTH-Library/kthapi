@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrieve data for KTH Profiles — kth_profile_legacy • kthapi</title>
+<title>Public data with KTH Altmetric Outputs with Attention — altmetric_explorer_attention • kthapi</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Retrieve data for KTH Profiles — kth_profile_legacy" />
-<meta property="og:description" content="This API does supports the existing profile api, version 1.1 and has no access key requirements." />
+<meta property="og:title" content="Public data with KTH Altmetric Outputs with Attention — altmetric_explorer_attention" />
+<meta property="og:description" content="Data fetched from Altmetric Explorer API" />
 
 
 
@@ -129,43 +129,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Retrieve data for KTH Profiles</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/profile.R'><code>R/profile.R</code></a></small>
-    <div class="hidden name"><code>kth_profile_legacy.Rd</code></div>
+    <h1>Public data with KTH Altmetric Outputs with Attention</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/package-kthapis.R'><code>R/package-kthapis.R</code></a></small>
+    <div class="hidden name"><code>altmetric_explorer_attention.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This API does supports the existing profile api, version 1.1 and has no access key requirements.</p>
+    <p>Data fetched from Altmetric Explorer API</p>
     </div>
 
-    <pre class="usage"><span class='fu'>kth_profile_legacy</span>(<span class='kw'>userid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>config</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='no'>altmetric_explorer_attention</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>userid</th>
-      <td><p>a string with the account name or KTH user id</p></td>
-    </tr>
-    <tr>
-      <th>config</th>
-      <td><p>a configuration setting for the KTH APIs including base URL etc, by default from config()</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>results records returned from the search</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>An object of class <code>numeric</code> of length 1.</p>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>See details at <a href='https://api.kth.se/api/profile/swagger/?url=/api/profile/swagger.json#/v1.1/getPublicProfile_v11'>https://api.kth.se/api/profile/swagger/?url=/api/profile/swagger.json#/v1.1/getPublicProfile_v11</a></p>
+    <p><a href='https://www.altmetric.com/explorer/api/research_outputs/attention'>https://www.altmetric.com/explorer/api/research_outputs/attention</a></p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>kth_profile_legacy</span>(<span class='st'>"hoyce"</span>)
-<span class='fu'>kth_profile_legacy</span>(<span class='st'>"agnel"</span>)
-<span class='co'># kth_profile_legacy("markussk")  # error</span>
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

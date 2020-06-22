@@ -128,7 +128,7 @@ usethis::use_data(abm_units, overwrite = TRUE)
 
 
 
-# TODO sync with the database
+# function to sync with the database
 
 update_mssql_abm_units <- function() {
 
@@ -136,7 +136,7 @@ update_mssql_abm_units <- function() {
 
   con_bibmon <- dbConnect(odbc(), driver = "ODBC Driver 17 for SQL Server",
     server = Sys.getenv("DBHOST"), database = Sys.getenv("DBNAME"),
-    Port = 1433, UID = Sys.getenv("DBUSER"), PWD = Sys.getenv("DBPASS"))
+    Port = 1433, UID = Sys.getenv("DBADMINUSER"), PWD = Sys.getenv("DBADMINPASS"))
 
   dbWriteTable(con_bibmon, "abm_org_info", abm_units, overwrite = TRUE)
 

@@ -95,8 +95,10 @@
 <a href="#kthapi" class="anchor"></a>kthapi</h1></div>
 <!-- badges: start -->
 
-<p>The goal of the <code>kthapi</code> R package is to provide an API wrapper for APIs used at KTH, The Royal Institute of Technology, which can be used directly in R.</p>
-<p>The KTH APIs provides information about employee profiles, published web content, places, course schemas and program catalogues. This R package interfaces with the API, making data available to use directly from R.</p>
+<p>The goal of the <code>kthapi</code> R package is to provide an API wrapper for some of the APIs used at KTH, The Royal Institute of Technology, which can be used directly in R.</p>
+<p>The KTH APIs are described here:</p>
+<p><a href="https://www.kth.se/api/anvand-data-fran-kth-1.57059" class="uri">https://www.kth.se/api/anvand-data-fran-kth-1.57059</a></p>
+<p>The KTH APIs provide information about employee profiles, published web content, places, course schemas and program catalogues. This R package interfaces with the API, making data available to use directly from R.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -121,42 +123,6 @@
 <span class="co">#&gt;     intersect, setdiff, setequal, union</span>
 <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>))
 
-<span class="co"># display the default API config</span>
-<span class="fu"><a href="reference/config.html">config</a></span>()
-<span class="co">#&gt; $url_schemas</span>
-<span class="co">#&gt; [1] "https://www.kth.se/api/schema/v2"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $url_kopps</span>
-<span class="co">#&gt; [1] "https://api.kth.se/api/kopps/v2"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $url_profiles_legacy</span>
-<span class="co">#&gt; [1] "https://api.kth.se/api/profile/1.1"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $url_profiles</span>
-<span class="co">#&gt; [1] "https://api.kth.se/api/profile/v1"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $url_directory</span>
-<span class="co">#&gt; [1] "https://api.kth.se/api/directory/v1"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $url_places</span>
-<span class="co">#&gt; [1] "https://api.kth.se/api/places"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $url_publications</span>
-<span class="co">#&gt; [1] "https://api.kth.se/api/publications"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $ua</span>
-<span class="co">#&gt; &lt;request&gt;</span>
-<span class="co">#&gt; Options:</span>
-<span class="co">#&gt; * useragent: http://github.com/hadley/httr</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $api_key_profiles</span>
-<span class="co">#&gt; [1] "***REMOVED***"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $api_key_directory</span>
-<span class="co">#&gt; [1] "***REMOVED***"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $api_key_publications</span>
-<span class="co">#&gt; [1] "***REMOVED***"</span>
 
 <span class="co"># how to change the config</span>
 <span class="no">my_cfg</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/config.html">config</a></span>()

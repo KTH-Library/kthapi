@@ -9,11 +9,15 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of the `kthapi` R package is to provide an API wrapper for APIs
-used at KTH, The Royal Institute of Technology, which can be used
-directly in R.
+The goal of the `kthapi` R package is to provide an API wrapper for some
+of the APIs used at KTH, The Royal Institute of Technology, which can be
+used directly in R.
 
-The KTH APIs provides information about employee profiles, published web
+The KTH APIs are described here:
+
+<https://www.kth.se/api/anvand-data-fran-kth-1.57059>
+
+The KTH APIs provide information about employee profiles, published web
 content, places, course schemas and program catalogues. This R package
 interfaces with the API, making data available to use directly from R.
 
@@ -44,42 +48,6 @@ library(dplyr)
 #>     intersect, setdiff, setequal, union
 suppressPackageStartupMessages(library(dplyr))
 
-# display the default API config
-config()
-#> $url_schemas
-#> [1] "https://www.kth.se/api/schema/v2"
-#> 
-#> $url_kopps
-#> [1] "https://api.kth.se/api/kopps/v2"
-#> 
-#> $url_profiles_legacy
-#> [1] "https://api.kth.se/api/profile/1.1"
-#> 
-#> $url_profiles
-#> [1] "https://api.kth.se/api/profile/v1"
-#> 
-#> $url_directory
-#> [1] "https://api.kth.se/api/directory/v1"
-#> 
-#> $url_places
-#> [1] "https://api.kth.se/api/places"
-#> 
-#> $url_publications
-#> [1] "https://api.kth.se/api/publications"
-#> 
-#> $ua
-#> <request>
-#> Options:
-#> * useragent: http://github.com/hadley/httr
-#> 
-#> $api_key_profiles
-#> [1] "***REMOVED***"
-#> 
-#> $api_key_directory
-#> [1] "***REMOVED***"
-#> 
-#> $api_key_publications
-#> [1] "***REMOVED***"
 
 # how to change the config
 my_cfg <- config()

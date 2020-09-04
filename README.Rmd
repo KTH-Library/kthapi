@@ -46,8 +46,6 @@ library(knitr)
 library(dplyr)
 suppressPackageStartupMessages(library(dplyr))
 
-# display the default API config
-config()
 
 # how to change the config
 my_cfg <- config()

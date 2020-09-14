@@ -43,13 +43,7 @@ This API wrapper / client is pre-configured with a set of API endpoints:
 ```{r example}
 library(kthapi)
 library(knitr)
-library(dplyr)
 suppressPackageStartupMessages(library(dplyr))
-
-
-# how to change the config
-my_cfg <- config()
-my_cfg$ua <- "My own user agent string"
 ```
 
 This is a basic example which shows you how to make a lookup using the v 1.1 "legacy" Profiles API, where we get contact information for a KTH employee using an account name:

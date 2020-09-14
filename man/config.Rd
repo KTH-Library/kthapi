@@ -15,3 +15,20 @@ Please edit your ~./Renviron file and set values for environment variables
 KTH_API_KEY_DIRECTORY, KTH_API_KEY_PROFILES and KTH_API_KEY_PUBLICATIONS
 you can use file.edit("~/.Renviron"); readRenviron("~/.Renviron"))
 }
+\examples{
+\dontrun{
+if (interactive()) {
+
+# how to change the config
+my_cfg <- config()
+my_cfg$ua <- httr::user_agent("My own user agent string")
+my_cfg$verbose <- TRUE
+
+# then use this config when making calls
+kth_profile_legacy("hoyce", config = my_cfg)
+ }
+}
+}
+\seealso{
+\code{\link[httr]{user_agent}}
+}

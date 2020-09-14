@@ -36,6 +36,10 @@ kth_profile_legacy <- function(
     config <- config()
 
   resp <- GET(sprintf("%s/%s", config$url_profiles_legacy, userid), config$ua)
+
+  if (config$verbose)
+    message("Sending GET to url: ", sprintf("%s/%s", config$url_profiles_legacy, userid))
+
   check_status(resp)
   if (http_type(resp) != "application/json") {
     stop("API did not return json", call. = FALSE)
@@ -121,8 +125,8 @@ kth_profile <- function(kthid = NULL, orcid = NULL, socialid = NULL, username = 
   }
 
   url <- sprintf("%s/%s", config$url_profiles, path)
-  message("Sending GET to url: ", url)
-  resp <- GET(url, config$ua, add_headers(api_key = config$api_key_profiles))
+  if (config$verbose) message("Sending GET to url: ", url)
+  resp <- GET(url, add_headers(api_key = config$api_key_profiles), config$ua)
 
   check_status(resp)
   if (http_type(resp) != "application/json") {

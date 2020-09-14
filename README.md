@@ -37,21 +37,7 @@ This API wrapper / client is pre-configured with a set of API endpoints:
 ``` r
 library(kthapi)
 library(knitr)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 suppressPackageStartupMessages(library(dplyr))
-
-
-# how to change the config
-my_cfg <- config()
-my_cfg$ua <- "My own user agent string"
 ```
 
 This is a basic example which shows you how to make a lookup using the v
@@ -120,7 +106,6 @@ authenticated Profiles API:
 profile <- 
   kth_profile(username = "hoyce") %>%
   .$content
-#> Sending GET to url: https://api.kth.se/api/profile/v1/user/hoyce
 
 # organizational belonging
 profile$worksFor$items %>% 
@@ -143,12 +128,10 @@ profile$worksFor$items$path
 
 # displayname used in ABM app
 kth_displayname("hoyce", type = "username")
-#> Sending GET to url: https://api.kth.se/api/profile/v1/user/hoyce
 #> [1] "Niklas Olsson (hoyce)"
 
 # NB: this (authenticated API call) does not throw an error for non-employees
 kth_displayname("markussk", type = "username")
-#> Sending GET to url: https://api.kth.se/api/profile/v1/user/markussk
 #> [1] "Markus Skyttner (markussk)"
 ```
 

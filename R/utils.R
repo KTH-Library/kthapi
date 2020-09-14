@@ -21,7 +21,24 @@ check_status <- function(res){
 #' KTH_API_KEY_DIRECTORY, KTH_API_KEY_PROFILES and KTH_API_KEY_PUBLICATIONS
 #' you can use file.edit("~/.Renviron"); readRenviron("~/.Renviron"))
 #'
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'
+#' # how to change the config
+#' my_cfg <- config()
+#' my_cfg$ua <- httr::user_agent("My own user agent string")
+#' my_cfg$verbose <- TRUE
+#'
+#' # then use this config when making calls
+#' kth_profile_legacy("hoyce", config = my_cfg)
+#'  }
+#' }
+#' @seealso
+#'  \code{\link[httr]{user_agent}}
+#' @rdname config
 #' @export
+#' @importFrom httr user_agent
 config <- function() {
   key_directory <- Sys.getenv("KTH_API_KEY_DIRECTORY")
   key_profiles <- Sys.getenv("KTH_API_KEY_PROFILES")
@@ -41,6 +58,7 @@ config <- function() {
     url_places = "https://api.kth.se/api/places",
     url_publications = "https://api.kth.se/api/publications/v1",
     ua = httr::user_agent("http://github.com/hadley/httr"),
+    verbose = FALSE,
     api_key_profiles = key_profiles,
     api_key_directory = key_directory,
     api_key_publications = key_publications

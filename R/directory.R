@@ -37,9 +37,8 @@ kth_root <- function(config = NULL, path, lang)
 
   url <- sprintf("%s/%s", config$url_directory, q$path)
 
-  message("Getting url: ", url)
-  resp <- GET(url, config$ua, add_headers(api_key = config$api_key_directory))
-
+  if (config$verbose) message("Getting url: ", url)
+  resp <- GET(url, add_headers(api_key = config$api_key_directory), config$ua)
 
   check_status(resp)
   if (http_type(resp) != "application/json") {

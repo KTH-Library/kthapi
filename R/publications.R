@@ -69,12 +69,14 @@ kth_publications <- function(
   }
 
   url <- sprintf("%s/%s", config$url_publications, path)
-  message("Sending GET to url: ", url)
+  if (config$verbose) message("Sending GET to url: ", url)
 
   if (is.null(params)) {
-    resp <- GET(url, config$ua, add_headers(api_key = config$api_key_publications))
+    resp <- GET(url,
+      add_headers(api_key = config$api_key_publications), config$ua)
   } else {
-    resp <- GET(url, config$ua, query = params, add_headers(api_key = config$api_key_publications))
+    resp <- GET(url, query = params,
+      add_headers(api_key = config$api_key_publications), config$ua)
   }
 
   check_status(resp)

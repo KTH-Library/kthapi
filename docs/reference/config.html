@@ -148,7 +148,23 @@ used in API calls, and the relevant API keys required.</p>
     <p>Please edit your ~./Renviron file and set values for environment variables
 KTH_API_KEY_DIRECTORY, KTH_API_KEY_PROFILES and KTH_API_KEY_PUBLICATIONS
 you can use file.edit("~/.Renviron"); readRenviron("~/.Renviron"))</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='https://httr.r-lib.org/reference/user_agent.html'>user_agent</a></code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+
+<span class='co'># how to change the config</span>
+<span class='no'>my_cfg</span> <span class='kw'>&lt;-</span> <span class='fu'>config</span>()
+<span class='no'>my_cfg</span>$<span class='no'>ua</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>httr</span><span class='kw ns'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/user_agent.html'>user_agent</a></span>(<span class='st'>"My own user agent string"</span>)
+<span class='no'>my_cfg</span>$<span class='no'>verbose</span> <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
+
+<span class='co'># then use this config when making calls</span>
+<span class='fu'><a href='kth_profile_legacy.html'>kth_profile_legacy</a></span>(<span class='st'>"hoyce"</span>, <span class='kw'>config</span> <span class='kw'>=</span> <span class='no'>my_cfg</span>)
+ }
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

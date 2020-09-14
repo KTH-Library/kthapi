@@ -85,7 +85,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="Potential-Heads_files/header-attrs-2.3/header-attrs.js"></script><script src="Potential-Heads_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Potential-Heads</h1>
@@ -126,7 +126,6 @@
   <span class="co"># retain just the deps and non-excluded slugs</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">is_dep</span>, !<span class="no">is_excluded</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(<span class="no">slug</span>)
-<span class="co">#&gt; Getting url: https://api.kth.se/api/directory/v1/root</span>
 
 <span class="no">slugs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span>(<span class="kw">nm</span> <span class="kw">=</span> <span class="no">slugs</span>)
 
@@ -144,17 +143,23 @@
 <span class="no">display</span> <span class="kw">&lt;-</span>
   <span class="no">potential_heads</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">slug</span>, <span class="no">username</span>, <span class="kw">title</span> <span class="kw">=</span> <span class="no">`title.en`</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join.html">inner_join</a></span>(<span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>()) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span>(<span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>()) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">slug</span>, <span class="kw">slug_id</span> <span class="kw">=</span> <span class="no">kthid</span>, <span class="kw">desc</span> <span class="kw">=</span> <span class="no">`description.en`</span>, <span class="no">username</span>, <span class="no">title</span>)
-<span class="co">#&gt; Getting url: https://api.kth.se/api/directory/v1/root</span>
 <span class="co">#&gt; Joining, by = "slug"</span>
 
 <span class="no">display</span> <span class="kw">&lt;-</span>
   <span class="no">display</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">display</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">5</span>))
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">display</span>), <span class="kw">size</span> <span class="kw">=</span> <span class="fl">5</span>))
 
 <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">display</span>)</pre></body></html></div>
 <table class="table">
+<colgroup>
+<col width="5%">
+<col width="10%">
+<col width="40%">
+<col width="10%">
+<col width="32%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">slug</th>
 <th align="left">slug_id</th>
@@ -167,36 +172,36 @@
 <td align="left">a/ad</td>
 <td align="left">u2vsze9c</td>
 <td align="left">ARCHITECTURE</td>
-<td align="left">grillner</td>
-<td align="left">PROFESSOR, HEAD OF DEPARTMENT</td>
+<td align="left">pfranson</td>
+<td align="left">ADJUNCT / HEAD OF DIVISION</td>
 </tr>
 <tr class="even">
-<td align="left">j/jj</td>
-<td align="left">u24u5kih</td>
-<td align="left">DEPARTMENT OF ELECTRICAL ENERGY ENGINEERING</td>
-<td align="left">jans</td>
-<td align="left">PROF., DEPUTY HEAD OF DIVISION</td>
+<td align="left">s/sm</td>
+<td align="left">u25y1xo7</td>
+<td align="left">TEKNISK MEKANIK</td>
+<td align="left">mart</td>
+<td align="left">HEAD OF DEPARTMENT</td>
 </tr>
 <tr class="odd">
-<td align="left">a/al</td>
-<td align="left">u23cj6w6</td>
-<td align="left">SUSTAINABILITY ASSESSMENT AND MANAGEMENT</td>
-<td align="left">nilsjoha</td>
-<td align="left">ASS. HEAD OF DIV, RESEARCHER</td>
+<td align="left">a/ag</td>
+<td align="left">u2uo2cht</td>
+<td align="left">URBAN PLANNING AND ENVIRONMENT</td>
+<td align="left">amail</td>
+<td align="left">PROFESSOR, HEAD OF DIV</td>
 </tr>
 <tr class="even">
-<td align="left">j/jm</td>
-<td align="left">u25tvbl1</td>
-<td align="left">DEPARTMENT OF HUMAN CENTERED TECHNOLOGY</td>
-<td align="left">alz</td>
-<td align="left">DEP. HEAD OF SCHOOL, PROFESSOR</td>
+<td align="left">c/cf</td>
+<td align="left">u21880mm</td>
+<td align="left">DEPARTMENT OF CHEMICAL ENGINEERING</td>
+<td align="left">gnli</td>
+<td align="left">PROFESSOR, HEAD OF DIVISION</td>
 </tr>
 <tr class="odd">
-<td align="left">a/al</td>
-<td align="left">u23cj6w6</td>
-<td align="left">SUSTAINABILITY ASSESSMENT AND MANAGEMENT</td>
-<td align="left">worman</td>
-<td align="left">HEAD OF DIVISION, PROFESSOR</td>
+<td align="left">c/ce</td>
+<td align="left">u2rr4ui3</td>
+<td align="left">DEPARTMENT OF CHEMISTRY</td>
+<td align="left">percl</td>
+<td align="left">PROFESSOR, HEAD OF DIVISON</td>
 </tr>
 </tbody>
 </table>
@@ -207,8 +212,8 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>()
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 2</span>
-<span class="co">#&gt; $ url      &lt;chr&gt; "https://www.kth.se/profile/grillner"</span>
-<span class="co">#&gt; $ worksfor &lt;chr&gt; "https://www.kth.se/directory/a/ad/ade"</span></pre></body></html></div>
+<span class="co">#&gt; $ url      &lt;chr&gt; "https://www.kth.se/profile/pfranson"</span>
+<span class="co">#&gt; $ worksfor &lt;chr&gt; "https://www.kth.se/directory/a/ad/adb"</span></pre></body></html></div>
 <div id="division-level-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#division-level-data" class="anchor"></a>Division level data</h1>
@@ -222,7 +227,6 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">is_excluded</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">slug</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">slug</span>, <span class="kw">desc</span> <span class="kw">=</span> <span class="no">`description.en`</span>)
-<span class="co">#&gt; Getting url: https://api.kth.se/api/directory/v1/root</span>
 
 <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="no">ksd</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fl">1</span>:<span class="fl">5</span>))</pre></body></html></div>
 <table class="table">
@@ -248,8 +252,8 @@
 <td align="left">ABE SKOLAN</td>
 </tr>
 <tr class="odd">
-<td align="left">a/ach</td>
-<td align="left">CENTRE FOR SUSTAINABLE BUILT ENVIRONMENT</td>
+<td align="left">a/acp</td>
+<td align="left">SIP SMARTA O HÅLLBARA STÄDER</td>
 </tr>
 </tbody>
 </table>

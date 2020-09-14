@@ -85,7 +85,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="Publications-API-Usage_files/header-attrs-2.3/header-attrs.js"></script><script src="Publications-API-Usage_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Publications-API-Usage</h1>
@@ -110,13 +110,12 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     intersect, setdiff, setequal, union</span></pre></body></html></div>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span>(<span class="st">"stats"</span>)
-<span class="co">#&gt; Sending GET to url: https://api.kth.se/api/publications/v1/stats</span>
 <span class="co">#&gt; &lt;KTH API call for stats&gt;</span>
 <span class="co">#&gt; $activeUsers</span>
-<span class="co">#&gt; [1] 3279</span>
+<span class="co">#&gt; [1] 3338</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $publicUsers</span>
-<span class="co">#&gt; [1] 1053</span>
+<span class="co">#&gt; [1] 1075</span>
 
 <span class="co"># top 5 active public users with publication counts</span>
 <span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span>(<span class="st">"activePublicUsers"</span>)$<span class="no">content</span>$<span class="no">users</span> <span class="kw">%&gt;%</span>
@@ -125,8 +124,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">count</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">kthid</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fl">1</span>:<span class="fl">5</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()
-<span class="co">#&gt; Sending GET to url: https://api.kth.se/api/publications/v1/activePublicUsers</span></pre></body></html></div>
+  <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">count</th>
@@ -134,23 +132,23 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="right">747</td>
+<td align="right">757</td>
 <td align="left">sorlin</td>
 </tr>
 <tr class="even">
-<td align="right">731</td>
+<td align="right">747</td>
 <td align="left">kallej</td>
 </tr>
 <tr class="odd">
-<td align="right">686</td>
-<td align="left">flaurell</td>
-</tr>
-<tr class="even">
-<td align="right">680</td>
+<td align="right">704</td>
 <td align="left">hagren</td>
 </tr>
+<tr class="even">
+<td align="right">700</td>
+<td align="left">flaurell</td>
+</tr>
 <tr class="odd">
-<td align="right">581</td>
+<td align="right">587</td>
 <td align="left">lorenzof</td>
 </tr>
 </tbody>
@@ -163,17 +161,16 @@
 <span class="co"># some users provide public access to publications</span>
 <span class="no">fp</span> <span class="kw">&lt;-</span>
   <span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span>(<span class="st">"filteredPublications"</span>, <span class="kw">username</span> <span class="kw">=</span> <span class="st">"pal"</span>)$<span class="no">content</span>
-<span class="co">#&gt; Sending GET to url: https://api.kth.se/api/publications/v1/filteredPublications/pal</span>
 
 <span class="no">fp</span>$<span class="no">filteredPublications</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>() <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fl">1</span>:<span class="fl">5</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">title</span>)
 <span class="co">#&gt; # A tibble: 5 x 1</span>
 <span class="co">#&gt;   title                                                                         </span>
 <span class="co">#&gt;   &lt;chr&gt;                                                                         </span>
-<span class="co">#&gt; 1 EMMA - the electric and magnetic monitor of the aurora on Astrid-2            </span>
-<span class="co">#&gt; 2 The EMMA Instrument on the Astrid-2 Micro-Satellite                           </span>
-<span class="co">#&gt; 3 Temporal and spatial evolution of discrete auroral arcs as seen by Cluster    </span>
-<span class="co">#&gt; 4 First results of electric field and density observations by Cluster EFW based…</span>
-<span class="co">#&gt; 5 Disturbance of plasma environment in the vicinity of the Astrid-2 microsatell…</span>
+<span class="co">#&gt; 1 Electric field and plasma observations near the magnetopause and bow shock du…</span>
+<span class="co">#&gt; 2 SIMULTANEOUS OBSERVATION OF UPWARD MOVING FIELD-ALIGNED ENERGETIC ELECTRONS A…</span>
+<span class="co">#&gt; 3 Preliminary results from the DC electric fields experiment on Viking          </span>
+<span class="co">#&gt; 4 THE FINE-STRUCTURE OF THE FRONT SIDE MAGNETOPAUSE DURING 2 SUCCESSIVE CROSSIN…</span>
+<span class="co">#&gt; 5 Further Explorations of Cosmogonic Shadow Effects in the Saturnian Rings</span>
 
 <span class="co"># available fields for publication data</span>
 <span class="no">fp</span>$<span class="no">filteredPublications</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>() <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fl">1</span>:<span class="fl">5</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>()
@@ -196,10 +193,10 @@
 <span class="no">fp</span>$<span class="no">filteredPublications</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>() <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fl">1</span>:<span class="fl">1</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>()
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 28</span>
-<span class="co">#&gt; $ publicationId             &lt;chr&gt; "diva2:341912"</span>
-<span class="co">#&gt; $ organizationId            &lt;chr&gt; "6176"</span>
-<span class="co">#&gt; $ topics                    &lt;list&gt; [&lt;data.frame[14 x 1]&gt;]</span>
-<span class="co">#&gt; $ authors                   &lt;list&gt; [&lt;data.frame[14 x 3]&gt;]</span>
+<span class="co">#&gt; $ publicationId             &lt;chr&gt; "diva2:1067423"</span>
+<span class="co">#&gt; $ organizationId            &lt;chr&gt; "5988"</span>
+<span class="co">#&gt; $ topics                    &lt;list&gt; [&lt;data.frame[2 x 1]&gt;]</span>
+<span class="co">#&gt; $ authors                   &lt;list&gt; [&lt;data.frame[4 x 3]&gt;]</span>
 <span class="co">#&gt; $ seriesIssueNr             &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ seriesTitle               &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ patent                    &lt;chr&gt; ""</span>
@@ -209,39 +206,36 @@
 <span class="co">#&gt; $ bookPublisher             &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ bookPlace                 &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ conferenceName            &lt;chr&gt; ""</span>
-<span class="co">#&gt; $ recordOrigin              &lt;chr&gt; ""</span>
-<span class="co">#&gt; $ hostExtentEnd             &lt;chr&gt; "123"</span>
-<span class="co">#&gt; $ hostExtentStart           &lt;chr&gt; "115"</span>
-<span class="co">#&gt; $ hostIssue                 &lt;chr&gt; "1"</span>
-<span class="co">#&gt; $ hostVolume                &lt;chr&gt; "22"</span>
+<span class="co">#&gt; $ recordOrigin              &lt;chr&gt; "u1yukyk9"</span>
+<span class="co">#&gt; $ hostExtentEnd             &lt;chr&gt; "104"</span>
+<span class="co">#&gt; $ hostExtentStart           &lt;chr&gt; "99"</span>
+<span class="co">#&gt; $ hostIssue                 &lt;chr&gt; ""</span>
+<span class="co">#&gt; $ hostVolume                &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ hostSubTitle              &lt;chr&gt; ""</span>
-<span class="co">#&gt; $ hostTitle                 &lt;chr&gt; "Annales Geophysicae"</span>
+<span class="co">#&gt; $ hostTitle                 &lt;chr&gt; "Achievements of the International Magnetos…</span>
 <span class="co">#&gt; $ contentTypeCode           &lt;chr&gt; "refereed"</span>
 <span class="co">#&gt; $ publicationSubTypeCode    &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ publicationTypeCode       &lt;chr&gt; "article"</span>
-<span class="co">#&gt; $ dateIssued                &lt;chr&gt; "2004"</span>
+<span class="co">#&gt; $ dateIssued                &lt;chr&gt; "1984"</span>
 <span class="co">#&gt; $ publicationStatus         &lt;chr&gt; "Published"</span>
 <span class="co">#&gt; $ subTitle                  &lt;chr&gt; ""</span>
-<span class="co">#&gt; $ title                     &lt;chr&gt; "EMMA - the electric and magnetic monitor o…</span>
+<span class="co">#&gt; $ title                     &lt;chr&gt; "Electric field and plasma observations nea…</span>
 <span class="co">#&gt; $ visible                   &lt;lgl&gt; TRUE</span>
 
 <span class="co"># whether the user provides public access can be checked with the userstatus call</span>
 <span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span>(<span class="st">"userstatus"</span>, <span class="kw">username</span> <span class="kw">=</span> <span class="st">"pal"</span>)$<span class="no">public</span>
-<span class="co">#&gt; Sending GET to url: https://api.kth.se/api/publications/v1/userstatus/pal</span>
 <span class="co">#&gt; NULL</span>
 
 <span class="co"># not all users have registered publications</span>
 <span class="fu"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span>(
   <span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span>(<span class="st">"filteredPublications"</span>, <span class="kw">username</span> <span class="kw">=</span> <span class="st">"mskyttner"</span>),
   <span class="kw">error</span> <span class="kw">=</span> <span class="kw">function</span>(<span class="no">e</span>) <span class="no">e</span>)
-<span class="co">#&gt; Sending GET to url: https://api.kth.se/api/publications/v1/filteredPublications/mskyttner</span>
 <span class="co">#&gt; &lt;simpleError: The API returned an error&gt;</span>
 
 <span class="co"># organisations can be queried</span>
 <span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span>(<span class="st">"organisations"</span>)$<span class="no">content</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span>(<span class="fl">1</span>:<span class="fl">5</span>)
-<span class="co">#&gt; Sending GET to url: https://api.kth.se/api/publications/v1/organisations</span>
 <span class="co">#&gt; # A tibble: 5 x 3</span>
 <span class="co">#&gt;       id name$en                 $sv                   nameLocalized            </span>
 <span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                   &lt;chr&gt;                 &lt;chr&gt;                    </span>

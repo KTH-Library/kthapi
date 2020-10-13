@@ -1,9 +1,18 @@
+# Set to FALSE to test with testthat, set to TRUE before pushing to Github
+skip_api_tests <- TRUE
+
 test_that("query for root slugs works", {
+
+  skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
+
   slugs <- kth_root(path = "root")$content$slug
   expect_gt(length(slugs), 5)
 })
 
 test_that("query for root works", {
+
+  skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
+
   lookup <- kth_root(path = "root")$content
 
   t1 <- bind_cols(with(lookup, list(
@@ -16,13 +25,18 @@ test_that("query for root works", {
 })
 
 test_that("query for KTH schools and departments catalog works", {
-    api_slugs <- kth_school_dep()$slug
-    valid_slugs <- unlist(strsplit("acjmst", ""))
-    is_valid <- all(valid_slugs %in% api_slugs)
-    expect_true(is_valid)
+
+  skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
+
+  api_slugs <- kth_school_dep()$slug
+  valid_slugs <- unlist(strsplit("acjmst", ""))
+  is_valid <- all(valid_slugs %in% api_slugs)
+  expect_true(is_valid)
 })
 
 test_that("query for catalog from slug 's/sa' works", {
+
+  skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
 
   sa <- kth_catalog(slug = "s/sa")
   n_users <- nrow(sa$users)
@@ -35,6 +49,8 @@ test_that("query for catalog from slug 's/sa' works", {
 
 
 test_that("current bundled data 'abm_units' matches w Directory API results for schools and institutions", {
+
+  skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
 
   # get current data on schools and institutions from the Directory API
   kds <- kth_school_dep()

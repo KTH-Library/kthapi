@@ -17,6 +17,7 @@
 #' - Directory API : <https://api.kth.se/api/directory/swagger/>
 #' - Places API: <https://api.kth.se/api/places/swagger/>
 #' - Publications API: <https://api.kth.se/api/publications/swagger/>
+#' - Projects API: <https://api-r.referens.sys.kth.se/api/projects/swagger>
 #'
 #' @name kthapis
 #' @docType package

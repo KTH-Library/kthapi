@@ -25,7 +25,7 @@
 #' }
 kth_projects <- function(path = "projects/all",
     year_beg = NULL, year_end = NULL,
-    kthUserName = NULL, orcid = NULL,
+    kthUserName = NULL, orcid = NULL, tag = NULL,
     config = NULL) {
   #"https://api-r.referens.sys.kth.se/api/projects/v1/projects"
 
@@ -47,13 +47,13 @@ kth_projects <- function(path = "projects/all",
     stop_if_not(kthUserName, is_valid_arg, msg = "Please provide a valid kthUserName")
     params <- list(kthUserName = kthUserName)
   } else if (path %in% c("projects/orcid/")) {
-    stop_if_not(orcid, is_valid_arg, msg = "Please provide a valid orcid")
-    params <- list(orcid = orcid)
-  } else if (path %in% c("projects/tag/")) {
-    stop_if_not(tag, is_valid_arg, msg = "Please provide a valid tag")
-    params <- list(tag = tag)
+   stop_if_not(orcid, is_valid_arg, msg = "Please provide a valid orcid")
+   params <- list(orcid = orcid)
+  # } else if (path %in% c("projects/tag/")) {
+  #   stop_if_not(tag, is_valid_arg, msg = "Please provide a valid tag")
+  #   params <- list(tag = tag)
   } else {
-    stop("Error. Endpoint not recognized.")
+    warning("... Unsure about endpoint.")
   }
 
   url <- sprintf("%s/%s", config$url_projects, path)

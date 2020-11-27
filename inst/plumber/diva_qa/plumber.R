@@ -15,10 +15,12 @@ library(readr)
 #* @apiTag Issues Potential data quality issues
 #* @apiVersion 0.1
 
+pubs <- kth_diva_pubs()
+
 #* Data for a publication given a publication identifier (DiVA PID or paper identifer)
 #* @get /v1/paper/<PaperId>
 #* @response 400 Invalid input.
-#* @param PaperId:string A publication identifier; examples for various identifiers: DiVA: PID:1242492, DOI: DOI:10.1109/ECOC.2017.8345960, PubMed ID: PMID:19872477, UT/ISI: ISI:29941459
+#* @param PaperId:string A publication identifier; examples for various identifiers: DiVA: PID:1242492, DOI: DOI:10.1109/ECOC.2017.8345960, PubMed ID: PMID:19872477, UT/ISI: ISI:000208837900085
 #* @tag Publication
 function(PaperId) {
 
@@ -39,13 +41,13 @@ function(PaperId) {
 
   # use fts here! with column:-syntax
   if (!is.na(pid) && nchar(pid) > 0)
-    res <- kth_diva_pubs() %>% filter(PID == pid) %>% collect()
+    res <- pubs %>% filter(PID == pid) %>% collect()
 
   if (!is.na(doi) && nchar(doi) > 0)
-    res <- kth_diva_pubs() %>% filter(DOI == doi) %>% collect()
+    res <- pubs %>% filter(DOI == doi) %>% collect()
 
   if (!is.na(pmid) && nchar(pmid) > 0)
-    res <- kth_diva_pubs() %>% filter(PMID == pmid) %>% collect()
+    res <- pubs %>% filter(PMID == pmid) %>% collect()
 
   if (!is.na(isi) && nchar(isi) > 0)
     res <- kth_diva_pubs() %>% filter(ISI == isi) %>% collect()

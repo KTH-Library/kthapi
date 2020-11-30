@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>KTH APIs — kthapis • kthapi</title>
+<title>Retrieve data for KTH Projects — kth_projects • kthapi</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,8 @@
 
 
 
-<meta property="og:title" content="KTH APIs — kthapis" />
-<meta property="og:description" content="KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R." />
+<meta property="og:title" content="Retrieve data for KTH Projects — kth_projects" />
+<meta property="og:description" content="See details at https://api-r.referens.sys.kth.se/api/projects/swagger/?url=/api/projects/swagger.json" />
 
 
 
@@ -132,35 +129,67 @@ available to use from R." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>KTH APIs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/package-kthapis.R'><code>R/package-kthapis.R</code></a></small>
-    <div class="hidden name"><code>kthapis.Rd</code></div>
+    <h1>Retrieve data for KTH Projects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/projects.R'><code>R/projects.R</code></a></small>
+    <div class="hidden name"><code>kth_projects.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R.</p>
+    <p>See details at <a href='https://api-r.referens.sys.kth.se/api/projects/swagger/?url=/api/projects/swagger.json'>https://api-r.referens.sys.kth.se/api/projects/swagger/?url=/api/projects/swagger.json</a></p>
     </div>
 
+    <pre class="usage"><span class='fu'>kth_projects</span>(
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"projects/all"</span>,
+  <span class='kw'>year_beg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>year_end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>kthUserName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>orcid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tag</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>config</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>path</th>
+      <td><p>string to indicate endpoint to use, for example
+"projects/", "projects/all", "projects/hidden", "fundings/", Default: "projects/all"</p></td>
+    </tr>
+    <tr>
+      <th>year_beg</th>
+      <td><p>starting year, for example 2012</p></td>
+    </tr>
+    <tr>
+      <th>year_end</th>
+      <td><p>ending year, for example 2019</p></td>
+    </tr>
+    <tr>
+      <th>kthUserName</th>
+      <td><p>username of KTH profile, for example "stemme"</p></td>
+    </tr>
+    <tr>
+      <th>orcid</th>
+      <td><p>Orcid of members to get, for example "0000-0003-2983-5573"</p></td>
+    </tr>
+    <tr>
+      <th>tag</th>
+      <td><p>project tag</p></td>
+    </tr>
+    <tr>
+      <th>config</th>
+      <td><p>a configuration setting for the KTH APIs including base URL etc, by default from config()</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An introduction to the KTH APIs in Swedish is available here: <a href='https://www.kth.se/api/anvand-data-fran-kth-1.57059'>https://www.kth.se/api/anvand-data-fran-kth-1.57059</a></p>
-<p>An overview of the KTH APIs can be found here: <a href='https://www.kth.se/api'>https://www.kth.se/api</a></p>
-<p>Individual APIs are documented here:</p><ul>
-<li><p>Course schema API: <a href='https://www.kth.se/api/schema/v2/apidoc.html'>https://www.kth.se/api/schema/v2/apidoc.html</a></p></li>
-<li><p>Program catalogue API: <a href='https://api.kth.se/api/kopps/v2/'>https://api.kth.se/api/kopps/v2/</a></p></li>
-<li><p>Profiles API (personal contact info): <a href='https://api.kth.se/api/profile/swagger/'>https://api.kth.se/api/profile/swagger/</a></p></li>
-<li><p>Directory API : <a href='https://api.kth.se/api/directory/swagger/'>https://api.kth.se/api/directory/swagger/</a></p></li>
-<li><p>Places API: <a href='https://api.kth.se/api/places/swagger/'>https://api.kth.se/api/places/swagger/</a></p></li>
-<li><p>Publications API: <a href='https://api.kth.se/api/publications/swagger/'>https://api.kth.se/api/publications/swagger/</a></p></li>
-<li><p>Projects API: <a href='https://api-r.referens.sys.kth.se/api/projects/swagger'>https://api-r.referens.sys.kth.se/api/projects/swagger</a></p></li>
-</ul>
+    <p>resulting records</p>
 
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>kth_projects</span>()
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

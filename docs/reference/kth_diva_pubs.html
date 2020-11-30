@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>KTH APIs — kthapis • kthapi</title>
+<title>Retrieve DiVA publications for KTH from the KTH DiVA portal — kth_diva_pubs • kthapi</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,9 @@
 
 
 
-<meta property="og:title" content="KTH APIs — kthapis" />
-<meta property="og:description" content="KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R." />
+<meta property="og:title" content="Retrieve DiVA publications for KTH from the KTH DiVA portal — kth_diva_pubs" />
+<meta property="og:description" content="This function sends a request to KTH's DiVA portal for a CSV data export
+covering KTH publications between 2012 and 2019." />
 
 
 
@@ -132,34 +130,47 @@ available to use from R." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>KTH APIs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/package-kthapis.R'><code>R/package-kthapis.R</code></a></small>
-    <div class="hidden name"><code>kthapis.Rd</code></div>
+    <h1>Retrieve DiVA publications for KTH from the KTH DiVA portal</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/diva.R'><code>R/diva.R</code></a></small>
+    <div class="hidden name"><code>kth_diva_pubs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R.</p>
+    <p>This function sends a request to KTH's DiVA portal for a CSV data export
+covering KTH publications between 2012 and 2019.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>kth_diva_pubs</span>(
+  <span class='kw'>orgid</span> <span class='kw'>=</span> <span class='st'>"177"</span>,
+  <span class='kw'>year_beg</span> <span class='kw'>=</span> <span class='st'>"2012"</span>,
+  <span class='kw'>year_end</span> <span class='kw'>=</span> <span class='st'>"2019"</span>,
+  <span class='kw'>use_cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>orgid</th>
+      <td><p>the DiVA organisation id, by default "177" for KTH</p></td>
+    </tr>
+    <tr>
+      <th>year_beg</th>
+      <td><p>the beginning of the period, by default "2012"</p></td>
+    </tr>
+    <tr>
+      <th>year_end</th>
+      <td><p>the end of the period, by default "2019"</p></td>
+    </tr>
+    <tr>
+      <th>use_cache</th>
+      <td><p>logical flag to indicate if cached data should be used, default: TRUE</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An introduction to the KTH APIs in Swedish is available here: <a href='https://www.kth.se/api/anvand-data-fran-kth-1.57059'>https://www.kth.se/api/anvand-data-fran-kth-1.57059</a></p>
-<p>An overview of the KTH APIs can be found here: <a href='https://www.kth.se/api'>https://www.kth.se/api</a></p>
-<p>Individual APIs are documented here:</p><ul>
-<li><p>Course schema API: <a href='https://www.kth.se/api/schema/v2/apidoc.html'>https://www.kth.se/api/schema/v2/apidoc.html</a></p></li>
-<li><p>Program catalogue API: <a href='https://api.kth.se/api/kopps/v2/'>https://api.kth.se/api/kopps/v2/</a></p></li>
-<li><p>Profiles API (personal contact info): <a href='https://api.kth.se/api/profile/swagger/'>https://api.kth.se/api/profile/swagger/</a></p></li>
-<li><p>Directory API : <a href='https://api.kth.se/api/directory/swagger/'>https://api.kth.se/api/directory/swagger/</a></p></li>
-<li><p>Places API: <a href='https://api.kth.se/api/places/swagger/'>https://api.kth.se/api/places/swagger/</a></p></li>
-<li><p>Publications API: <a href='https://api.kth.se/api/publications/swagger/'>https://api.kth.se/api/publications/swagger/</a></p></li>
-<li><p>Projects API: <a href='https://api-r.referens.sys.kth.se/api/projects/swagger'>https://api-r.referens.sys.kth.se/api/projects/swagger</a></p></li>
-</ul>
-
+    <p>data frame with results</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -1,10 +1,13 @@
+
 test_that("Projects API returns data given accountname", {
+  skip_on_ci()
   p1 <- kth_projects(path = "projects/kthUserName/", kthUserName = "stemme")
   is_valid <- nrow(p1$content$people) > 1
   expect_true(is_valid)
 })
 
 test_that("Projects API returns data for all public projects", {
+  skip_on_ci()
   p1 <- kth_projects()
   is_valid <- p1$content$pagination$lastPage > 200
   expect_true(is_valid)
@@ -17,6 +20,7 @@ test_that("Projects API returns data for all public projects", {
 #})
 
 test_that("Projects API returns data when given tag", {
+  skip_on_ci()
   p1 <- kth_projects("projects/tag/10209")
   is_valid <- nrow(p1$content$projects) >= 2
   expect_true(is_valid)

@@ -94,7 +94,7 @@ classify_umu_ub <- function(record, type = c("mods", "wos"),
 
   # we likely have an xml response, parse it into a table
   x1 <- content(res)
-  x2 <- x1 %>% xml_find_all("/poster/post/forsknings<c3><a4>mne")
+  x2 <- x1 %>% xml_find_all("/poster/post/forskningsämne")
 
   dplyr::bind_cols(
     UT = x2 %>% xml2::xml_find_first("..") %>% xml2::xml_attr("UT") %>% as.character(),

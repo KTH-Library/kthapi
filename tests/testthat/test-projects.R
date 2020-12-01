@@ -9,7 +9,7 @@ test_that("Projects API returns data given accountname", {
 test_that("Projects API returns data for all public projects", {
   skip_on_ci()
   p1 <- kth_projects()
-  is_valid <- p1$content$pagination$lastPage > 200
+  is_valid <- p1$content$pagination$lastPage > 50
   expect_true(is_valid)
 })
 

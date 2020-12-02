@@ -38,6 +38,7 @@
 #' @importFrom xml2 write_xml xml_find_first xml_attr xml_contents xml_find_all
 #' @importFrom httr upload_file POST accept
 #' @importFrom readr write_lines read_tsv
+#' @importFrom stringi stri_unescape_unicode
 #' @export
 classify_umu_ub <- function(record, type = c("mods", "wos"),
   threshold = 0.2, email = "foo.bar@null.se") {
@@ -93,8 +94,9 @@ classify_umu_ub <- function(record, type = c("mods", "wos"),
     return(readr::read_tsv(content(res, as = "text")))
 
   # we likely have an xml response, parse it into a table
+  topic <- stringi::stri_unescape_unicode("/poster/post/forsknings\\u00e4mne")
   x1 <- content(res)
-  x2 <- x1 %>% xml_find_all("/poster/post/forskningsämne")
+  x2 <- x1 %>% xml_find_all(topic)
 
   dplyr::bind_cols(
     UT = x2 %>% xml2::xml_find_first("..") %>% xml2::xml_attr("UT") %>% as.character(),

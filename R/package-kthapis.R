@@ -17,6 +17,7 @@
 #' - Directory API : <https://api.kth.se/api/directory/swagger/>
 #' - Places API: <https://api.kth.se/api/places/swagger/>
 #' - Publications API: <https://api.kth.se/api/publications/swagger/>
+#' - Projects API: <https://api-r.referens.sys.kth.se/api/projects/swagger>
 #'
 #' @name kthapis
 #' @docType package
@@ -24,7 +25,13 @@
 #' @aliases package-kthapis
 #'
 # needed for use of . in magrittr pipelines
-utils::globalVariables(c(".", "description.en"))
+utils::globalVariables(c(".", "description.en", "Name", "PID", "extorg",
+"is_external", "is_remappable_extorg", "kthid", "n2", "n_commas",
+"n_pid", "name", "orcid", "orcid.x", "orcid.y", "orgids", "pids", "pubs"))
+
+#print_global_vars <- function(undef_global_vars)
+#  cat(paste(collapse = ", ", sprintf("\"%s\"", unlist(strsplit(undef_global_vars, " ")))))
+
 NULL
 
 #' Public data with KTH Departments at Altmetric

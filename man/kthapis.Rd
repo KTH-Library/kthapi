@@ -24,6 +24,7 @@ Individual APIs are documented here:
 \item Directory API : \url{https://api.kth.se/api/directory/swagger/}
 \item Places API: \url{https://api.kth.se/api/places/swagger/}
 \item Publications API: \url{https://api.kth.se/api/publications/swagger/}
+\item Projects API: \url{https://api-r.referens.sys.kth.se/api/projects/swagger}
 }
 }
 \keyword{package}

@@ -43,12 +43,17 @@ config <- function() {
   key_directory <- Sys.getenv("KTH_API_KEY_DIRECTORY")
   key_profiles <- Sys.getenv("KTH_API_KEY_PROFILES")
   key_publications <- Sys.getenv("KTH_API_KEY_PUBLICATIONS")
+  key_projects <- Sys.getenv("KTH_API_KEY_PROJECTS")
+
   if (key_directory == "")
     message("Please set the KTH_API_KEY_DIRECTORY envvar for accessing authed endpoints")
   if (key_profiles == "")
     message("Please set the KTH_API_KEY_PROFILES envvar for accessing authed endpoints")
   if (key_publications == "")
     message("Please set the KTH_API_KEY_PUBLICATIONS envvar for accessing authed endpoints")
+  if (key_projects == "")
+    message("Please set the KTH_API_KEY_PROJECTS envvar for accessing authed endpoints")
+
   list(
     url_schemas = "https://www.kth.se/api/schema/v2",
     url_kopps = "https://api.kth.se/api/kopps/v2",
@@ -57,11 +62,13 @@ config <- function() {
     url_directory = "https://api.kth.se/api/directory/v1",
     url_places = "https://api.kth.se/api/places",
     url_publications = "https://api.kth.se/api/publications/v1",
+    url_projects = "https://api-r.referens.sys.kth.se/api/projects/v1",
     ua = httr::user_agent("http://github.com/hadley/httr"),
     verbose = FALSE,
     api_key_profiles = key_profiles,
     api_key_directory = key_directory,
-    api_key_publications = key_publications
+    api_key_publications = key_publications,
+    api_key_projects = key_projects
   )
 }
 
@@ -71,7 +78,11 @@ config <- function() {
 status_kthapi <- function() {
 
   r_environ_path <- normalizePath("~/.Renviron", mustWork = FALSE)
-  envvars <- c("KTH_API_KEY_DIRECTORY", "KTH_API_KEY_PROFILES", "KTH_API_KEY_PUBLICATIONS")
+  envvars <- c(
+    "KTH_API_KEY_DIRECTORY",
+    "KTH_API_KEY_PROFILES",
+    "KTH_API_KEY_PUBLICATIONS",
+    "KTH_API_KEY_PROJECTS")
 
   if (any(Sys.getenv(envvars) == "")) {
     msg <- paste("Please use an .Renviron at", r_environ_path,
@@ -98,7 +109,13 @@ status_kthapi <- function() {
   if (!is_valid_3)
     warning("KTH Directory API check failed - connectivity issue?")
 
-  if (all(is_valid_1, is_valid_2, is_valid_3))
+  # KTH Projects API check
+  is_valid_4 <- TRUE
+  if (!is_valid_4)
+    warning("KTH Directory API check failed - connectivity issue?")
+
+
+  if (all(is_valid_1, is_valid_2, is_valid_3, is_valid_4))
     return (list (msg = "OK", status = TRUE))
 
   list(msg = "Issue with KTH APIs", status = FALSE)

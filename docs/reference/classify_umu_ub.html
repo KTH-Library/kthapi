@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>KTH APIs — kthapis • kthapi</title>
+<title>Classify a publication record by Swedish standard subject categories — classify_umu_ub • kthapi</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,14 @@
 
 
 
-<meta property="og:title" content="KTH APIs — kthapis" />
-<meta property="og:description" content="KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R." />
+<meta property="og:title" content="Classify a publication record by Swedish standard subject categories — classify_umu_ub" />
+<meta property="og:description" content="Umeå University provides a web api described
+here, for classifying
+english and swedish language records from DiVA or Swepub based on the MODS
+format (v 3.2 or later) according to the Swedish standard.
+Classification can also be made based on a Web of Science record
+Uploaded record batches may not exceed 200 MB, using batches of 10 MB are
+recommended (around 2-3000 records per chunk)" />
 
 
 
@@ -132,35 +135,79 @@ available to use from R." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>KTH APIs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/package-kthapis.R'><code>R/package-kthapis.R</code></a></small>
-    <div class="hidden name"><code>kthapis.Rd</code></div>
+    <h1>Classify a publication record by Swedish standard subject categories</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/classify.R'><code>R/classify.R</code></a></small>
+    <div class="hidden name"><code>classify_umu_ub.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R.</p>
+    <p>Umeå University provides a web <a href='https://klassificera.ub.umu.se/'>api</a> described
+<a href='https://klassificera.ub.umu.se/api2.html'>here</a>, for classifying
+english and swedish language records from DiVA or Swepub based on the MODS
+format (v 3.2 or later) according to the <a href='https://www.scb.se/dokumentation/klassifikationer-och-standarder/standard-for-svensk-indelning-av-forskningsamnen/'>Swedish standard</a>.
+Classification can also be made based on a <a href='https://klassificera.ub.umu.se/uploadFile.txt'>Web of Science record</a>
+Uploaded record batches may not exceed 200 MB, using batches of 10 MB are
+recommended (around 2-3000 records per chunk)</p>
     </div>
 
+    <pre class="usage"><span class='fu'>classify_umu_ub</span>(
+  <span class='no'>record</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mods"</span>, <span class='st'>"wos"</span>),
+  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
+  <span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"foo.bar@null.se"</span>
+)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>record</th>
+      <td><p>string the publication identifier string in DiVA or an export file
+from Web of Science in the "Plain text/Full record" format</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>string, type of identifier, one of "mods" or "wos", default: "mods"</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>a value in between 0.1 and 0.51, which governs to which
+which extent a record is classified with more than one subject area</p></td>
+    </tr>
+    <tr>
+      <th>email</th>
+      <td><p>email adress for the user</p></td>
+    </tr>
+    </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a tibble with suggested classifications</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An introduction to the KTH APIs in Swedish is available here: <a href='https://www.kth.se/api/anvand-data-fran-kth-1.57059'>https://www.kth.se/api/anvand-data-fran-kth-1.57059</a></p>
-<p>An overview of the KTH APIs can be found here: <a href='https://www.kth.se/api'>https://www.kth.se/api</a></p>
-<p>Individual APIs are documented here:</p><ul>
-<li><p>Course schema API: <a href='https://www.kth.se/api/schema/v2/apidoc.html'>https://www.kth.se/api/schema/v2/apidoc.html</a></p></li>
-<li><p>Program catalogue API: <a href='https://api.kth.se/api/kopps/v2/'>https://api.kth.se/api/kopps/v2/</a></p></li>
-<li><p>Profiles API (personal contact info): <a href='https://api.kth.se/api/profile/swagger/'>https://api.kth.se/api/profile/swagger/</a></p></li>
-<li><p>Directory API : <a href='https://api.kth.se/api/directory/swagger/'>https://api.kth.se/api/directory/swagger/</a></p></li>
-<li><p>Places API: <a href='https://api.kth.se/api/places/swagger/'>https://api.kth.se/api/places/swagger/</a></p></li>
-<li><p>Publications API: <a href='https://api.kth.se/api/publications/swagger/'>https://api.kth.se/api/publications/swagger/</a></p></li>
-<li><p>Projects API: <a href='https://api-r.referens.sys.kth.se/api/projects/swagger'>https://api-r.referens.sys.kth.se/api/projects/swagger</a></p></li>
+    <p>The classification is based on information in there record from the title
+and abstract (required) but also on keywords, ISSN/journal, ISBN-prefix/
+publisher and affiliations. Training data comes from SwePub (July 2020).
+It is based on the following papers:</p><ul>
+<li><p>Dual Coordinate Descent Methods for Logistic Regression and Maximum
+Entropy Models. (<a href='https://dx.doi.org/10.1007/s10994-010-5221-8'>doi:10.1007/s10994-010-5221-8</a>)</p></li>
+<li><p>Entropy-Based Term Weighting Schemes for Text Categorization in VSM. (<a href='https://dx.doi.org/10.1109/ICTAI.2015.57'>doi:10.1109/ICTAI.2015.57</a>)</p></li>
 </ul>
 
+<p>The classification is made at the research topic level (5 digits)
+for English language records and at research subject group level
+3 digits for Swedish language records.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+
+<span class='co'># classify using a DiVA record identifier</span>
+<span class='fu'>classify_umu_ub</span>(<span class='st'>"diva2:515038"</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>email</span> <span class='kw'>=</span> <span class='st'>"john.doe@hotmail.com"</span>)
+
+<span class='co'># classify using a WoS Record in Flatfile/Plain text format</span>
+<span class='no'>wos_record</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_lines.html'>read_lines</a></span>(<span class='st'>"https://klassificera.ub.umu.se/uploadFile.txt"</span>)
+<span class='fu'>classify_umu_ub</span>(<span class='no'>wos_record</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"wos"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

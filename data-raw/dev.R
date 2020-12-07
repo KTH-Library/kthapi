@@ -75,3 +75,11 @@ source("data-raw/altmetric_explorer.R")
 source("data-raw/abm_units.R")
 
 # TODO add function that can be used to update the database...
+
+library(sinew)
+sinew::makeOxygen(config)
+
+sinew::interOxyAddIn()
+
+
+

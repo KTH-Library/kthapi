@@ -22,15 +22,19 @@ Imports:
     jsonlite,
     progress,
     purrr,
-    tibble
+    tibble,
+    stringr,
+    stringi,
+    readr,
+    rappdirs,
+    xml2
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
 Suggests: 
     rmarkdown,
     knitr,
-    testthat (>= 2.1.0),
-    stringr
+    testthat (>= 2.1.0)
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

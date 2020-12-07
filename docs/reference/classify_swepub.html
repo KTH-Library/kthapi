@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>KTH APIs — kthapis • kthapi</title>
+<title>Classify into subject categories using SwePub Web API — classify_swepub • kthapi</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,10 @@
 
 
 
-<meta property="og:title" content="KTH APIs — kthapis" />
-<meta property="og:description" content="KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R." />
+<meta property="og:title" content="Classify into subject categories using SwePub Web API — classify_swepub" />
+<meta property="og:description" content="Use the title, abstract and keywords to get a suggestion for subject
+categories to use from the Swedish standard set of 3 or 5 digit
+subject categories." />
 
 
 
@@ -132,35 +131,53 @@ available to use from R." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>KTH APIs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/package-kthapis.R'><code>R/package-kthapis.R</code></a></small>
-    <div class="hidden name"><code>kthapis.Rd</code></div>
+    <h1>Classify into subject categories using SwePub Web API</h1>
+    <small class="dont-index">Source: <a href='https://github.com/KTH-Library/kthapi/blob/master/R/classify.R'><code>R/classify.R</code></a></small>
+    <div class="hidden name"><code>classify_swepub.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>KTH offers a number of APIs that provides information about employee
-profiles, published web content, places, course schemas and program
-catalogues. This R package interfaces with the API, making data
-available to use from R.</p>
+    <p>Use the title, abstract and keywords to get a suggestion for subject
+categories to use from the Swedish standard set of 3 or 5 digit
+subject categories.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>classify_swepub</span>(<span class='no'>title</span>, <span class='no'>abstract</span>, <span class='no'>keywords</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>title</th>
+      <td><p>the title of the paper</p></td>
+    </tr>
+    <tr>
+      <th>abstract</th>
+      <td><p>the abstract</p></td>
+    </tr>
+    <tr>
+      <th>keywords</th>
+      <td><p>keywords used</p></td>
+    </tr>
+    <tr>
+      <th>level</th>
+      <td><p>either 3 or 5, default: 3</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>An introduction to the KTH APIs in Swedish is available here: <a href='https://www.kth.se/api/anvand-data-fran-kth-1.57059'>https://www.kth.se/api/anvand-data-fran-kth-1.57059</a></p>
-<p>An overview of the KTH APIs can be found here: <a href='https://www.kth.se/api'>https://www.kth.se/api</a></p>
-<p>Individual APIs are documented here:</p><ul>
-<li><p>Course schema API: <a href='https://www.kth.se/api/schema/v2/apidoc.html'>https://www.kth.se/api/schema/v2/apidoc.html</a></p></li>
-<li><p>Program catalogue API: <a href='https://api.kth.se/api/kopps/v2/'>https://api.kth.se/api/kopps/v2/</a></p></li>
-<li><p>Profiles API (personal contact info): <a href='https://api.kth.se/api/profile/swagger/'>https://api.kth.se/api/profile/swagger/</a></p></li>
-<li><p>Directory API : <a href='https://api.kth.se/api/directory/swagger/'>https://api.kth.se/api/directory/swagger/</a></p></li>
-<li><p>Places API: <a href='https://api.kth.se/api/places/swagger/'>https://api.kth.se/api/places/swagger/</a></p></li>
-<li><p>Publications API: <a href='https://api.kth.se/api/publications/swagger/'>https://api.kth.se/api/publications/swagger/</a></p></li>
-<li><p>Projects API: <a href='https://api-r.referens.sys.kth.se/api/projects/swagger'>https://api-r.referens.sys.kth.se/api/projects/swagger</a></p></li>
-</ul>
+    <p>Calls the API at https://swepub-qa.kb.se/api/v1/classify</p>
 
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>classify_swepub</span>(
+   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Magnetic resonance"</span>,
+   <span class='kw'>abstract</span> <span class='kw'>=</span> <span class='st'>"This paper deals with magnetic resonance"</span>,
+   <span class='kw'>keywords</span> <span class='kw'>=</span> <span class='st'>"magnetic radiotherapy nuclear"</span>,
+   <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>5</span>
+)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

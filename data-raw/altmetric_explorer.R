@@ -163,10 +163,10 @@ altmetrics_get_attention <- function(json_file, verbose = FALSE) {
 }
 
 
-altmetric_explorer <- parse_altmetric_explorer(verbose = FALSE)
+altmetric_explorer <- parse_altmetric_explorer(verbose = TRUE)
 usethis::use_data(altmetric_explorer, overwrite = TRUE)
 
-altmetric_explorer_attention <- altmetrics_get_attention()
+altmetric_explorer_attention <- altmetrics_get_attention(verbose = TRUE)
 usethis::use_data(altmetric_explorer_attention, overwrite = TRUE)
 
 ## Doesn't work online, only with the local file

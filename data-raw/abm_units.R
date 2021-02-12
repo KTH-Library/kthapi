@@ -45,19 +45,32 @@ lookup <-
 df <- as.data.frame(lookup)
 
 # manual attempts to correct some mappings
+# df[7,]$idx <- 17
+# df[10,]$idx <- 32
+# df[11,]$idx <- 33
+# df[12,]$idx <- 34
+# df[13,]$idx <- 35
+# df[16,]$idx <- 61
+# df[21,]$idx <- 23
+# df[22,]$idx <- 22
+# df[24,]$idx <- 25
+# df[25,]$idx <- 27
+# df[26,]$idx <- 26
+# df[31,]$idx <- 44
+df[10,]$idx <- 31
+df[11,]$idx <- 32
+df[12,]$idx <- 33
+df[13,]$idx <- 34
+df[14,]$idx <- 5
+df[16,]$idx <- 60
+df[22,]$idx <- 21
+df[24,]$idx <- 24
+df[26,]$idx <- 25
+df[29,]$idx <- 42
+df[31,]$idx <- 45
+df[32,]$idx <- 39
+df[34,]$idx <- 40
 
-df[7,]$idx <- 17
-df[10,]$idx <- 32
-df[11,]$idx <- 33
-df[12,]$idx <- 34
-df[13,]$idx <- 35
-df[16,]$idx <- 61
-df[21,]$idx <- 23
-df[22,]$idx <- 22
-df[24,]$idx <- 25
-df[25,]$idx <- 27
-df[26,]$idx <- 26
-df[31,]$idx <- 44
 
 mapping <-
   tibble(a = df$a, idx = df$idx) %>%
@@ -141,4 +154,3 @@ update_mssql_abm_units <- function() {
   dbWriteTable(con_bibmon, "abm_org_info", abm_units, overwrite = TRUE)
 
 }
-

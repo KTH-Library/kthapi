@@ -45,32 +45,30 @@ lookup <-
 df <- as.data.frame(lookup)
 
 # manual attempts to correct some mappings
-# df[7,]$idx <- 17
-# df[10,]$idx <- 32
-# df[11,]$idx <- 33
-# df[12,]$idx <- 34
-# df[13,]$idx <- 35
-# df[16,]$idx <- 61
-# df[21,]$idx <- 23
-# df[22,]$idx <- 22
-# df[24,]$idx <- 25
-# df[25,]$idx <- 27
-# df[26,]$idx <- 26
-# df[31,]$idx <- 44
-df[10,]$idx <- 31
-df[11,]$idx <- 32
-df[12,]$idx <- 33
-df[13,]$idx <- 34
-df[14,]$idx <- 5
-df[16,]$idx <- 60
-df[22,]$idx <- 21
-df[24,]$idx <- 24
-df[26,]$idx <- 25
-df[29,]$idx <- 42
-df[31,]$idx <- 45
-df[32,]$idx <- 39
-df[34,]$idx <- 40
-
+# df[10,]$idx <- 31
+# df[11,]$idx <- 32
+# df[12,]$idx <- 33
+# df[13,]$idx <- 34
+# df[14,]$idx <- 5
+# df[16,]$idx <- 60
+# df[22,]$idx <- 21
+# df[24,]$idx <- 24
+# df[26,]$idx <- 25
+# df[29,]$idx <- 42
+# df[31,]$idx <- 45
+# df[32,]$idx <- 39
+# df[34,]$idx <- 40
+df[10,]$idx <- 32
+df[11,]$idx <- 33
+df[12,]$idx <- 34
+df[13,]$idx <- 35
+df[16,]$idx <- 57
+df[22,]$idx <- 22
+df[24,]$idx <- 25
+df[26,]$idx <- 26
+df[29,]$idx <- 43
+df[32,]$idx <- 40
+df[34,]$idx <- 41
 
 mapping <-
   tibble(a = df$a, idx = df$idx) %>%
@@ -96,12 +94,13 @@ abm_units <- bind_rows(
 abm_units[1, ]$description.en <- abm_units[1, ]$unit_long_en
 abm_units[1, ]$desc <- abm_units[1, ]$unit_long_en
 
-#abm_units[1, ]$count <-
-#  altmetric_explorer_highlights %>%
-#  filter(indicator == "Outputs with attention") %>%
-#  pull(value)
+abm_units[1, ]$count <-
+  altmetric_explorer_highlights %>%
+  filter(indicator == "Outputs with attention") %>%
+  pull(value)
 
-abm_units[1,]$count <- altmetric_explorer_attention
+#This gives "Total outputs tracked", not "Outputs with attention"
+#abm_units[1,]$count <- altmetric_explorer_attention
 
 altmetric_id_root <- "a76346801b570c19effb1ae8692c87fc"
 abm_units[1, ]$level <- "department root"

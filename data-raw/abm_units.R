@@ -35,12 +35,13 @@ abm_units <-
 abm_units[1, ]$description.en <- abm_units[1, ]$unit_long_en
 abm_units[1, ]$desc <- abm_units[1, ]$unit_long_en
 
-#abm_units[1, ]$count <-
-#  altmetric_explorer_highlights %>%
-#  filter(indicator == "Outputs with attention") %>%
-#  pull(value)
+abm_units[1, ]$count <-
+  altmetric_explorer_highlights %>%
+  filter(indicator == "Outputs with attention") %>%
+  pull(value)
 
-abm_units[1,]$count <- altmetric_explorer_attention
+#This gives "Total outputs tracked", not "Outputs with attention"
+#abm_units[1,]$count <- altmetric_explorer_attention
 
 altmetric_id_root <- "a76346801b570c19effb1ae8692c87fc"
 abm_units[1, ]$level <- "department root"

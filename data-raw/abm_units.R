@@ -1,95 +1,34 @@
 # NB: This depends on first having the altmetric_explorer_highlights dataset present!
+# so please first run altmetric_explorer.R script to make sure those are up to date
 
 library(bibliomatrix)
 library(kthapi)
 
-org <- bibliomatrix::abm_public_kth$meta
+# first check that kthids have not changed when joining by slug against Catalogue API data
 
-a <- org$unit_long_en
-b <- kth_school_dep()$`description.en`
+org <- con_bib("mssql") %>% tbl("abm_org_info") %>% collect()
+ksd <- kth_school_dep()
 
-# what "catalogs" are available under "m/m"?
-#c <- kth_catalog(slug = "m/m")
-#c$catalogs
+ok_slugmatch <-
+  org2 %>%
+  left_join(ksd, by = "slug") %>%
+  mutate(is_match = kthid.x == kthid.y) %>%
+  # exclude the root node for KTH - it has no slug/kthid
+  filter(unit_code != "KTH") %>%
+  pull(is_match) %>%
+  all() %>%
+  isTRUE()
 
-# if I want to merge w "b"
-#additions <- c$catalogs %>% pull(`description.en`)
-#b <- c(b, additions)
+if (!ok_slugmatch)
+  warning("It seems that some slugs have been reorganized or changed kthids? Why?")
 
-# there are some direct matches
-a[toupper(a) %in% b]
+# update desc, count and href with data from Altmetric Explorer
 
-# we try to match using low values for string distances (poor man's record linkage)
-library(stringdist)
-library(tidyr)
-
-m <-
-  adist(toupper(a), b, partial = FALSE, counts=T)
-
-mt <- m %>% as_tibble()
-
-library(purrr)
-
-mtmin <-
-  apply(mt, 1, function(x) which(min(x) == x))
-
-altids <-
-  mtmin %>% map_chr(paste, collapse = ",")
-
-idx <-
-  mtmin %>% map_int(function(x) x[1])
-
-lookup <-
-  tibble(a, b[idx], idx, altids)
-
-df <- as.data.frame(lookup)
-
-# manual attempts to correct some mappings
-# df[7,]$idx <- 17
-# df[10,]$idx <- 32
-# df[11,]$idx <- 33
-# df[12,]$idx <- 34
-# df[13,]$idx <- 35
-# df[16,]$idx <- 61
-# df[21,]$idx <- 23
-# df[22,]$idx <- 22
-# df[24,]$idx <- 25
-# df[25,]$idx <- 27
-# df[26,]$idx <- 26
-# df[31,]$idx <- 44
-df[10,]$idx <- 31
-df[11,]$idx <- 32
-df[12,]$idx <- 33
-df[13,]$idx <- 34
-df[14,]$idx <- 5
-df[16,]$idx <- 60
-df[22,]$idx <- 21
-df[24,]$idx <- 24
-df[26,]$idx <- 25
-df[29,]$idx <- 42
-df[31,]$idx <- 45
-df[32,]$idx <- 39
-df[34,]$idx <- 40
-
-
-mapping <-
-  tibble(a = df$a, idx = df$idx) %>%
-  left_join(tibble(idx = 1:length(b), b = b)) %>%
-  select(unit_long_en = a, `description.en` = b)
-
-# combine to get kthid, slug, altmetric_id etc
-connexions <-
-  mapping %>%
-  slice(-1) %>%
-  left_join(kth_school_dep()) %>%
-  select(unit_long_en, `description.en`, kthid, slug) %>%
-  left_join(bibliomatrix::abm_public_kth$meta %>% select(-starts_with("altmetric"))) %>%
-  left_join(altmetric_explorer, by = c("Diva_org_id" = "diva_id")) %>%
-  select(unit_long_en, `description.en`, kthid, slug, desc, count, href, everything())
-
-abm_units <- bind_rows(
-  abm_public_kth$meta %>% slice(1) %>% select(-starts_with("altmetric")), connexions)
-
+abm_units <-
+  org %>%
+  left_join(ksd, by = "slug") %>%
+  select(-starts_with("altmetric")) %>%
+  left_join(altmetric_explorer, by = c("Diva_org_id" = "diva_id"))
 
 # fill Altmetric root node values (for all of KTH) "manually"
 
@@ -113,33 +52,36 @@ abm_units[1, ]$href <- sprintf(
 
 #View(abm_units)
 
+# ensure that the data which has been updated with Altmetrics
+# conforms to the field names used in abm_org_info table in the db
+
 abm_units <-
   abm_units %>%
   dplyr::rename(
     "altmetric_level" = level,
     "altmetric_count" = count,
     "altmetric_href" = href,
-    "altmetric_desc" = desc) %>%
+    "altmetric_desc" = desc,
+    "kthid" = kthid.x) %>%
   mutate(description_en = `description.en`) %>%
-  select(-`description.en`)
+  select(-c(`description.en`, kthid.y)) %>%
+  select(contains(names(org2)))
+
+# check if the public data in bibliomatrix matches
+# otherwise recommend an update
 
 check <-
   bibliomatrix::abm_public_kth$meta ==
   abm_units %>% select(names(bibliomatrix::abm_public_kth$meta))
 
 if (length(which(check == FALSE)) > 0) {
-  warning("Found difference in data, recommending data base update/sync")
-  View(check)
+  warning("Found difference in data, recommending database update/sync")
+  daff::render_diff(daff::diff_data(abm_units, bibliomatrix::abm_public_kth$meta))
 }
 
-#setdiff(
-#  abm_units %>% select(contains("altmetric")),
-#  bibliomatrix::abm_public_kth$meta %>% select(contains("altmetric"))
-#)
+
 
 usethis::use_data(abm_units, overwrite = TRUE)
-
-
 
 # function to sync with the database
 

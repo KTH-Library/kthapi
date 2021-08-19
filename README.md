@@ -7,6 +7,7 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R-CMD-check](https://github.com/KTH-Library/kthapi/workflows/R-CMD-check/badge.svg)](https://github.com/KTH-Library/kthapi/actions)
 <!-- badges: end -->
 
 The goal of the `kthapi` R package is to provide an API wrapper for some
@@ -74,7 +75,7 @@ profile %>% t() %>% as.data.frame() %>%
 ```
 
 | key              | value                                        |
-| :--------------- | :------------------------------------------- |
+|:-----------------|:---------------------------------------------|
 | givenName        | Niklas                                       |
 | familyName       | Olsson                                       |
 | url              | <https://www.kth.se/profile/hoyce>           |
@@ -90,7 +91,6 @@ profile %>% t() %>% as.data.frame() %>%
 
 ``` r
 
-
 # NB: some valid account names do not return data
 tryCatch(kth_profile_legacy("markussk"), error = function(e) e)
 #> <simpleError: The API returned an error>
@@ -102,7 +102,6 @@ This is a basic example which shows how to make a lookup using the
 authenticated Profiles API:
 
 ``` r
-
 profile <- 
   kth_profile(username = "hoyce") %>%
   .$content
@@ -115,13 +114,12 @@ profile$worksFor$items %>%
 ```
 
 | path          | name                    | nameEn |
-| :------------ | :---------------------- | :----- |
+|:--------------|:------------------------|:-------|
 | t/tj          | IT-AVDELNINGEN          | IT     |
 | t/tj/tjd      | SYSTEMFÖRV & UTVECKLING |        |
 | t/tj/tjd/tjda | FÖRVALTNING             |        |
 
 ``` r
-
 # corresponding "slugs"
 profile$worksFor$items$path
 #> [1] "t/tj"          "t/tj/tjd"      "t/tj/tjd/tjda"

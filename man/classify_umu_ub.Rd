@@ -41,8 +41,8 @@ publisher and affiliations. Training data comes from SwePub (July 2020).
 It is based on the following papers:
 \itemize{
 \item Dual Coordinate Descent Methods for Logistic Regression and Maximum
-Entropy Models. (\href{https://dx.doi.org/10.1007/s10994-010-5221-8}{doi:10.1007/s10994-010-5221-8})
-\item Entropy-Based Term Weighting Schemes for Text Categorization in VSM. (\href{https://dx.doi.org/10.1109/ICTAI.2015.57}{doi:10.1109/ICTAI.2015.57})
+Entropy Models. (\href{\doi{10.1007/s10994-010-5221-8}}{doi:10.1007/s10994-010-5221-8}
+\item Entropy-Based Term Weighting Schemes for Text Categorization in VSM. (\href{\doi{10.1109/ICTAI.2015.57}}{doi:10.1109/ICTAI.2015.57}
 }
 
 The classification is made at the research topic level (5 digits)

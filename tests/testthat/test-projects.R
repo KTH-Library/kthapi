@@ -1,10 +1,10 @@
 
-test_that("Projects API returns data given accountname", {
-  skip_on_ci()
-  p1 <- kth_projects(path = "projects/username/", kthUserName = "hoyce")
-  is_valid <- nrow(p1$content$people) > 1
-  expect_true(is_valid)
-})
+# test_that("Projects API returns data given accountname", {
+#   skip_on_ci()
+#   p1 <- kth_projects(path = "projects/username/", kthUserName = "stemme")
+#   is_valid <- nrow(p1$content$people) > 1
+#   expect_true(is_valid)
+# })
 
 test_that("Projects API returns data for all public projects", {
   skip_on_ci()

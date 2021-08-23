@@ -7,7 +7,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 This example shows how to use the `kth_school_dep()` function to enumerate some organizational unit "slugs".
 
@@ -17,20 +22,11 @@ This creates a list of potentially responsible heads for this set of organizatio
 
 For most units there are several potential matches.
 
-
-```r
+```{r setup}
 library(kthapi)
 library(dplyr)
 library(stringr)
 library(purrr)
-#> 
-#> Attaching package: 'purrr'
-#> The following object is masked from 'package:kthapi':
-#> 
-#>     flatten
-#> The following object is masked from 'package:testthat':
-#> 
-#>     is_null
 library(tibble)
 
 # some slugs of relevance
@@ -62,35 +58,18 @@ display <-
   select(slug, username, title = `title.en`) %>%
   inner_join(kth_school_dep()) %>%
   select(slug, slug_id = kthid, desc = `description.en`, username, title)
-#> Joining, by = "slug"
 
 display <- 
   display %>% 
   slice(sample(nrow(display), size = 5))
 
 knitr::kable(display)
-```
-
-
-
-|slug  |slug_id  |desc                                                           |username |title                          |
-|:-----|:--------|:--------------------------------------------------------------|:--------|:------------------------------|
-|j/jr  |u22y13wv |DEPARTMENT OF INTELLIGENT SYSTEMS                              |mikaelj  |PROF., DEPUTY HEAD OF DIVISION |
-|c/cg  |u2hmae9o |DEPARTMENT OF FIBRE AND POLYMER TECHNOLOGY                     |monicaek |PROFESSOR, HEAD OF DIVISION    |
-|a/al  |u23cj6w6 |SUSTAINABLE DEVELOPMENT, ENVIRONMENTAL SCIENCE AND ENGINEERING |malmstro |HEAD OF DEPARTMENT, ASSOC.PROF |
-|j/jj  |u24u5kih |DEPARTMENT OF ELECTRICAL ENERGY ENGINEERING                    |mnorgren |PROFESSOR, HEAD OF DIVISION    |
-|a/aab |u2zd9bd6 |SCHOOLS OFFICE OF STUDENT AFFAIRS ABE                          |tiinav   |HEAD OF STUDENT COUNSELOR      |
-
-```r
 
 # for each potential head, additional info can be looked up, like this:
 kth_profile_legacy(display$username[1])$content %>% 
   select(url, worksfor = `worksFor.url`) %>%
   glimpse()
-#> Rows: 1
-#> Columns: 2
-#> $ url      <chr> "https://www.kth.se/profile/mikaelj"
-#> $ worksfor <chr> "https://www.kth.se/directory/j/jr/jrl"
+
 ```
 
 
@@ -98,8 +77,7 @@ kth_profile_legacy(display$username[1])$content %>%
 
 What divisions (KTH -> School -> Department (sv: Institution) -> Division (sv: Avdelning)) are there?
 
-
-```r
+```{r}
 
 # get some relevant schools and departments
 ksd <- 
@@ -111,19 +89,6 @@ ksd <-
   select(slug, desc = `description.en`)
 
 knitr::kable(ksd %>% slice(1:5))
-```
-
-
-
-|slug  |desc                                             |
-|:-----|:------------------------------------------------|
-|a     |SCHOOL OF ARCHITECTURE AND THE BUILT ENVIRONMENT |
-|a/aaa |SCHOOLS OFFICE                                   |
-|a/aab |SCHOOLS OFFICE OF STUDENT AFFAIRS ABE            |
-|a/abe |ABE SKOLAN                                       |
-|a/acp |VIABLE CITIES                                    |
-
-```r
 
 # use one of the slugs
 
@@ -138,16 +103,6 @@ ai <-
 ai$catalog %>% 
   select(slug, `description.en`, kthid) %>%
   knitr::kable()
+
 ```
-
-
-
-|slug     |description.en                                         |kthid    |
-|:--------|:------------------------------------------------------|:--------|
-|a/ai/aia |DIVISION OF REAL ESTATE AND CONSTRUCTION MANAGEMENT    |u2n3dep0 |
-|a/ai/aib |DIVISION OF REAL ESTATE ECONOMICS AND FINANCE          |u2vce7hj |
-|a/ai/aic |DIVISION OF REAL ESTATE PLANNING AND LAND LAW          |u2yhezo5 |
-|a/ai/aid |DIVISION OF CONSTRUCTION AND FACILITIES MANAGEMENT     |u2ctw8g8 |
-|a/ai/aie |DIVISION OF REAL ESTATE BUSINESS AND FINANCIAL SYSTEMS |u21evul2 |
-|a/ai/aig |DIVISION OF GEODESY AND SATELLITE POSITIONING          |u21ttfwm |
 

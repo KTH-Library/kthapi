@@ -1,0 +1,66 @@
+---
+title: "Publications-API-Usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Publications-API-Usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The function providing access to KTH Publications API data can provide some overview stats, list the active public users, active users with publications and more. Some usage examples:
+
+
+```{r setup}
+library(kthapi)
+library(dplyr)
+```
+
+```{r}
+kth_publications("stats")
+
+# top 5 active public users with publication counts
+kth_publications("activePublicUsers")$content$users %>% 
+  as_tibble() %>% 
+  setNames(., nm = c("count", "kthid", "username")) %>%
+  arrange(desc(count)) %>%
+  select(-kthid) %>%
+  slice(1:5) %>%
+  knitr::kable()
+
+#kth_publications("activeUsersWithPublications")$content$users %>% 
+#  as_tibble() %>%
+#  slice(1:5)
+  
+# some users provide public access to publications
+fp <- 
+  kth_publications("filteredPublications", username = "pal")$content
+  
+fp$filteredPublications %>% as_tibble() %>% slice(1:5) %>% select(title)
+
+# available fields for publication data
+fp$filteredPublications %>% as_tibble() %>% slice(1:5) %>% names()
+
+# example record
+fp$filteredPublications %>% as_tibble() %>% slice(1:1) %>% glimpse()
+
+# whether the user provides public access can be checked with the userstatus call
+kth_publications("userstatus", username = "pal")$public
+
+# not all users have registered publications
+tryCatch(
+  kth_publications("filteredPublications", username = "mskyttner"), 
+  error = function(e) e)
+
+# organisations can be queried
+kth_publications("organisations")$content %>% 
+  as_tibble() %>% 
+  slice(1:5)
+```
+

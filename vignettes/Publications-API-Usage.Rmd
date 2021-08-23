@@ -7,23 +7,26 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+
 
 The function providing access to KTH Publications API data can provide some overview stats, list the active public users, active users with publications and more. Some usage examples:
 
 
-```{r setup}
+
+```r
 library(kthapi)
 library(dplyr)
 ```
 
-```{r}
+
+```r
 kth_publications("stats")
+#> <KTH API call for stats>
+#> $activeUsers
+#> [1] 3397
+#> 
+#> $publicUsers
+#> [1] 1147
 
 # top 5 active public users with publication counts
 kth_publications("activePublicUsers")$content$users %>% 
@@ -33,6 +36,19 @@ kth_publications("activePublicUsers")$content$users %>%
   select(-kthid) %>%
   slice(1:5) %>%
   knitr::kable()
+```
+
+
+
+| count|username |
+|-----:|:--------|
+|  1000|jostran  |
+|   804|sorlin   |
+|   786|kallej   |
+|   755|otterste |
+|   718|flaurell |
+
+```r
 
 #kth_publications("activeUsersWithPublications")$content$users %>% 
 #  as_tibble() %>%
@@ -43,24 +59,78 @@ fp <-
   kth_publications("filteredPublications", username = "pal")$content
   
 fp$filteredPublications %>% as_tibble() %>% slice(1:5) %>% select(title)
+#> # A tibble: 5 x 1
+#>   title                                                                                                           
+#>   <chr>                                                                                                           
+#> 1 Electric field and plasma observations near the magnetopause and bow shock during a rapid compression.          
+#> 2 SIMULTANEOUS OBSERVATION OF UPWARD MOVING FIELD-ALIGNED ENERGETIC ELECTRONS AND IONS ON AURORAL-ZONE FIELD LINES
+#> 3 Preliminary results from the DC electric fields experiment on Viking                                            
+#> 4 THE FINE-STRUCTURE OF THE FRONT SIDE MAGNETOPAUSE DURING 2 SUCCESSIVE CROSSINGS                                 
+#> 5 Further Explorations of Cosmogonic Shadow Effects in the Saturnian Rings
 
 # available fields for publication data
 fp$filteredPublications %>% as_tibble() %>% slice(1:5) %>% names()
+#>  [1] "publicationId"             "organizationId"            "topics"                    "authors"                   "seriesIssueNr"            
+#>  [6] "seriesTitle"               "patent"                    "statementOfResponsibility" "identifierUri"             "bookEdition"              
+#> [11] "bookPublisher"             "bookPlace"                 "conferenceName"            "recordOrigin"              "hostExtentEnd"            
+#> [16] "hostExtentStart"           "hostIssue"                 "hostVolume"                "hostSubTitle"              "hostTitle"                
+#> [21] "contentTypeCode"           "publicationSubTypeCode"    "publicationTypeCode"       "dateIssued"                "publicationStatus"        
+#> [26] "subTitle"                  "title"                     "visible"
 
 # example record
 fp$filteredPublications %>% as_tibble() %>% slice(1:1) %>% glimpse()
+#> Rows: 1
+#> Columns: 28
+#> $ publicationId             <chr> "diva2:1067423"
+#> $ organizationId            <chr> "5988"
+#> $ topics                    <list> [<data.frame[2 x 1]>]
+#> $ authors                   <list> [<data.frame[4 x 3]>]
+#> $ seriesIssueNr             <chr> ""
+#> $ seriesTitle               <chr> ""
+#> $ patent                    <chr> ""
+#> $ statementOfResponsibility <chr> ""
+#> $ identifierUri             <chr> "http://urn.kb.se/resolve?urn=urn:nbn:se:kth:diva-200117"
+#> $ bookEdition               <chr> ""
+#> $ bookPublisher             <chr> ""
+#> $ bookPlace                 <chr> ""
+#> $ conferenceName            <chr> ""
+#> $ recordOrigin              <chr> "u1yukyk9"
+#> $ hostExtentEnd             <chr> "104"
+#> $ hostExtentStart           <chr> "99"
+#> $ hostIssue                 <chr> ""
+#> $ hostVolume                <chr> ""
+#> $ hostSubTitle              <chr> ""
+#> $ hostTitle                 <chr> "Achievements of the International Magnetospheric Study (IMS)"
+#> $ contentTypeCode           <chr> "refereed"
+#> $ publicationSubTypeCode    <chr> ""
+#> $ publicationTypeCode       <chr> "article"
+#> $ dateIssued                <chr> "1984"
+#> $ publicationStatus         <chr> "Published"
+#> $ subTitle                  <chr> ""
+#> $ title                     <chr> "Electric field and plasma observations near the magnetopause and bow shock during a rapid compression."
+#> $ visible                   <lgl> TRUE
 
 # whether the user provides public access can be checked with the userstatus call
 kth_publications("userstatus", username = "pal")$public
+#> NULL
 
 # not all users have registered publications
 tryCatch(
   kth_publications("filteredPublications", username = "mskyttner"), 
   error = function(e) e)
+#> <simpleError: The API returned an error>
 
 # organisations can be queried
 kth_publications("organisations")$content %>% 
   as_tibble() %>% 
   slice(1:5)
+#> # A tibble: 5 x 3
+#>       id name$en                                       $sv                                          nameLocalized                               
+#>    <int> <chr>                                         <chr>                                        <chr>                                       
+#> 1    177 KTH                                           KTH                                          KTH                                         
+#> 2  12851 Centres                                       Centra                                       Centres                                     
+#> 3  12850 Nordic Institute for Theoretical Physics NOR… Nordic Institute for Theoretical Physics NO… Nordic Institute for Theoretical Physics NO…
+#> 4   5921 Science for Life Laboratory, SciLifeLab       Science for Life Laboratory, SciLifeLab      Science for Life Laboratory, SciLifeLab     
+#> 5 878400 KTH Center for Applied Precision Medicine (K… KTH Center for Applied Precision Medicine (… KTH Center for Applied Precision Medicine (…
 ```
 

@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -71,7 +71,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/KTH-Library/kthapi/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -85,8 +85,7 @@
 
       
 
-      </header><script src="Schools-Departments-from-KTH-Directory-API_files/header-attrs-2.5/header-attrs.js"></script><script src="Schools-Departments-from-KTH-Directory-API_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="Schools-Departments-from-KTH-Directory-API_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="Schools-Departments-from-KTH-Directory-API_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="Schools-Departments-from-KTH-Directory-API_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Schools-Departments-from-KTH-Directory-API</h1>
@@ -103,36 +102,38 @@
 <h2 class="hasAnchor">
 <a href="#organizational-belonging-for-a-given-kth-user-account-or-kthid" class="anchor"></a>Organizational belonging for a given KTH user account or kthid</h2>
 <p>Given an account name or “kthid”, how can we look up the organizational belonging?</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">kthapi</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KTH-Library/kthapi">kthapi</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
-<span class="no">user</span> <span class="kw">&lt;-</span> <span class="st">"hoyce"</span>
-<span class="no">unit_codes</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/kth_profile_school_dep.html">kth_profile_school_dep</a></span>(<span class="no">user</span>)
+<span class="va">user</span> <span class="op">&lt;-</span> <span class="st">"hoyce"</span>
+<span class="va">unit_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/kth_profile_school_dep.html">kth_profile_school_dep</a></span><span class="op">(</span><span class="va">user</span><span class="op">)</span>
 
 <span class="co"># organizational belonging for user "hoyce"</span>
-<span class="no">unit_codes</span>
+<span class="va">unit_codes</span>
 <span class="co">#&gt; [1] "t"    "tj"   "tjd"  "tjda"</span>
 
 <span class="co"># use the first two levels of the hierarchy</span>
-<span class="no">slug</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw">collapse</span> <span class="kw">=</span> <span class="st">"/"</span>, <span class="no">unit_codes</span>[<span class="fl">1</span>:<span class="fl">2</span>])
+<span class="va">slug</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">"/"</span>, <span class="va">unit_codes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co"># look up the english lang description for this "slug"</span>
-<span class="no">unit2</span> <span class="kw">&lt;-</span>
-  <span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(<span class="kw">slug</span> <span class="kw">=</span> <span class="no">slug</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">slug</span>, <span class="kw">desc</span> <span class="kw">=</span> <span class="no">`description.en`</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span>(<span class="no">desc</span>)
+<span class="va">unit2</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="va">slug</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">slug</span>, desc <span class="op">=</span> <span class="va">`description.en`</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">desc</span><span class="op">)</span>
 
-<span class="no">unit2</span>
-<span class="co">#&gt; [1] "IT"</span></pre></body></html></div>
+<span class="va">unit2</span>
+<span class="co">#&gt; [1] "IT"</span></code></pre></div>
 <p>Via the so called “Legacy Profile API v 1.1” we have now looked up that <strong>hoyce</strong> belongs to the organizational unit <strong>IT</strong>, at the second level (institutional level) of the organizational hierarchy.</p>
 <p>A function that wraps the above calls and returns a data frame is provided for convenience:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/kth_belonging_institutional.html">kth_belonging_institutional</a></span>(<span class="st">"hoyce"</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/kth_belonging_institutional.html">kth_belonging_institutional</a></span><span class="op">(</span><span class="st">"hoyce"</span><span class="op">)</span>
 <span class="co">#&gt; Joining, by = "slug"</span>
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   kthid slug  desc </span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span>
-<span class="co">#&gt; 1 hoyce t/tj  IT</span></pre></body></html></div>
+<span class="co">#&gt; 1 hoyce t/tj  IT</span></code></pre></div>
 <p>The <code><a href="../reference/kth_profile_legacy.html">kth_profile_legacy()</a></code> function returns a field called <code>worksFor.name-en</code> which represents the lowest level (often level 4) organizational unit name, sometimes provided in Swedish instead of in English, so cannot directly be used to determine institutional belonging.</p>
 </div>
 <div id="level-1-and-2-organizational-units" class="section level2">
@@ -140,16 +141,17 @@
 <a href="#level-1-and-2-organizational-units" class="anchor"></a>Level 1 and 2 organizational units</h2>
 <p>The KTH schools and departments (in this case for the first two levels of the org hierarchy) can be retrieved with <code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code>.</p>
 <p>In the listing we exclude the <code>kthid</code> identifier, but it exists also for organizational units.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span>() <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
 <span class="co">#  filter(is.na(`_id`)) %&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">row</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">.</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">row</span>, <span class="no">slug</span>, <span class="kw">desc</span> <span class="kw">=</span> <span class="no">`description.en`</span>, <span class="no">website</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>()</pre></body></html></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">row</span>, <span class="va">slug</span>, desc <span class="op">=</span> <span class="va">`description.en`</span>, <span class="va">website</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="2%">
 <col width="4%">
-<col width="46%">
+<col width="47%">
 <col width="45%">
 </colgroup>
 <thead><tr class="header">
@@ -197,416 +199,380 @@
 </tr>
 <tr class="odd">
 <td align="right">7</td>
-<td align="left">zaa</td>
-<td align="left">KTH HOLDING OCH DOTTERBOLAG</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="right">8</td>
 <td align="left">a/aaa</td>
 <td align="left">SCHOOLS OFFICE</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">9</td>
+<tr class="even">
+<td align="right">8</td>
 <td align="left">a/aab</td>
 <td align="left">SCHOOLS OFFICE OF STUDENT AFFAIRS ABE</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">10</td>
+<tr class="odd">
+<td align="right">9</td>
 <td align="left">a/abe</td>
 <td align="left">ABE SKOLAN</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">11</td>
+<tr class="even">
+<td align="right">10</td>
 <td align="left">a/acp</td>
-<td align="left">SIP SMARTA O HÅLLBARA STÄDER</td>
+<td align="left">VIABLE CITIES</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">12</td>
+<tr class="odd">
+<td align="right">11</td>
 <td align="left">a/ad</td>
 <td align="left">ARCHITECTURE</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">13</td>
+<tr class="even">
+<td align="right">12</td>
 <td align="left">a/af</td>
 <td align="left">CIVIL AND ARCHITECTURAL ENGINEERING</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">14</td>
+<tr class="odd">
+<td align="right">13</td>
 <td align="left">a/ag</td>
 <td align="left">URBAN PLANNING AND ENVIRONMENT</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">15</td>
+<tr class="even">
+<td align="right">14</td>
 <td align="left">a/ai</td>
 <td align="left">REAL ESTATE AND CONSTRUCTION MANAGEMENT</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">16</td>
+<tr class="odd">
+<td align="right">15</td>
 <td align="left">a/ak</td>
 <td align="left">PHILOSOPHY AND HISTORY OF TECHNOLOGY</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">17</td>
+<tr class="even">
+<td align="right">16</td>
 <td align="left">a/al</td>
 <td align="left">SUSTAINABLE DEVELOPMENT, ENVIRONMENTAL SCIENCE AND ENGINEERING</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">18</td>
+<tr class="odd">
+<td align="right">17</td>
 <td align="left">c/cac</td>
 <td align="left">CBH ADMINISTRATION</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">19</td>
+<tr class="even">
+<td align="right">18</td>
 <td align="left">c/cb</td>
 <td align="left">GREENHOUSE LABS</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">20</td>
+<tr class="odd">
+<td align="right">19</td>
 <td align="left">c/cd</td>
 <td align="left">DEPARTMENT OF BIOMEDICAL ENGINEERING AND HEALTH SYSTEMS</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">21</td>
+<tr class="even">
+<td align="right">20</td>
 <td align="left">c/ce</td>
 <td align="left">DEPARTMENT OF CHEMISTRY</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">22</td>
+<tr class="odd">
+<td align="right">21</td>
 <td align="left">c/cf</td>
 <td align="left">DEPARTMENT OF CHEMICAL ENGINEERING</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">23</td>
+<tr class="even">
+<td align="right">22</td>
 <td align="left">c/cg</td>
 <td align="left">DEPARTMENT OF FIBRE AND POLYMER TECHNOLOGY</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">24</td>
+<tr class="odd">
+<td align="right">23</td>
 <td align="left">c/ch</td>
 <td align="left">DEPARTMENT OF GENE TECHNOLOGY</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">25</td>
+<tr class="even">
+<td align="right">24</td>
 <td align="left">c/cj</td>
 <td align="left">DEPARTMENT OF PROTEIN SCIENCE</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">26</td>
+<tr class="odd">
+<td align="right">25</td>
 <td align="left">c/ck</td>
 <td align="left">DEPARTMENT OF INDUSTRIAL BIOTECHNOLOGY</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">27</td>
+<tr class="even">
+<td align="right">26</td>
 <td align="left">c/cl</td>
 <td align="left">DEPARTMENT OF THEORETICAL CHEMISTRY AND BIOLOGY</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">28</td>
+<tr class="odd">
+<td align="right">27</td>
 <td align="left">c/cm</td>
 <td align="left">DEPARTMENT OF ENGINEERING PEDAGOGICS</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">29</td>
+<tr class="even">
+<td align="right">28</td>
 <td align="left">j/jb</td>
 <td align="left">EECS PROFESSIONAL SUPPORT</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">30</td>
+<tr class="odd">
+<td align="right">29</td>
 <td align="left">j/jc</td>
 <td align="left">CENTRES</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">31</td>
+<tr class="even">
+<td align="right">30</td>
 <td align="left">j/jh</td>
 <td align="left">DEPARTMENT OF COMPUTER SCIENCE</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">32</td>
+<tr class="odd">
+<td align="right">31</td>
 <td align="left">j/jj</td>
 <td align="left">DEPARTMENT OF ELECTRICAL ENERGY ENGINEERING</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">33</td>
+<tr class="even">
+<td align="right">32</td>
 <td align="left">j/jm</td>
 <td align="left">DEPARTMENT OF HUMAN CENTERED TECHNOLOGY</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">34</td>
+<tr class="odd">
+<td align="right">33</td>
 <td align="left">j/jr</td>
 <td align="left">DEPARTMENT OF INTELLIGENT SYSTEMS</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">35</td>
+<tr class="even">
+<td align="right">34</td>
 <td align="left">m/maa</td>
 <td align="left">ITM SCHOOL’S OFFICE</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">36</td>
+<tr class="odd">
+<td align="right">35</td>
 <td align="left">m/mab</td>
 <td align="left">ITM SCHOOLS OFFICE OF STUDENT AFFAIRS</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">37</td>
+<tr class="even">
+<td align="right">36</td>
 <td align="left">m/mad</td>
 <td align="left">ITM SERVICE CENTER</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">38</td>
+<tr class="odd">
+<td align="right">37</td>
 <td align="left">m/me</td>
 <td align="left">DEPARTMENT OF INDUSTRIAL ECONOMICS AND MANAGEMENT</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">39</td>
+<tr class="even">
+<td align="right">38</td>
 <td align="left">m/mf</td>
 <td align="left">DEPARTMENT OF MACHINE DESIGN</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">40</td>
+<tr class="odd">
+<td align="right">39</td>
 <td align="left">m/mg</td>
 <td align="left">DEPARTMENT OF PRODUCTION ENGINEERING</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">41</td>
-<td align="left">m/mjcm</td>
-<td align="left">KTH LIVE-IN LAB</td>
-<td align="left"></td>
-</tr>
 <tr class="even">
-<td align="right">42</td>
+<td align="right">40</td>
 <td align="left">m/mje</td>
 <td align="left">DEPARTMENT OF ENERGY TECHNOLOGY</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
-<td align="right">43</td>
+<td align="right">41</td>
 <td align="left">m/ml</td>
 <td align="left">DEPARTMENT OF SUSTAINABLE PRODUCTION DEVELOPMENT</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="right">44</td>
+<td align="right">42</td>
 <td align="left">m/mm</td>
 <td align="left">POWERTRAIN MANUFACTURING FOR HEAVY VEHICLES APPLICATION LAB (PMH)</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
-<td align="right">45</td>
-<td align="left">m/mob</td>
-<td align="left">UNIT OF LEARNING IN STEM</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="right">46</td>
-<td align="left">m/mod</td>
-<td align="left">UNIT OF DIGITAL LEARNING</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="right">47</td>
-<td align="left">m/moe</td>
-<td align="left">UNIT OF LANGUAGE AND COMMUNICATION</td>
-<td align="left"></td>
-</tr>
-<tr class="even">
-<td align="right">48</td>
-<td align="left">m/mog</td>
-<td align="left">THE HOUSE OF SCIENCE</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="right">49</td>
+<td align="right">43</td>
 <td align="left">m/mv</td>
 <td align="left">DEPARTMENT OF MATERIALS SCIENCE AND ENGINEERING</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="right">50</td>
+<td align="right">44</td>
+<td align="left">m/mo</td>
+<td align="left">LEARNING IN ENGINEERING SCIENCES</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="right">45</td>
+<td align="left">m/mjc</td>
+<td align="left">MJC CENTRA</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="right">46</td>
 <td align="left">s/sa</td>
 <td align="left">SCI-SKOLAN CENTRALT</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
-<td align="right">51</td>
+<td align="right">47</td>
 <td align="left">s/sd</td>
 <td align="left">AERONAUTICAL &amp; VEHICLE ENGINEERING</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="right">52</td>
+<td align="right">48</td>
 <td align="left">s/sf</td>
 <td align="left">MATHEMATICS</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
-<td align="right">53</td>
+<td align="right">49</td>
 <td align="left">s/sg</td>
 <td align="left">MECHANICS</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="right">54</td>
+<td align="right">50</td>
 <td align="left">s/sh</td>
 <td align="left">PHYSICS</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
-<td align="right">55</td>
+<td align="right">51</td>
 <td align="left">s/sid</td>
 <td align="left">MATEMATISK FYSIK</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
-<td align="right">56</td>
-<td align="left">s/sie</td>
-<td align="left">MATERIALTEORI</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="right">57</td>
+<td align="right">52</td>
 <td align="left">s/sig</td>
 <td align="left">TEORETISK FYSIK</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">58</td>
+<tr class="odd">
+<td align="right">53</td>
 <td align="left">s/sk</td>
 <td align="left">APPLIED PHYSICS</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">59</td>
+<tr class="even">
+<td align="right">54</td>
 <td align="left">s/sl</td>
 <td align="left">SCI ADMINISTRATION</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">60</td>
+<tr class="odd">
+<td align="right">55</td>
 <td align="left">s/sm</td>
 <td align="left">TEKNISK MEKANIK</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">61</td>
+<tr class="even">
+<td align="right">56</td>
 <td align="left">t/ta</td>
 <td align="left">UNIVERSITETSLEDNING</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">62</td>
+<tr class="odd">
+<td align="right">57</td>
 <td align="left">t/td</td>
 <td align="left">FINANCE</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">63</td>
+<tr class="even">
+<td align="right">58</td>
 <td align="left">t/te</td>
 <td align="left">HUMAN RESOURCES</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">64</td>
+<tr class="odd">
+<td align="right">59</td>
 <td align="left">t/tf</td>
 <td align="left">UNIVERSITY MANAGEMENT OFFICE</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">65</td>
+<tr class="even">
+<td align="right">60</td>
 <td align="left">t/tg</td>
 <td align="left">EDUCATION OFFICE</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">66</td>
+<tr class="odd">
+<td align="right">61</td>
 <td align="left">t/th</td>
 <td align="left">RESEARCH SUPPORT OFFICE</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">67</td>
+<tr class="even">
+<td align="right">62</td>
 <td align="left">t/ti</td>
 <td align="left">COMMUNICATIONS AND BUSINESS LIAISONS</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">68</td>
+<tr class="odd">
+<td align="right">63</td>
 <td align="left">t/tj</td>
 <td align="left">IT</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">69</td>
+<tr class="even">
+<td align="right">64</td>
 <td align="left">t/tk</td>
 <td align="left">SUSTAINABILITY, REAL ESTATE AND FACILITY SERVICE</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">70</td>
+<tr class="odd">
+<td align="right">65</td>
 <td align="left">t/tp</td>
 <td align="left">INTERNAL AUDIT</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">71</td>
+<tr class="even">
+<td align="right">66</td>
 <td align="left">t/tq</td>
 <td align="left">KTH INNOVATION</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">72</td>
+<tr class="odd">
+<td align="right">67</td>
 <td align="left">t/tr</td>
 <td align="left">KTH LIBRARY</td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
-<td align="right">73</td>
+<tr class="even">
+<td align="right">68</td>
 <td align="left">t/ts</td>
 <td align="left">OPEN LAB</td>
 <td align="left"></td>
 </tr>
-<tr class="even">
-<td align="right">74</td>
+<tr class="odd">
+<td align="right">69</td>
 <td align="left">t/tt</td>
 <td align="left">SCILIFELAB ADMINISTRATION</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="right">75</td>
-<td align="left">t/tu</td>
-<td align="left">ALBANOVA ADM O DRIFT</td>
 <td align="left"></td>
 </tr>
 </tbody>
@@ -625,11 +591,11 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Gaël Serge Dubus, Agne Larsson, Markus Skyttner.</p>
+  <p>Developed by Gaël Dubus, Agne Larsson, Markus Skyttner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

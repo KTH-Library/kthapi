@@ -23,7 +23,7 @@
 #' \dontrun{
 #' kth_projects()
 #' }
-kth_projects <- function(path = "projects/all",
+kth_projects <- function(path = "projects",
     year_beg = NULL, year_end = NULL,
     kthUserName = NULL, orcid = NULL, tag = NULL,
     config = NULL) {
@@ -37,21 +37,21 @@ kth_projects <- function(path = "projects/all",
   is_valid_arg <- function(x) !is.null(x) && nchar(x) > 0
 
   params <- NULL
-  if (path %in% c("projects/all", "projects/hidden", "projects/",
+  if (path %in% c("projects/public", "projects/hidden", "projects/",
                   "project/tags/", "fundings/")) {
   } else if (path %in% c("projects/date/")) {
     stop_if_not(year_beg, is_valid_arg, msg = "Please provide a valid beginning year")
     stop_if_not(year_end, is_valid_arg, msg = "Please provide a valid ending year")
     params <- list(start = year_beg, end = year_end)
-  } else if (path %in% c("projects/kthUserName/")) {
+  } else if (path %in% c("projects/kthUserName/", "projects/username/")) {
     stop_if_not(kthUserName, is_valid_arg, msg = "Please provide a valid kthUserName")
-    params <- list(kthUserName = kthUserName)
+    path <- paste0("projects/username/", kthUserName)
   } else if (path %in% c("projects/orcid/")) {
    stop_if_not(orcid, is_valid_arg, msg = "Please provide a valid orcid")
-   params <- list(orcid = orcid)
-  # } else if (path %in% c("projects/tag/")) {
-  #   stop_if_not(tag, is_valid_arg, msg = "Please provide a valid tag")
-  #   params <- list(tag = tag)
+    path <- paste0(path, orcid)
+  } else if (path %in% c("projects/tag/")) {
+    stop_if_not(tag, is_valid_arg, msg = "Please provide a valid tag")
+    path <- paste0(path, tag)
   } else {
     warning("... Unsure about endpoint.")
   }
@@ -70,6 +70,7 @@ kth_projects <- function(path = "projects/all",
   }
 
   check_status(resp)
+
   if (http_type(resp) != "application/json") {
     stop("API did not return json", call. = FALSE)
   }
@@ -87,6 +88,7 @@ kth_projects <- function(path = "projects/all",
       call. = FALSE
     )
   }
+
 
   # parse nested json into tabular format
   content <-

@@ -47,7 +47,7 @@ test_that("Legacy Profiles API returns institutional belonging for accountid and
   t2 <- kth_belonging_institutional("u1z88syr")
   t3 <- tryCatch(kth_belonging_institutional("markussk"), error = function(e) e)
 
-  is_valid <- (t1$desc == "IT" && t2$slug == "t/tr" && t3$message == "The API returned an error")
+  is_valid <- (t1$desc == "IT" && t2$slug == "t/tr" && t3$message == "The API returned an error: Not found")
 
   expect_true(is_valid)
 

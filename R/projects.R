@@ -2,7 +2,7 @@
 #'
 #' See details at <https://api-r.referens.sys.kth.se/api/projects/swagger/?url=/api/projects/swagger.json>
 #' @param path string to indicate endpoint to use, for example
-#' "projects/", "projects/all", "projects/hidden", "fundings/", Default: "projects/all"
+#' "projects", "projects/public", "projects/hidden", "fundings/", Default: "projects/"
 #' @param year_beg starting year, for example 2012
 #' @param year_end ending year, for example 2019
 #' @param kthUserName username of KTH profile, for example "stemme"
@@ -23,7 +23,7 @@
 #' \dontrun{
 #' kth_projects()
 #' }
-kth_projects <- function(path = "projects",
+kth_projects <- function(path = "projects/",
     year_beg = NULL, year_end = NULL,
     kthUserName = NULL, orcid = NULL, tag = NULL,
     config = NULL) {

@@ -5,7 +5,7 @@
 \title{Retrieve data for KTH Projects}
 \usage{
 kth_projects(
-  path = "projects/all",
+  path = "projects/",
   year_beg = NULL,
   year_end = NULL,
   kthUserName = NULL,
@@ -16,7 +16,7 @@ kth_projects(
 }
 \arguments{
 \item{path}{string to indicate endpoint to use, for example
-"projects/", "projects/all", "projects/hidden", "fundings/", Default: "projects/all"}
+"projects", "projects/public", "projects/hidden", "fundings/", Default: "projects/"}
 
 \item{year_beg}{starting year, for example 2012}
 

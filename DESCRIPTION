@@ -1,6 +1,6 @@
 Package: kthapi
 Title: Data from KTH APIs
-Version: 0.1
+Version: 0.1.1
 Authors@R: 
     c(
         person("Gaël", "Dubus", email = "dubus@kth.se", role = "aut"), 
@@ -27,7 +27,10 @@ Imports:
     stringi,
     readr,
     rappdirs,
-    xml2
+    xml2,
+    textclean,
+    tidyr,
+    base64enc
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
@@ -35,6 +38,6 @@ Suggests:
     rmarkdown,
     knitr,
     testthat (>= 2.1.0)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

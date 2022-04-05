@@ -99,6 +99,8 @@ but can be a character vector of attributes, such as c('ugKthid', 'ugOrcid')</p>
     <h2>Details</h2>
     <p>The ldapsearch command makes use of -E pr=2147483647/noprompt to avoid paging
 and returns results in LDIF format which is parsed into a tibble.</p>
+<p>It is possible to disable ldaps TLS require certificate check, by setting
+the environment variable LDAPTLS_REQCERT to "never" (can be done in .Renviron)</p>
     </div>
 
     <div id="ref-examples">

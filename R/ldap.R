@@ -136,6 +136,9 @@ parse_ldif <- function(text, ldap_attributes = NULL, dn = NULL) {
 #' The ldapsearch command makes use of -E pr=2147483647/noprompt to avoid paging
 #' and returns results in LDIF format which is parsed into a tibble.
 #'
+#' It is possible to disable ldaps TLS require certificate check, by setting
+#' the environment variable LDAPTLS_REQCERT to "never" (can be done in .Renviron)
+#'
 #' @param ldap_query the LDAP query to issue, such as 'ugKthid=*'
 #' @param ldap_attributes set of attributes to return, by default NULL
 #' but can be a character vector of attributes, such as c('ugKthid', 'ugOrcid')
@@ -160,7 +163,14 @@ ldap_search <- function(
     ldap_attributes = ldap_attributes
     )
 
-  message("Running LDAP query for ", ldap_query, " w attribs: ", ldap_attributes)
+  if (Sys.getenv("LDAPTLS_REQCERT") == "") {
+    message("Note: it is possible to disable ldaps TLS require certificate check, by ...")
+    message('Sys.setenv("LDAPTLS_REQCERT"="never")')
+    message("(or by making this environment variable setting persistent using .Renviron)")
+  }
+
+  message("Running LDAP query for ", ldap_query, " w attribs: \n",
+          paste0(collapse = " ", ldap_attributes))
   res <- system(cmd, intern = TRUE)
 
   if (!nzchar(res) && attr(res, "status") == 254)
@@ -270,3 +280,14 @@ ad_search_accountname <- function(accountname) {
 
 # ad_search_accountname("marku*")
 
+ad_lookup_dn <- function(kthid) {
+
+  query <- sprintf("(&(ugKthid=%s)(ugUsername=*))", kthid)
+
+  ldap_search(query, cfg = ldap_config(), ldap_attributes = c(
+    "ugKthid", "ugUsername", "displayName"
+  ))
+
+}
+
+# ad_lookup_dn("u1z88syr")

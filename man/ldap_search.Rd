@@ -26,6 +26,9 @@ account used for the queries.
 \details{
 The ldapsearch command makes use of -E pr=2147483647/noprompt to avoid paging
 and returns results in LDIF format which is parsed into a tibble.
+
+It is possible to disable ldaps TLS require certificate check, by setting
+the environment variable LDAPTLS_REQCERT to "never" (can be done in .Renviron)
 }
 \examples{
 \dontrun{

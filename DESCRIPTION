@@ -27,7 +27,8 @@ Imports:
     stringi,
     readr,
     rappdirs,
-    xml2
+    xml2,
+    tidyr
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
@@ -35,6 +36,6 @@ Suggests:
     rmarkdown,
     knitr,
     testthat (>= 2.1.0)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

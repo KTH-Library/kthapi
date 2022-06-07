@@ -34,10 +34,13 @@ kth_projects(
 resulting records
 }
 \description{
-See details at \url{https://api-r.referens.sys.kth.se/api/projects/swagger/?url=/api/projects/swagger.json}
+See details at \url{https://api-r.referens.sys.kth.se/api/projects/swagger}
 }
 \examples{
 \dontrun{
 kth_projects()
+kth_projects("projects/public")$content$projects \%>\% tibble::as_tibble()
+kth_projects("admin/last-manual-import")
+kth_projects("admin/weekly-import-information")
 }
 }

@@ -1,6 +1,6 @@
 #' Retrieve data for KTH Projects
 #'
-#' See details at <https://api-r.referens.sys.kth.se/api/projects/swagger/?url=/api/projects/swagger.json>
+#' See details at <https://api-r.referens.sys.kth.se/api/projects/swagger>
 #' @param path string to indicate endpoint to use, for example
 #' "projects", "projects/public", "projects/hidden", "fundings/", Default: "projects/"
 #' @param year_beg starting year, for example 2012
@@ -22,6 +22,9 @@
 #' @examples
 #' \dontrun{
 #' kth_projects()
+#' kth_projects("projects/public")$content$projects %>% tibble::as_tibble()
+#' kth_projects("admin/last-manual-import")
+#' kth_projects("admin/weekly-import-information")
 #' }
 kth_projects <- function(path = "projects/",
     year_beg = NULL, year_end = NULL,
@@ -37,8 +40,10 @@ kth_projects <- function(path = "projects/",
   is_valid_arg <- function(x) !is.null(x) && nchar(x) > 0
 
   params <- NULL
-  if (path %in% c("projects/public", "projects/hidden", "projects/",
-                  "project/tags/", "fundings/")) {
+  if (path %in% c(
+    "projects/public", "projects/hidden", "projects/",
+    "project/tags/", "fundings/",
+    "admin/people-duplicates", "admin/last-manual-import", "admin/weekly-import-information")) {
   } else if (path %in% c("projects/date/")) {
     stop_if_not(year_beg, is_valid_arg, msg = "Please provide a valid beginning year")
     stop_if_not(year_end, is_valid_arg, msg = "Please provide a valid ending year")
@@ -52,6 +57,8 @@ kth_projects <- function(path = "projects/",
   } else if (path %in% c("projects/tag/")) {
     stop_if_not(tag, is_valid_arg, msg = "Please provide a valid tag")
     path <- paste0(path, tag)
+  } else if (path %in% c()) {
+
   } else {
     warning("... Unsure about endpoint.")
   }
@@ -111,3 +118,33 @@ print.kthapiprojects <- function(x, ...) {
   print(x$content)
   invisible(x)
 }
+
+#' Duplicates of people in projects
+#' @importFrom tibble as_tibble enframe
+#' @importFrom tidyr unnest
+#' @export
+kth_projects_people_duplicates <- function() {
+
+  dupes <-
+    kth_projects("admin/people-duplicates")$content %>%
+    tibble::as_tibble()
+
+  leaders <-
+    dupes %>%
+    pull("project_leaders", name = "id") %>%
+    tibble::enframe(name = "project_id") %>%
+    tidyr::unnest(cols = c("value")) %>%
+    mutate(type = "project leader")
+
+  others <-
+    dupes %>%
+    pull("other_personnel", name = "id") %>%
+    tibble::enframe(name = "project_id") %>%
+    tidyr::unnest(cols = c("value")) %>%
+    mutate(type = "other personnel")
+
+  bind_rows(leaders, others) %>%
+    mutate(orcid = recode(orcid, "null" = NA_character_))
+
+}
+

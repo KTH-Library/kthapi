@@ -26,3 +26,10 @@ test_that("Projects API returns data when given tag", {
   is_valid <- nrow(p1$content$projects) >= 2
   expect_true(is_valid)
 })
+
+test_that("Projects API returns people duplicates", {
+  skip_on_ci()
+  p1 <- kth_projects_people_duplicates()
+  is_valid <- nrow(p1) >= 2
+  expect_true(is_valid)
+})

@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">kthapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -67,10 +63,13 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/KTH-Library/kthapi/">
+  <a href="https://github.com/KTH-Library/kthapi/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,26 +84,26 @@
 
       
 
-      </header><script src="Schools-Departments-from-KTH-Directory-API_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Schools-Departments-from-KTH-Directory-API</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/KTH-Library/kthapi/blob/master/vignettes/Schools-Departments-from-KTH-Directory-API.Rmd"><code>vignettes/Schools-Departments-from-KTH-Directory-API.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/KTH-Library/kthapi/blob/HEAD/vignettes/Schools-Departments-from-KTH-Directory-API.Rmd" class="external-link"><code>vignettes/Schools-Departments-from-KTH-Directory-API.Rmd</code></a></small>
       <div class="hidden name"><code>Schools-Departments-from-KTH-Directory-API.Rmd</code></div>
 
     </div>
 
     
     
-<div id="organizational-belonging-for-a-given-kth-user-account-or-kthid" class="section level2">
-<h2 class="hasAnchor">
-<a href="#organizational-belonging-for-a-given-kth-user-account-or-kthid" class="anchor"></a>Organizational belonging for a given KTH user account or kthid</h2>
+<div class="section level2">
+<h2 id="organizational-belonging-for-a-given-kth-user-account-or-kthid">Organizational belonging for a given KTH user account or kthid<a class="anchor" aria-label="anchor" href="#organizational-belonging-for-a-given-kth-user-account-or-kthid"></a>
+</h2>
 <p>Given an account name or “kthid”, how can we look up the organizational belonging?</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KTH-Library/kthapi">kthapi</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KTH-Library/kthapi" class="external-link">kthapi</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
 <span class="va">user</span> <span class="op">&lt;-</span> <span class="st">"hoyce"</span>
 <span class="va">unit_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/kth_profile_school_dep.html">kth_profile_school_dep</a></span><span class="op">(</span><span class="va">user</span><span class="op">)</span>
@@ -114,14 +113,14 @@
 <span class="co">#&gt; [1] "t"    "tj"   "tjd"  "tjda"</span>
 
 <span class="co"># use the first two levels of the hierarchy</span>
-<span class="va">slug</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">"/"</span>, <span class="va">unit_codes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
+<span class="va">slug</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">"/"</span>, <span class="va">unit_codes</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
 
 <span class="co"># look up the english lang description for this "slug"</span>
 <span class="va">unit2</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="va">slug</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">slug</span>, desc <span class="op">=</span> <span class="va">`description.en`</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">desc</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="va">slug</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">slug</span>, desc <span class="op">=</span> <span class="va">`description.en`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">desc</span><span class="op">)</span>
 
 <span class="va">unit2</span>
 <span class="co">#&gt; [1] "IT"</span></code></pre></div>
@@ -136,17 +135,17 @@
 <span class="co">#&gt; 1 hoyce t/tj  IT</span></code></pre></div>
 <p>The <code><a href="../reference/kth_profile_legacy.html">kth_profile_legacy()</a></code> function returns a field called <code>worksFor.name-en</code> which represents the lowest level (often level 4) organizational unit name, sometimes provided in Swedish instead of in English, so cannot directly be used to determine institutional belonging.</p>
 </div>
-<div id="level-1-and-2-organizational-units" class="section level2">
-<h2 class="hasAnchor">
-<a href="#level-1-and-2-organizational-units" class="anchor"></a>Level 1 and 2 organizational units</h2>
+<div class="section level2">
+<h2 id="level-1-and-2-organizational-units">Level 1 and 2 organizational units<a class="anchor" aria-label="anchor" href="#level-1-and-2-organizational-units"></a>
+</h2>
 <p>The KTH schools and departments (in this case for the first two levels of the org hierarchy) can be retrieved with <code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code>.</p>
 <p>In the listing we exclude the <code>kthid</code> identifier, but it exists also for organizational units.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
 <span class="co">#  filter(is.na(`_id`)) %&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">row</span>, <span class="va">slug</span>, desc <span class="op">=</span> <span class="va">`description.en`</span>, <span class="va">website</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">row</span>, <span class="va">slug</span>, desc <span class="op">=</span> <span class="va">`description.en`</span>, <span class="va">website</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="2%">
@@ -165,37 +164,37 @@
 <td align="right">1</td>
 <td align="left">a</td>
 <td align="left">SCHOOL OF ARCHITECTURE AND THE BUILT ENVIRONMENT</td>
-<td align="left"><a href="https://www.kth.se/abe" class="uri">https://www.kth.se/abe</a></td>
+<td align="left"><a href="https://www.kth.se/abe" class="external-link uri">https://www.kth.se/abe</a></td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
 <td align="left">c</td>
 <td align="left">SCHOOL OF ENGINEERING SCIENCES IN CHEMISTRY, BIOTECHNOLOGY AND HEALTH</td>
-<td align="left"><a href="https://www.kth.se/cbh" class="uri">https://www.kth.se/cbh</a></td>
+<td align="left"><a href="https://www.kth.se/cbh" class="external-link uri">https://www.kth.se/cbh</a></td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
 <td align="left">j</td>
 <td align="left">SCHOOL OF ELECTRICAL ENGINEERING AND COMPUTER SCIENCE</td>
-<td align="left"><a href="https://www.kth.se/eecs" class="uri">https://www.kth.se/eecs</a></td>
+<td align="left"><a href="https://www.kth.se/eecs" class="external-link uri">https://www.kth.se/eecs</a></td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
 <td align="left">m</td>
 <td align="left">SCHOOL OF INDUSTRIAL ENGINEERING AND MANAGEMENT</td>
-<td align="left"><a href="https://www.kth.se/itm" class="uri">https://www.kth.se/itm</a></td>
+<td align="left"><a href="https://www.kth.se/itm" class="external-link uri">https://www.kth.se/itm</a></td>
 </tr>
 <tr class="odd">
 <td align="right">5</td>
 <td align="left">s</td>
 <td align="left">SCHOOL OF ENGINEERING SCIENCES</td>
-<td align="left"><a href="https://www.kth.se/sci" class="uri">https://www.kth.se/sci</a></td>
+<td align="left"><a href="https://www.kth.se/sci" class="external-link uri">https://www.kth.se/sci</a></td>
 </tr>
 <tr class="even">
 <td align="right">6</td>
 <td align="left">t</td>
 <td align="left">UNIVERSITY ADMINISTRATION</td>
-<td align="left"><a href="https://www.kth.se/om/organisation/universitetsforvaltningen-1.3852" class="uri">https://www.kth.se/om/organisation/universitetsforvaltningen-1.3852</a></td>
+<td align="left"><a href="https://www.kth.se/om/organisation/universitetsforvaltningen-1.3852" class="external-link uri">https://www.kth.se/om/organisation/universitetsforvaltningen-1.3852</a></td>
 </tr>
 <tr class="odd">
 <td align="right">7</td>
@@ -591,11 +590,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Gaël Dubus, Agne Larsson, Markus Skyttner.</p>
+  <p></p>
+<p>Developed by Gaël Dubus, Agne Larsson, Markus Skyttner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -603,6 +604,8 @@
 
   
 
+
+  
 
   </body>
 </html>

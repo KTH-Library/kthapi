@@ -1,6 +1,6 @@
 Package: kthapi
 Title: Data from KTH APIs
-Version: 0.1
+Version: 0.1.1
 Authors@R: 
     c(
         person("Gaël", "Dubus", email = "dubus@kth.se", role = "aut"), 
@@ -28,7 +28,9 @@ Imports:
     readr,
     rappdirs,
     xml2,
-    tidyr
+    textclean,
+    tidyr,
+    base64enc
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)

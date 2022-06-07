@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">kthapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -67,10 +63,13 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/KTH-Library/kthapi/">
+  <a href="https://github.com/KTH-Library/kthapi/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,13 +84,13 @@
 
       
 
-      </header><script src="Publications-API-Usage_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Publications-API-Usage</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/KTH-Library/kthapi/blob/master/vignettes/Publications-API-Usage.Rmd"><code>vignettes/Publications-API-Usage.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/KTH-Library/kthapi/blob/HEAD/vignettes/Publications-API-Usage.Rmd" class="external-link"><code>vignettes/Publications-API-Usage.Rmd</code></a></small>
       <div class="hidden name"><code>Publications-API-Usage.Rmd</code></div>
 
     </div>
@@ -100,16 +99,8 @@
     
 <p>The function providing access to KTH Publications API data can provide some overview stats, list the active public users, active users with publications and more. Some usage examples:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KTH-Library/kthapi">kthapi</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KTH-Library/kthapi" class="external-link">kthapi</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span><span class="op">(</span><span class="st">"stats"</span><span class="op">)</span>
 <span class="co">#&gt; &lt;KTH API call for stats&gt;</span>
@@ -120,13 +111,13 @@
 <span class="co">#&gt; [1] 1147</span>
 
 <span class="co"># top 5 active public users with publication counts</span>
-<span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span><span class="op">(</span><span class="st">"activePublicUsers"</span><span class="op">)</span><span class="op">$</span><span class="va">content</span><span class="op">$</span><span class="va">users</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="va">.</span>, nm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"count"</span>, <span class="st">"kthid"</span>, <span class="st">"username"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">kthid</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span><span class="op">(</span><span class="st">"activePublicUsers"</span><span class="op">)</span><span class="op">$</span><span class="va">content</span><span class="op">$</span><span class="va">users</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="va">.</span>, nm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"count"</span>, <span class="st">"kthid"</span>, <span class="st">"username"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">kthid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">count</th>
@@ -165,35 +156,27 @@
 <span class="va">fp</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span><span class="op">(</span><span class="st">"filteredPublications"</span>, username <span class="op">=</span> <span class="st">"pal"</span><span class="op">)</span><span class="op">$</span><span class="va">content</span>
   
-<span class="va">fp</span><span class="op">$</span><span class="va">filteredPublications</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">title</span><span class="op">)</span>
+<span class="va">fp</span><span class="op">$</span><span class="va">filteredPublications</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">title</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 5 x 1</span>
-<span class="co">#&gt;   title                                                                         </span>
-<span class="co">#&gt;   &lt;chr&gt;                                                                         </span>
-<span class="co">#&gt; 1 Electric field and plasma observations near the magnetopause and bow shock du…</span>
-<span class="co">#&gt; 2 SIMULTANEOUS OBSERVATION OF UPWARD MOVING FIELD-ALIGNED ENERGETIC ELECTRONS A…</span>
-<span class="co">#&gt; 3 Preliminary results from the DC electric fields experiment on Viking          </span>
-<span class="co">#&gt; 4 THE FINE-STRUCTURE OF THE FRONT SIDE MAGNETOPAUSE DURING 2 SUCCESSIVE CROSSIN…</span>
+<span class="co">#&gt;   title                                                                                                           </span>
+<span class="co">#&gt;   &lt;chr&gt;                                                                                                           </span>
+<span class="co">#&gt; 1 Electric field and plasma observations near the magnetopause and bow shock during a rapid compression.          </span>
+<span class="co">#&gt; 2 SIMULTANEOUS OBSERVATION OF UPWARD MOVING FIELD-ALIGNED ENERGETIC ELECTRONS AND IONS ON AURORAL-ZONE FIELD LINES</span>
+<span class="co">#&gt; 3 Preliminary results from the DC electric fields experiment on Viking                                            </span>
+<span class="co">#&gt; 4 THE FINE-STRUCTURE OF THE FRONT SIDE MAGNETOPAUSE DURING 2 SUCCESSIVE CROSSINGS                                 </span>
 <span class="co">#&gt; 5 Further Explorations of Cosmogonic Shadow Effects in the Saturnian Rings</span>
 
 <span class="co"># available fields for publication data</span>
-<span class="va">fp</span><span class="op">$</span><span class="va">filteredPublications</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "publicationId"             "organizationId"           </span>
-<span class="co">#&gt;  [3] "topics"                    "authors"                  </span>
-<span class="co">#&gt;  [5] "seriesIssueNr"             "seriesTitle"              </span>
-<span class="co">#&gt;  [7] "patent"                    "statementOfResponsibility"</span>
-<span class="co">#&gt;  [9] "identifierUri"             "bookEdition"              </span>
-<span class="co">#&gt; [11] "bookPublisher"             "bookPlace"                </span>
-<span class="co">#&gt; [13] "conferenceName"            "recordOrigin"             </span>
-<span class="co">#&gt; [15] "hostExtentEnd"             "hostExtentStart"          </span>
-<span class="co">#&gt; [17] "hostIssue"                 "hostVolume"               </span>
-<span class="co">#&gt; [19] "hostSubTitle"              "hostTitle"                </span>
-<span class="co">#&gt; [21] "contentTypeCode"           "publicationSubTypeCode"   </span>
-<span class="co">#&gt; [23] "publicationTypeCode"       "dateIssued"               </span>
-<span class="co">#&gt; [25] "publicationStatus"         "subTitle"                 </span>
-<span class="co">#&gt; [27] "title"                     "visible"</span>
+<span class="va">fp</span><span class="op">$</span><span class="va">filteredPublications</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt;  [1] "publicationId"             "organizationId"            "topics"                    "authors"                   "seriesIssueNr"            </span>
+<span class="co">#&gt;  [6] "seriesTitle"               "patent"                    "statementOfResponsibility" "identifierUri"             "bookEdition"              </span>
+<span class="co">#&gt; [11] "bookPublisher"             "bookPlace"                 "conferenceName"            "recordOrigin"              "hostExtentEnd"            </span>
+<span class="co">#&gt; [16] "hostExtentStart"           "hostIssue"                 "hostVolume"                "hostSubTitle"              "hostTitle"                </span>
+<span class="co">#&gt; [21] "contentTypeCode"           "publicationSubTypeCode"    "publicationTypeCode"       "dateIssued"                "publicationStatus"        </span>
+<span class="co">#&gt; [26] "subTitle"                  "title"                     "visible"</span>
 
 <span class="co"># example record</span>
-<span class="va">fp</span><span class="op">$</span><span class="va">filteredPublications</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">fp</span><span class="op">$</span><span class="va">filteredPublications</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 28</span>
 <span class="co">#&gt; $ publicationId             &lt;chr&gt; "diva2:1067423"</span>
@@ -204,7 +187,7 @@
 <span class="co">#&gt; $ seriesTitle               &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ patent                    &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ statementOfResponsibility &lt;chr&gt; ""</span>
-<span class="co">#&gt; $ identifierUri             &lt;chr&gt; "http://urn.kb.se/resolve?urn=urn:nbn:se:kth…</span>
+<span class="co">#&gt; $ identifierUri             &lt;chr&gt; "http://urn.kb.se/resolve?urn=urn:nbn:se:kth:diva-200117"</span>
 <span class="co">#&gt; $ bookEdition               &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ bookPublisher             &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ bookPlace                 &lt;chr&gt; ""</span>
@@ -215,14 +198,14 @@
 <span class="co">#&gt; $ hostIssue                 &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ hostVolume                &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ hostSubTitle              &lt;chr&gt; ""</span>
-<span class="co">#&gt; $ hostTitle                 &lt;chr&gt; "Achievements of the International Magnetosp…</span>
+<span class="co">#&gt; $ hostTitle                 &lt;chr&gt; "Achievements of the International Magnetospheric Study (IMS)"</span>
 <span class="co">#&gt; $ contentTypeCode           &lt;chr&gt; "refereed"</span>
 <span class="co">#&gt; $ publicationSubTypeCode    &lt;chr&gt; ""</span>
 <span class="co">#&gt; $ publicationTypeCode       &lt;chr&gt; "article"</span>
 <span class="co">#&gt; $ dateIssued                &lt;chr&gt; "1984"</span>
 <span class="co">#&gt; $ publicationStatus         &lt;chr&gt; "Published"</span>
 <span class="co">#&gt; $ subTitle                  &lt;chr&gt; ""</span>
-<span class="co">#&gt; $ title                     &lt;chr&gt; "Electric field and plasma observations nea…</span>
+<span class="co">#&gt; $ title                     &lt;chr&gt; "Electric field and plasma observations near the magnetopause and bow shock during a rapid compression."</span>
 <span class="co">#&gt; $ visible                   &lt;lgl&gt; TRUE</span>
 
 <span class="co"># whether the user provides public access can be checked with the userstatus call</span>
@@ -230,23 +213,23 @@
 <span class="co">#&gt; NULL</span>
 
 <span class="co"># not all users have registered publications</span>
-<span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span>
+<span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span><span class="op">(</span><span class="st">"filteredPublications"</span>, username <span class="op">=</span> <span class="st">"mskyttner"</span><span class="op">)</span>, 
   error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="va">e</span><span class="op">)</span>
 <span class="co">#&gt; &lt;simpleError: The API returned an error&gt;</span>
 
 <span class="co"># organisations can be queried</span>
-<span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span><span class="op">(</span><span class="st">"organisations"</span><span class="op">)</span><span class="op">$</span><span class="va">content</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="../reference/kth_publications.html">kth_publications</a></span><span class="op">(</span><span class="st">"organisations"</span><span class="op">)</span><span class="op">$</span><span class="va">content</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 5 x 3</span>
-<span class="co">#&gt;       id name$en                 $sv                   nameLocalized            </span>
-<span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                   &lt;chr&gt;                 &lt;chr&gt;                    </span>
-<span class="co">#&gt; 1    177 KTH                     KTH                   KTH                      </span>
-<span class="co">#&gt; 2  12851 Centres                 Centra                Centres                  </span>
-<span class="co">#&gt; 3  12850 Nordic Institute for T… Nordic Institute for… Nordic Institute for The…</span>
-<span class="co">#&gt; 4   5921 Science for Life Labor… Science for Life Lab… Science for Life Laborat…</span>
-<span class="co">#&gt; 5 878400 KTH Center for Applied… KTH Center for Appli… KTH Center for Applied P…</span></code></pre></div>
+<span class="co">#&gt;       id name$en                                       $sv                                          nameLocalized                               </span>
+<span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                                         &lt;chr&gt;                                        &lt;chr&gt;                                       </span>
+<span class="co">#&gt; 1    177 KTH                                           KTH                                          KTH                                         </span>
+<span class="co">#&gt; 2  12851 Centres                                       Centra                                       Centres                                     </span>
+<span class="co">#&gt; 3  12850 Nordic Institute for Theoretical Physics NOR… Nordic Institute for Theoretical Physics NO… Nordic Institute for Theoretical Physics NO…</span>
+<span class="co">#&gt; 4   5921 Science for Life Laboratory, SciLifeLab       Science for Life Laboratory, SciLifeLab      Science for Life Laboratory, SciLifeLab     </span>
+<span class="co">#&gt; 5 878400 KTH Center for Applied Precision Medicine (K… KTH Center for Applied Precision Medicine (… KTH Center for Applied Precision Medicine (…</span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -258,11 +241,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Gaël Dubus, Agne Larsson, Markus Skyttner.</p>
+  <p></p>
+<p>Developed by Gaël Dubus, Agne Larsson, Markus Skyttner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -270,6 +255,8 @@
 
   
 
+
+  
 
   </body>
 </html>

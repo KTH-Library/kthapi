@@ -48,11 +48,11 @@ See details at \url{https://api.kth.se/api/publications/swagger}
 kth_publications(path = "userstatus", username = "tjep")
 
 orgid <- tibble::as_tibble(kth_publications(path = "organisations")$content) \%>\%
-    dplyr::filter(nameLocalized == "Library") \%>\% dplyr::pull(id)
+    dplyr::filter(nameLocalized == "Bibliotek") \%>\% dplyr::pull(id)
 
 pubs <- kth_publications("organisation", orgid = orgid)$content$publications \%>\%
     tibble::as_tibble()
 
-uri <- pubs$identifierUri[1]
+kth_publications("organisation", divaUri = kth_diva_org_mods_uri(orgid))$content \%>\% as.character() \%>\% xml2::read_html() \%>\% rvest::html_nodes("a") \%>\% as.character()
 }
 }

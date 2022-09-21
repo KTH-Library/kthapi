@@ -1,9 +1,16 @@
 #'
-kth_publication_mods_uri <- function(pid) {
-  sprintf("http://kth.diva-portal.org/smash/references?referenceFormat=MODS&pids=[%s]",
-    paste0(collapse=pid))
+kth_diva_org_mods_uri <- function(orgid) {
+  paste0(
+    'http://kth.diva-portal.org/smash/export.jsf?format=mods',
+    '&addFilename=true&aq=[[]]&aqe=[]',
+    '&aq2=[[{"organisationId":"', orgid,'","organisationId-Xtra":true}]]',
+    '&onlyFullText=false&noOfRows=50000&sortOrder=dateIssued_sort_desc',
+    '&sortOrder2=title_sort_asc'
+  )
 }
 
+#  sprintf("http://kth.diva-portal.org/smash/references?referenceFormat=MODS&pids=[%s]",
+#    paste0(collapse=pid))
 #http://kth.diva-portal.org/smash/record.jsf?searchType=RESEARCH&language=en&query=&af=%5B%22personOrgId%3A5993%22%5D&aq=%5B%5B%5D%5D&aq2=%5B%5B%5D%5D&aqe=%5B%5D&noOfRows=50&sortOrder=author_sort_asc&sortOrder2=title_sort_asc&onlyFullText=false&sf=all#
 
 #' Retrieve data for KTH Publications
@@ -33,17 +40,19 @@ kth_publication_mods_uri <- function(pid) {
 #' kth_publications(path = "userstatus", username = "tjep")
 #'
 #' orgid <- tibble::as_tibble(kth_publications(path = "organisations")$content) %>%
-#'     dplyr::filter(nameLocalized == "Library") %>% dplyr::pull(id)
+#'     dplyr::filter(nameLocalized == "Bibliotek") %>% dplyr::pull(id)
 #'
 #' pubs <- kth_publications("organisation", orgid = orgid)$content$publications %>%
 #'     tibble::as_tibble()
 #'
-#' uri <- pubs$identifierUri[1]
+#' kth_publications("organisation", divaUri = kth_diva_org_mods_uri(orgid))$content %>% as.character() %>% xml2::read_html() %>% rvest::html_nodes("a") %>% as.character()
 #' }
 kth_publications <- function(
-  path = c("filteredPublications", "userstatus", "stats", "activePublicUsers",
-           "activeNotPublicUsers", "activeUsersWithPublications", "activeUsersWithoutPublications",
-           "organisation", "organisations"),
+  path = c(
+    "filteredPublications", "userstatus", "stats", "activePublicUsers",
+    "activeNotPublicUsers", "activeUsersWithPublications", "activeUsersWithoutPublications",
+    "organisation", "organisations"
+  ),
   username = NULL, orgid = NULL,
   is_html = c("false", "true"), lang = c("sv", "en"), style = c("ieee", "apa"),
   divaUri = NULL, q = NULL,

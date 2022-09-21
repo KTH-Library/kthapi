@@ -31,7 +31,7 @@ check_status <- function(res){
 #' my_cfg$verbose <- TRUE
 #'
 #' # then use this config when making calls
-#' kth_profile_legacy("hoyce", config = my_cfg)
+#' kth_profile_legacy("tjep", config = my_cfg)
 #'  }
 #' }
 #' @seealso
@@ -91,14 +91,14 @@ status_kthapi <- function() {
   }
 
   # KTH Profiles API legacy check
-  unit_code <- kth_profile_school_dep("hoyce")
+  unit_code <- kth_profile_school_dep("tjep")
   is_valid_1 <- length(unit_code) > 1
   if (!is_valid_1)
     warning("KTH Profiles Legacy API check failed - connectivity issue?")
 
   # KTH Profiles API check
-  profile <- kth_profile(username = "hoyce")
-  is_valid_2 <- profile$content$emailAddress == "hoyce@kth.se"
+  profile <- kth_profile(username = "tjep")
+  is_valid_2 <- profile$content$emailAddress == "tjep@kth.se"
   if (!is_valid_2)
     warning("KTH Profiles API check failed - connectivity issue?")
 

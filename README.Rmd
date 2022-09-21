@@ -51,7 +51,7 @@ This is a basic example which shows you how to make a lookup using the v 1.1 "le
 
 ```{r}
 profile <- 
-  kth_profile_legacy("hoyce") %>% 
+  kth_profile_legacy("tjep") %>% 
   .$content 
 
 # inspect this record
@@ -75,7 +75,7 @@ This is a basic example which shows how to make a lookup using the authenticated
 ```{r}
 
 profile <- 
-  kth_profile(username = "hoyce") %>%
+  kth_profile(username = "tjep") %>%
   .$content
 
 # organizational belonging
@@ -88,7 +88,7 @@ profile$worksFor$items %>%
 profile$worksFor$items$path
 
 # displayname used in ABM app
-kth_displayname("hoyce", type = "username")
+kth_displayname("tjep", type = "username")
 
 # NB: this (authenticated API call) does not throw an error for non-employees
 kth_displayname("markussk", type = "username")

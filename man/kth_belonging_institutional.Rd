@@ -22,6 +22,6 @@ institutional level (assumed to be the second highest hierarchical level)
 \examples{
 \dontrun{
 kth_belonging_institutional("u1z88syr")
-kth_belonging_institutional("hoyce")
+kth_belonging_institutional("tjep")
 }
 }

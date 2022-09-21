@@ -47,25 +47,25 @@ employee using an account name:
 
 ``` r
 profile <- 
-  kth_profile_legacy("hoyce") %>% 
+  kth_profile_legacy("tjep") %>% 
   .$content 
 
 # inspect this record
 profile %>% glimpse()
 #> Rows: 1
 #> Columns: 12
-#> $ givenName          <chr> "Niklas"
-#> $ familyName         <chr> "Olsson"
-#> $ url                <chr> "https://www.kth.se/profile/hoyce"
-#> $ email              <chr> "hoyce@kth.se"
-#> $ image              <chr> "https://www.kth.se/files/avatar/hoyce"
-#> $ telephone          <chr> "087909357"
-#> $ jobTitle           <chr> "FÖRVALTNINGSLEDARE IT"
-#> $ `jobTitle-en`      <chr> "IT Solution Manager"
-#> $ workLocation       <chr> "DROTTNING KRISTINAS VÄG 48"
-#> $ worksFor.url       <chr> "https://www.kth.se/directory/t/tj/tjd/tjda"
-#> $ worksFor.name      <chr> "FÖRVALTNING"
-#> $ `worksFor.name-en` <chr> "FÖRVALTNING"
+#> $ givenName          <chr> "Tobias"
+#> $ familyName         <chr> "Jeppsson"
+#> $ url                <chr> "https://www.kth.se/profile/tjep"
+#> $ email              <chr> "tjep@kth.se"
+#> $ image              <chr> "https://www.kth.se/files/avatar/tjep"
+#> $ telephone          <chr> "087907106"
+#> $ jobTitle           <chr> "BIBLIOMETRISK ANALYTIKER"
+#> $ `jobTitle-en`      <chr> "BIBLIOMETRIC ANALYST"
+#> $ workLocation       <chr> "OSQUARS BACKE 31"
+#> $ worksFor.url       <chr> "https://www.kth.se/directory/t/tr/trac"
+#> $ worksFor.name      <chr> "PUBLICERINGENS INFRASTRUKTUR"
+#> $ `worksFor.name-en` <chr> ""
 
 # pivot into long format and display as a table
 profile %>% t() %>% as.data.frame() %>%  
@@ -74,26 +74,31 @@ profile %>% t() %>% as.data.frame() %>%
   kable()
 ```
 
-| key              | value                                        |
-|:-----------------|:---------------------------------------------|
-| givenName        | Niklas                                       |
-| familyName       | Olsson                                       |
-| url              | <https://www.kth.se/profile/hoyce>           |
-| email            | <hoyce@kth.se>                               |
-| image            | <https://www.kth.se/files/avatar/hoyce>      |
-| telephone        | 087909357                                    |
-| jobTitle         | FÖRVALTNINGSLEDARE IT                        |
-| jobTitle-en      | IT Solution Manager                          |
-| workLocation     | DROTTNING KRISTINAS VÄG 48                   |
-| worksFor.url     | <https://www.kth.se/directory/t/tj/tjd/tjda> |
-| worksFor.name    | FÖRVALTNING                                  |
-| worksFor.name-en | FÖRVALTNING                                  |
+| key              | value                                    |
+|:-----------------|:-----------------------------------------|
+| givenName        | Tobias                                   |
+| familyName       | Jeppsson                                 |
+| url              | <https://www.kth.se/profile/tjep>        |
+| email            | <tjep@kth.se>                            |
+| image            | <https://www.kth.se/files/avatar/tjep>   |
+| telephone        | 087907106                                |
+| jobTitle         | BIBLIOMETRISK ANALYTIKER                 |
+| jobTitle-en      | BIBLIOMETRIC ANALYST                     |
+| workLocation     | OSQUARS BACKE 31                         |
+| worksFor.url     | <https://www.kth.se/directory/t/tr/trac> |
+| worksFor.name    | PUBLICERINGENS INFRASTRUKTUR             |
+| worksFor.name-en |                                          |
 
 ``` r
 
+
 # NB: some valid account names do not return data
 tryCatch(kth_profile_legacy("markussk"), error = function(e) e)
-#> <simpleError: The API returned an error>
+#> <KTH API call for markussk>
+#> # A tibble: 0 × 10
+#> # … with 10 variables: givenName <chr>, familyName <chr>, url <chr>,
+#> #   email <chr>, image <chr>, telephone <chr>, jobTitle <chr>,
+#> #   jobTitle-en <chr>, worksFor <list>, workLocation <chr>
 ```
 
 ## More examples
@@ -102,8 +107,9 @@ This is a basic example which shows how to make a lookup using the
 authenticated Profiles API:
 
 ``` r
+
 profile <- 
-  kth_profile(username = "hoyce") %>%
+  kth_profile(username = "tjep") %>%
   .$content
 
 # organizational belonging
@@ -113,20 +119,20 @@ profile$worksFor$items %>%
   knitr::kable()
 ```
 
-| path          | name                    | nameEn |
-|:--------------|:------------------------|:-------|
-| t/tj          | IT-AVDELNINGEN          | IT     |
-| t/tj/tjd      | SYSTEMFÖRV & UTVECKLING |        |
-| t/tj/tjd/tjda | FÖRVALTNING             |        |
+| path      | name                         | nameEn      |
+|:----------|:-----------------------------|:------------|
+| t/tr      | KTH BIBLIOTEKET              | KTH LIBRARY |
+| t/tr/trac | PUBLICERINGENS INFRASTRUKTUR |             |
 
 ``` r
+
 # corresponding "slugs"
 profile$worksFor$items$path
-#> [1] "t/tj"          "t/tj/tjd"      "t/tj/tjd/tjda"
+#> [1] "t/tr"      "t/tr/trac"
 
 # displayname used in ABM app
-kth_displayname("hoyce", type = "username")
-#> [1] "Niklas Olsson (hoyce)"
+kth_displayname("tjep", type = "username")
+#> [1] "Tobias Jeppsson (tjep)"
 
 # NB: this (authenticated API call) does not throw an error for non-employees
 kth_displayname("markussk", type = "username")

@@ -25,7 +25,7 @@ my_cfg$ua <- httr::user_agent("My own user agent string")
 my_cfg$verbose <- TRUE
 
 # then use this config when making calls
-kth_profile_legacy("hoyce", config = my_cfg)
+kth_profile_legacy("tjep", config = my_cfg)
  }
 }
 }

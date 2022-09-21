@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">kthapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -117,25 +117,25 @@
 <p>This is a basic example which shows you how to make a lookup using the v 1.1 “legacy” Profiles API, where we get contact information for a KTH employee using an account name:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">profile</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="reference/kth_profile_legacy.html">kth_profile_legacy</a></span><span class="op">(</span><span class="st">"hoyce"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="reference/kth_profile_legacy.html">kth_profile_legacy</a></span><span class="op">(</span><span class="st">"tjep"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="va">.</span><span class="op">$</span><span class="va">content</span> 
 
 <span class="co"># inspect this record</span>
 <span class="va">profile</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 12</span>
-<span class="co">#&gt; $ givenName          &lt;chr&gt; "Niklas"</span>
-<span class="co">#&gt; $ familyName         &lt;chr&gt; "Olsson"</span>
-<span class="co">#&gt; $ url                &lt;chr&gt; "https://www.kth.se/profile/hoyce"</span>
-<span class="co">#&gt; $ email              &lt;chr&gt; "hoyce@kth.se"</span>
-<span class="co">#&gt; $ image              &lt;chr&gt; "https://www.kth.se/files/avatar/hoyce"</span>
-<span class="co">#&gt; $ telephone          &lt;chr&gt; "087909357"</span>
-<span class="co">#&gt; $ jobTitle           &lt;chr&gt; "FÖRVALTNINGSLEDARE IT"</span>
-<span class="co">#&gt; $ `jobTitle-en`      &lt;chr&gt; "IT Solution Manager"</span>
-<span class="co">#&gt; $ workLocation       &lt;chr&gt; "DROTTNING KRISTINAS VÄG 48"</span>
-<span class="co">#&gt; $ worksFor.url       &lt;chr&gt; "https://www.kth.se/directory/t/tj/tjd/tjda"</span>
-<span class="co">#&gt; $ worksFor.name      &lt;chr&gt; "FÖRVALTNING"</span>
-<span class="co">#&gt; $ `worksFor.name-en` &lt;chr&gt; "FÖRVALTNING"</span>
+<span class="co">#&gt; $ givenName          &lt;chr&gt; "Tobias"</span>
+<span class="co">#&gt; $ familyName         &lt;chr&gt; "Jeppsson"</span>
+<span class="co">#&gt; $ url                &lt;chr&gt; "https://www.kth.se/profile/tjep"</span>
+<span class="co">#&gt; $ email              &lt;chr&gt; "tjep@kth.se"</span>
+<span class="co">#&gt; $ image              &lt;chr&gt; "https://www.kth.se/files/avatar/tjep"</span>
+<span class="co">#&gt; $ telephone          &lt;chr&gt; "087907106"</span>
+<span class="co">#&gt; $ jobTitle           &lt;chr&gt; "BIBLIOMETRISK ANALYTIKER"</span>
+<span class="co">#&gt; $ `jobTitle-en`      &lt;chr&gt; "BIBLIOMETRIC ANALYST"</span>
+<span class="co">#&gt; $ workLocation       &lt;chr&gt; "OSQUARS BACKE 31"</span>
+<span class="co">#&gt; $ worksFor.url       &lt;chr&gt; "https://www.kth.se/directory/t/tr/trac"</span>
+<span class="co">#&gt; $ worksFor.name      &lt;chr&gt; "PUBLICERINGENS INFRASTRUKTUR"</span>
+<span class="co">#&gt; $ `worksFor.name-en` &lt;chr&gt; ""</span>
 
 <span class="co"># pivot into long format and display as a table</span>
 <span class="va">profile</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  
@@ -150,67 +150,73 @@
 <tbody>
 <tr class="odd">
 <td align="left">givenName</td>
-<td align="left">Niklas</td>
+<td align="left">Tobias</td>
 </tr>
 <tr class="even">
 <td align="left">familyName</td>
-<td align="left">Olsson</td>
+<td align="left">Jeppsson</td>
 </tr>
 <tr class="odd">
 <td align="left">url</td>
-<td align="left"><a href="https://www.kth.se/profile/hoyce" class="external-link uri">https://www.kth.se/profile/hoyce</a></td>
+<td align="left"><a href="https://www.kth.se/profile/tjep" class="external-link uri">https://www.kth.se/profile/tjep</a></td>
 </tr>
 <tr class="even">
 <td align="left">email</td>
-<td align="left"><a href="mailto:hoyce@kth.se" class="email">hoyce@kth.se</a></td>
+<td align="left"><a href="mailto:tjep@kth.se" class="email">tjep@kth.se</a></td>
 </tr>
 <tr class="odd">
 <td align="left">image</td>
-<td align="left"><a href="https://www.kth.se/files/avatar/hoyce" class="external-link uri">https://www.kth.se/files/avatar/hoyce</a></td>
+<td align="left"><a href="https://www.kth.se/files/avatar/tjep" class="external-link uri">https://www.kth.se/files/avatar/tjep</a></td>
 </tr>
 <tr class="even">
 <td align="left">telephone</td>
-<td align="left">087909357</td>
+<td align="left">087907106</td>
 </tr>
 <tr class="odd">
 <td align="left">jobTitle</td>
-<td align="left">FÖRVALTNINGSLEDARE IT</td>
+<td align="left">BIBLIOMETRISK ANALYTIKER</td>
 </tr>
 <tr class="even">
 <td align="left">jobTitle-en</td>
-<td align="left">IT Solution Manager</td>
+<td align="left">BIBLIOMETRIC ANALYST</td>
 </tr>
 <tr class="odd">
 <td align="left">workLocation</td>
-<td align="left">DROTTNING KRISTINAS VÄG 48</td>
+<td align="left">OSQUARS BACKE 31</td>
 </tr>
 <tr class="even">
 <td align="left">worksFor.url</td>
-<td align="left"><a href="https://www.kth.se/directory/t/tj/tjd/tjda" class="external-link uri">https://www.kth.se/directory/t/tj/tjd/tjda</a></td>
+<td align="left"><a href="https://www.kth.se/directory/t/tr/trac" class="external-link uri">https://www.kth.se/directory/t/tr/trac</a></td>
 </tr>
 <tr class="odd">
 <td align="left">worksFor.name</td>
-<td align="left">FÖRVALTNING</td>
+<td align="left">PUBLICERINGENS INFRASTRUKTUR</td>
 </tr>
 <tr class="even">
 <td align="left">worksFor.name-en</td>
-<td align="left">FÖRVALTNING</td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
+
 <span class="co"># NB: some valid account names do not return data</span>
 <span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="reference/kth_profile_legacy.html">kth_profile_legacy</a></span><span class="op">(</span><span class="st">"markussk"</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="va">e</span><span class="op">)</span>
-<span class="co">#&gt; &lt;simpleError: The API returned an error&gt;</span></code></pre></div>
+<span class="co">#&gt; &lt;KTH API call for markussk&gt;</span>
+<span class="co">#&gt; # A tibble: 0 × 10</span>
+<span class="co">#&gt; # … with 10 variables: givenName &lt;chr&gt;, familyName &lt;chr&gt;, url &lt;chr&gt;,</span>
+<span class="co">#&gt; #   email &lt;chr&gt;, image &lt;chr&gt;, telephone &lt;chr&gt;, jobTitle &lt;chr&gt;,</span>
+<span class="co">#&gt; #   jobTitle-en &lt;chr&gt;, worksFor &lt;list&gt;, workLocation &lt;chr&gt;</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="more-examples">More examples<a class="anchor" aria-label="anchor" href="#more-examples"></a>
 </h2>
 <p>This is a basic example which shows how to make a lookup using the authenticated Profiles API:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">profile</span> <span class="op">&lt;-</span> 
-  <span class="fu"><a href="reference/kth_profile.html">kth_profile</a></span><span class="op">(</span>username <span class="op">=</span> <span class="st">"hoyce"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<code class="sourceCode R">
+<span class="va">profile</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="reference/kth_profile.html">kth_profile</a></span><span class="op">(</span>username <span class="op">=</span> <span class="st">"tjep"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="va">.</span><span class="op">$</span><span class="va">content</span>
 
 <span class="co"># organizational belonging</span>
@@ -226,30 +232,26 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">t/tj</td>
-<td align="left">IT-AVDELNINGEN</td>
-<td align="left">IT</td>
+<td align="left">t/tr</td>
+<td align="left">KTH BIBLIOTEKET</td>
+<td align="left">KTH LIBRARY</td>
 </tr>
 <tr class="even">
-<td align="left">t/tj/tjd</td>
-<td align="left">SYSTEMFÖRV &amp; UTVECKLING</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">t/tj/tjd/tjda</td>
-<td align="left">FÖRVALTNING</td>
+<td align="left">t/tr/trac</td>
+<td align="left">PUBLICERINGENS INFRASTRUKTUR</td>
 <td align="left"></td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># corresponding "slugs"</span>
+<code class="sourceCode R">
+<span class="co"># corresponding "slugs"</span>
 <span class="va">profile</span><span class="op">$</span><span class="va">worksFor</span><span class="op">$</span><span class="va">items</span><span class="op">$</span><span class="va">path</span>
-<span class="co">#&gt; [1] "t/tj"          "t/tj/tjd"      "t/tj/tjd/tjda"</span>
+<span class="co">#&gt; [1] "t/tr"      "t/tr/trac"</span>
 
 <span class="co"># displayname used in ABM app</span>
-<span class="fu"><a href="reference/kth_displayname.html">kth_displayname</a></span><span class="op">(</span><span class="st">"hoyce"</span>, type <span class="op">=</span> <span class="st">"username"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Niklas Olsson (hoyce)"</span>
+<span class="fu"><a href="reference/kth_displayname.html">kth_displayname</a></span><span class="op">(</span><span class="st">"tjep"</span>, type <span class="op">=</span> <span class="st">"username"</span><span class="op">)</span>
+<span class="co">#&gt; [1] "Tobias Jeppsson (tjep)"</span>
 
 <span class="co"># NB: this (authenticated API call) does not throw an error for non-employees</span>
 <span class="fu"><a href="reference/kth_displayname.html">kth_displayname</a></span><span class="op">(</span><span class="st">"markussk"</span>, type <span class="op">=</span> <span class="st">"username"</span><span class="op">)</span>
@@ -312,7 +314,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>

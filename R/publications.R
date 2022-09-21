@@ -1,14 +1,22 @@
+#'
+kth_publication_mods_uri <- function(pid) {
+  sprintf("http://kth.diva-portal.org/smash/references?referenceFormat=MODS&pids=[%s]",
+    paste0(collapse=pid))
+}
+
+#http://kth.diva-portal.org/smash/record.jsf?searchType=RESEARCH&language=en&query=&af=%5B%22personOrgId%3A5993%22%5D&aq=%5B%5B%5D%5D&aq2=%5B%5B%5D%5D&aqe=%5B%5D&noOfRows=50&sortOrder=author_sort_asc&sortOrder2=title_sort_asc&onlyFullText=false&sf=all#
+
 #' Retrieve data for KTH Publications
 #'
-#' See details at <https://api.kth.se/api/publications/swagger/?url=/api/publications/swagger.json#/>
+#' See details at <https://api.kth.se/api/publications/swagger>
 #' @param path one of a set of valid API calls
 #' @param username the accountname parameter to use
 #' @param orgid the organisation identifier to use
-#' @param is_html boolean to indicate if HTML should be returned
+#' @param is_html string to indicate if HTML should be returned, default "false"
 #' @param style the style to use (when requesting organisation path)
 #' @param divaUri the diva URI to use (when requesting organisation/diva path)
 #' @param q regexp filter (when requesting organizations path)
-#' @param l the language code (one of "en" or "sv")
+#' @param lang the language code (one of "en" or "sv")
 #' @param config a configuration setting for the KTH APIs including base URL etc, by default from config()
 #'
 #' @importFrom attempt stop_if_all stop_if_not
@@ -22,17 +30,27 @@
 #' @return results records returned from the search
 #' @examples
 #' \dontrun{
-#' kth_publications(username = "hoyce")
+#' kth_publications(path = "userstatus", username = "tjep")
+#'
+#' orgid <- tibble::as_tibble(kth_publications(path = "organisations")$content) %>%
+#'     dplyr::filter(nameLocalized == "Library") %>% dplyr::pull(id)
+#'
+#' pubs <- kth_publications("organisation", orgid = orgid)$content$publications %>%
+#'     tibble::as_tibble()
+#'
+#' uri <- pubs$identifierUri[1]
 #' }
 kth_publications <- function(
   path = c("filteredPublications", "userstatus", "stats", "activePublicUsers",
            "activeNotPublicUsers", "activeUsersWithPublications", "activeUsersWithoutPublications",
            "organisation", "organisations"),
-  username = NULL, orgid = NULL, is_html = NULL, l = NULL, style = NULL, divaUri = NULL, q = NULL,
+  username = NULL, orgid = NULL,
+  is_html = c("false", "true"), lang = c("sv", "en"), style = c("ieee", "apa"),
+  divaUri = NULL, q = NULL,
   config = NULL)
 {
 
-  # filtererdPublications, userstatus (username)
+  # filteredPublications, userstatus (username)
   # c("stats", "activePublicUsers", "activeNotPublicUsers", "activeUsersWithPublications", "activeUsersWithoutPublications")
   # organisation/{id}(id, html, l, style)
   # organisation/diva(divaUri)
@@ -54,18 +72,21 @@ kth_publications <- function(
      "activeUsersWithPublications", "activeUsersWithoutPublications")) {
     # do nothing
   } else if (path == "organisation") {
-    if (is_valid_arg(id)) {
-      path <- sprintf("%s/%s", path, id)
-      message("Should add params html, l, style if present here ...")
+    if (is_valid_arg(orgid)) {
+      path <- sprintf("%s/%s", path, orgid)
+      params <- list(
+        html = match.arg(is_html),
+        l = match.arg(lang),
+        style = match.arg(style)
+      )
     } else if (is_valid_arg(divaUri)) {
-      path <- sprintf("%s/diva")
+      path <- sprintf("%s/diva", path)
       stop_if_not(divaUri, is_valid_arg, msg = "Please provide a valid Diva URI")
       params <- list(divaUri = divaUri)
     }
   } else if (path == "organisations") {
     if (is.null(q)) q <- ".*"
-    if (is.null(l)) l <- "en"
-    params <- list(q = q, l = l)
+    params <- list(q = q, l = match.arg(lang))
   }
 
   url <- sprintf("%s/%s", config$url_publications, path)
@@ -80,11 +101,16 @@ kth_publications <- function(
   }
 
   check_status(resp)
-  if (http_type(resp) != "application/json") {
-    stop("API did not return json", call. = FALSE)
-  }
 
-  parsed <- fromJSON(rawToChar(resp$content)) #, flatten = TRUE)
+  if (path == "organisation/diva") {
+    parsed <- httr::content(resp)
+  } else {
+    if (http_type(resp) != "application/json") {
+      print(content(resp))
+      stop("API did not return json", call. = FALSE)
+    }
+    parsed <- fromJSON(rawToChar(resp$content)) #, flatten = TRUE)
+  }
 
   if (status_code(resp) != 200) {
     stop(
@@ -107,7 +133,7 @@ kth_publications <- function(
       content = content,
       query = path
     ),
-    class = "kthapipublications"
+    class = c("kthapipublications")
   )
 }
 

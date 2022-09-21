@@ -27,12 +27,12 @@ kth_profile(
 results records returned from the search
 }
 \description{
-See details at \url{https://api.kth.se/api/profile/swagger/?url=/api/profile/swagger.json#/v1.1/getPublicProfile_v11}
+See details at \url{https://api.kth.se/api/profile/swagger/index.html}
 }
 \examples{
 \dontrun{
-kth_profile(username = "hoyce")
 kth_profile(username = "agnel")
 kth_profile(username = "markussk")
+tryCatch(kth_profile(username = "hoyce"), error = function(e) e, warning("Does not exist?"))
 }
 }

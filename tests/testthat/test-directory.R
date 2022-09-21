@@ -15,12 +15,12 @@ test_that("query for root works", {
 
   lookup <- kth_root(path = "root")$content
 
-  t1 <- bind_cols(with(lookup, list(
-    slug, parent_id, imported, kthid, location,
-    fax, phone, website, version, `description.en`
-  )))
+  # t1 <- bind_cols(with(lookup, list(
+  #   slug, parent_id, imported, kthid, location,
+  #   fax, phone, website, version, `description.en`
+  # )))
 
-  expect_gt(nrow(t1), 6)
+  expect_equal(nrow(t1), 6)
 
 })
 
@@ -43,7 +43,7 @@ test_that("query for catalog from slug 's/sa' works", {
   n_catalogs <- nrow(sa$catalogs)
   is_valid_parent <- sa$parent$slug == "s"
 
-  is_valid <- n_users > 10 && n_catalogs == 2 && is_valid_parent
+  is_valid <- n_users > 10 && n_catalogs == 3 && is_valid_parent
   expect_true(is_valid)
 })
 

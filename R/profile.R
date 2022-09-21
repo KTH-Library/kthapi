@@ -18,9 +18,9 @@
 #' @return results records returned from the search
 #' @examples
 #' \dontrun{
-#' kth_profile_legacy("hoyce")
 #' kth_profile_legacy("agnel")
-#' # kth_profile_legacy("markussk")  # error
+#' kth_profile_legacy("tjep")
+#' tryCatch(kth_profile(username = "hoyce"), error = function(e) e, warning("Does not exist?"))
 #' }
 kth_profile_legacy <- function(
   userid = NULL,
@@ -78,7 +78,7 @@ kth_profile_legacy <- function(
 
 #' Retrieve data for KTH Profiles
 #'
-#' See details at <https://api.kth.se/api/profile/swagger/?url=/api/profile/swagger.json#/v1.1/getPublicProfile_v11>
+#' See details at <https://api.kth.se/api/profile/swagger/index.html>
 #' @param kthid the kthId for the user profile
 #' @param orcid the ORC identifier for the user profile
 #' @param socialid the social id for the user profile
@@ -96,9 +96,9 @@ kth_profile_legacy <- function(
 #' @return results records returned from the search
 #' @examples
 #' \dontrun{
-#' kth_profile(username = "hoyce")
 #' kth_profile(username = "agnel")
 #' kth_profile(username = "markussk")
+#' tryCatch(kth_profile(username = "hoyce"), error = function(e) e, warning("Does not exist?"))
 #' }
 kth_profile <- function(kthid = NULL, orcid = NULL, socialid = NULL, username = NULL,
   config = NULL)
@@ -197,7 +197,7 @@ kth_displayname <- function(user, type = c("kthid", "username"), cfg = config())
 #' @examples
 #' \dontrun{
 #' kth_profile_school_dep("u1z88syr")
-#' kth_profile_legacy("hoyce")
+#' kth_profile_legacy("tjep")
 #' }
 kth_profile_school_dep <- function(kthid, cfg = config()) {
   cfg <- config()
@@ -217,7 +217,7 @@ kth_profile_school_dep <- function(kthid, cfg = config()) {
 #' @examples
 #' \dontrun{
 #' kth_belonging_institutional("u1z88syr")
-#' kth_belonging_institutional("hoyce")
+#' kth_belonging_institutional("tjep")
 #' }
 kth_belonging_institutional <- function(kthid, cfg = config()) {
 

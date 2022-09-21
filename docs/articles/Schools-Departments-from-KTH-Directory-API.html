@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">kthapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -100,7 +100,8 @@
 <div class="section level2">
 <h2 id="organizational-belonging-for-a-given-kth-user-account-or-kthid">Organizational belonging for a given KTH user account or kthid<a class="anchor" aria-label="anchor" href="#organizational-belonging-for-a-given-kth-user-account-or-kthid"></a>
 </h2>
-<p>Given an account name or “kthid”, how can we look up the organizational belonging?</p>
+<p>Given an account name or “kthid”, how can we look up the
+organizational belonging?</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KTH-Library/kthapi" class="external-link">kthapi</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
@@ -124,8 +125,12 @@
 
 <span class="va">unit2</span>
 <span class="co">#&gt; [1] "IT"</span></code></pre></div>
-<p>Via the so called “Legacy Profile API v 1.1” we have now looked up that <strong>hoyce</strong> belongs to the organizational unit <strong>IT</strong>, at the second level (institutional level) of the organizational hierarchy.</p>
-<p>A function that wraps the above calls and returns a data frame is provided for convenience:</p>
+<p>Via the so called “Legacy Profile API v 1.1” we have now looked up
+that <strong>hoyce</strong> belongs to the organizational unit
+<strong>IT</strong>, at the second level (institutional level) of the
+organizational hierarchy.</p>
+<p>A function that wraps the above calls and returns a data frame is
+provided for convenience:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/kth_belonging_institutional.html">kth_belonging_institutional</a></span><span class="op">(</span><span class="st">"hoyce"</span><span class="op">)</span>
 <span class="co">#&gt; Joining, by = "slug"</span>
@@ -133,13 +138,20 @@
 <span class="co">#&gt;   kthid slug  desc </span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;</span>
 <span class="co">#&gt; 1 hoyce t/tj  IT</span></code></pre></div>
-<p>The <code><a href="../reference/kth_profile_legacy.html">kth_profile_legacy()</a></code> function returns a field called <code>worksFor.name-en</code> which represents the lowest level (often level 4) organizational unit name, sometimes provided in Swedish instead of in English, so cannot directly be used to determine institutional belonging.</p>
+<p>The <code><a href="../reference/kth_profile_legacy.html">kth_profile_legacy()</a></code> function returns a field called
+<code>worksFor.name-en</code> which represents the lowest level (often
+level 4) organizational unit name, sometimes provided in Swedish instead
+of in English, so cannot directly be used to determine institutional
+belonging.</p>
 </div>
 <div class="section level2">
 <h2 id="level-1-and-2-organizational-units">Level 1 and 2 organizational units<a class="anchor" aria-label="anchor" href="#level-1-and-2-organizational-units"></a>
 </h2>
-<p>The KTH schools and departments (in this case for the first two levels of the org hierarchy) can be retrieved with <code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code>.</p>
-<p>In the listing we exclude the <code>kthid</code> identifier, but it exists also for organizational units.</p>
+<p>The KTH schools and departments (in this case for the first two
+levels of the org hierarchy) can be retrieved with
+<code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code>.</p>
+<p>In the listing we exclude the <code>kthid</code> identifier, but it
+exists also for organizational units.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/kth_school_dep.html">kth_school_dep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
 <span class="co">#  filter(is.na(`_id`)) %&gt;%</span>
@@ -169,13 +181,15 @@
 <tr class="even">
 <td align="right">2</td>
 <td align="left">c</td>
-<td align="left">SCHOOL OF ENGINEERING SCIENCES IN CHEMISTRY, BIOTECHNOLOGY AND HEALTH</td>
+<td align="left">SCHOOL OF ENGINEERING SCIENCES IN CHEMISTRY,
+BIOTECHNOLOGY AND HEALTH</td>
 <td align="left"><a href="https://www.kth.se/cbh" class="external-link uri">https://www.kth.se/cbh</a></td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
 <td align="left">j</td>
-<td align="left">SCHOOL OF ELECTRICAL ENGINEERING AND COMPUTER SCIENCE</td>
+<td align="left">SCHOOL OF ELECTRICAL ENGINEERING AND COMPUTER
+SCIENCE</td>
 <td align="left"><a href="https://www.kth.se/eecs" class="external-link uri">https://www.kth.se/eecs</a></td>
 </tr>
 <tr class="even">
@@ -253,7 +267,8 @@
 <tr class="even">
 <td align="right">16</td>
 <td align="left">a/al</td>
-<td align="left">SUSTAINABLE DEVELOPMENT, ENVIRONMENTAL SCIENCE AND ENGINEERING</td>
+<td align="left">SUSTAINABLE DEVELOPMENT, ENVIRONMENTAL SCIENCE AND
+ENGINEERING</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -271,7 +286,8 @@
 <tr class="odd">
 <td align="right">19</td>
 <td align="left">c/cd</td>
-<td align="left">DEPARTMENT OF BIOMEDICAL ENGINEERING AND HEALTH SYSTEMS</td>
+<td align="left">DEPARTMENT OF BIOMEDICAL ENGINEERING AND HEALTH
+SYSTEMS</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -409,7 +425,8 @@
 <tr class="even">
 <td align="right">42</td>
 <td align="left">m/mm</td>
-<td align="left">POWERTRAIN MANUFACTURING FOR HEAVY VEHICLES APPLICATION LAB (PMH)</td>
+<td align="left">POWERTRAIN MANUFACTURING FOR HEAVY VEHICLES APPLICATION
+LAB (PMH)</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -596,7 +613,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>

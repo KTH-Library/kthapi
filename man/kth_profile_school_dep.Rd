@@ -17,6 +17,6 @@ Retrieve organizational unit for a given kthid or accountname
 \examples{
 \dontrun{
 kth_profile_school_dep("u1z88syr")
-kth_profile_legacy("hoyce")
+kth_profile_legacy("tjep")
 }
 }

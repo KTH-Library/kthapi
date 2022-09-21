@@ -10,9 +10,9 @@ kth_publications(
     "activeUsersWithoutPublications", "organisation", "organisations"),
   username = NULL,
   orgid = NULL,
-  is_html = NULL,
-  l = NULL,
-  style = NULL,
+  is_html = c("false", "true"),
+  lang = c("sv", "en"),
+  style = c("ieee", "apa"),
   divaUri = NULL,
   q = NULL,
   config = NULL
@@ -25,9 +25,9 @@ kth_publications(
 
 \item{orgid}{the organisation identifier to use}
 
-\item{is_html}{boolean to indicate if HTML should be returned}
+\item{is_html}{string to indicate if HTML should be returned, default "false"}
 
-\item{l}{the language code (one of "en" or "sv")}
+\item{lang}{the language code (one of "en" or "sv")}
 
 \item{style}{the style to use (when requesting organisation path)}
 
@@ -41,10 +41,18 @@ kth_publications(
 results records returned from the search
 }
 \description{
-See details at \url{https://api.kth.se/api/publications/swagger/?url=/api/publications/swagger.json#/}
+See details at \url{https://api.kth.se/api/publications/swagger}
 }
 \examples{
 \dontrun{
-kth_publications(username = "hoyce")
+kth_publications(path = "userstatus", username = "tjep")
+
+orgid <- tibble::as_tibble(kth_publications(path = "organisations")$content) \%>\%
+    dplyr::filter(nameLocalized == "Library") \%>\% dplyr::pull(id)
+
+pubs <- kth_publications("organisation", orgid = orgid)$content$publications \%>\%
+    tibble::as_tibble()
+
+uri <- pubs$identifierUri[1]
 }
 }

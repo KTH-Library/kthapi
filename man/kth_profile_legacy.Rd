@@ -22,8 +22,8 @@ See details at \url{https://api.kth.se/api/profile/swagger/?url=/api/profile/swa
 }
 \examples{
 \dontrun{
-kth_profile_legacy("hoyce")
 kth_profile_legacy("agnel")
-# kth_profile_legacy("markussk")  # error
+kth_profile_legacy("tjep")
+tryCatch(kth_profile(username = "hoyce"), error = function(e) e, warning("Does not exist?"))
 }
 }

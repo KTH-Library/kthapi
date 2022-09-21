@@ -1,6 +1,6 @@
 Package: kthapi
 Title: Data from KTH APIs
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     c(
         person("Gaël", "Dubus", email = "dubus@kth.se", role = "aut"), 
@@ -38,6 +38,6 @@ Suggests:
     rmarkdown,
     knitr,
     testthat (>= 2.1.0)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

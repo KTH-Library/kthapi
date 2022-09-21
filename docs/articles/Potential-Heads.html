@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">kthapi</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -97,9 +97,12 @@
 
     
     
-<p>This example shows how to use the <code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code> function to enumerate some organizational unit “slugs”.</p>
-<p>For these slugs, associated KTH employees with the word “HEAD” in their titles are listed.</p>
-<p>This creates a list of potentially responsible heads for this set of organizational units at KTH.</p>
+<p>This example shows how to use the <code><a href="../reference/kth_school_dep.html">kth_school_dep()</a></code>
+function to enumerate some organizational unit “slugs”.</p>
+<p>For these slugs, associated KTH employees with the word “HEAD” in
+their titles are listed.</p>
+<p>This creates a list of potentially responsible heads for this set of
+organizational units at KTH.</p>
 <p>For most units there are several potential matches.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KTH-Library/kthapi" class="external-link">kthapi</a></span><span class="op">)</span>
@@ -185,7 +188,8 @@
 <tr class="odd">
 <td align="left">a/al</td>
 <td align="left">u23cj6w6</td>
-<td align="left">SUSTAINABLE DEVELOPMENT, ENVIRONMENTAL SCIENCE AND ENGINEERING</td>
+<td align="left">SUSTAINABLE DEVELOPMENT, ENVIRONMENTAL SCIENCE AND
+ENGINEERING</td>
 <td align="left">malmstro</td>
 <td align="left">HEAD OF DEPARTMENT, ASSOC.PROF</td>
 </tr>
@@ -218,7 +222,8 @@
 <div class="section level2">
 <h2 id="division-level-data">Division level data<a class="anchor" aria-label="anchor" href="#division-level-data"></a>
 </h2>
-<p>What divisions (KTH -&gt; School -&gt; Department (sv: Institution) -&gt; Division (sv: Avdelning)) are there?</p>
+<p>What divisions (KTH -&gt; School -&gt; Department (sv: Institution)
+-&gt; Division (sv: Avdelning)) are there?</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># get some relevant schools and departments</span>
@@ -275,6 +280,11 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">slug</span>, <span class="va">`description.en`</span>, <span class="va">kthid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="12%">
+<col width="75%">
+<col width="12%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">slug</th>
 <th align="left">description.en</th>
@@ -283,7 +293,8 @@
 <tbody>
 <tr class="odd">
 <td align="left">a/ai/aia</td>
-<td align="left">DIVISION OF REAL ESTATE AND CONSTRUCTION MANAGEMENT</td>
+<td align="left">DIVISION OF REAL ESTATE AND CONSTRUCTION
+MANAGEMENT</td>
 <td align="left">u2n3dep0</td>
 </tr>
 <tr class="even">
@@ -303,7 +314,8 @@
 </tr>
 <tr class="odd">
 <td align="left">a/ai/aie</td>
-<td align="left">DIVISION OF REAL ESTATE BUSINESS AND FINANCIAL SYSTEMS</td>
+<td align="left">DIVISION OF REAL ESTATE BUSINESS AND FINANCIAL
+SYSTEMS</td>
 <td align="left">u21evul2</td>
 </tr>
 <tr class="even">
@@ -333,7 +345,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>

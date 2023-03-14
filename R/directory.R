@@ -153,7 +153,7 @@ kth_catalog <- function(cfg = NULL, slug = NULL, lang = NULL) {
 
   resp <-
     GET(sprintf("%s/catalog/%s/*", cfg$url_directory, q$slug),
-        query = list(slug = slug, lang = q$lang),
+        param = list(l = q$lang),
         add_headers(api_key = cfg$api_key_directory))
 
   check_status(resp)

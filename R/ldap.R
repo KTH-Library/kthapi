@@ -35,7 +35,7 @@ ldap_cmd_search <- function(cfg = ldap_config(), ldap_query, ldap_attributes) {
     stop("Cannot find ldapsearch utility on system, pls install it (try sudo apt install ldap-utils)")
 
   sprintf(
-    "%s -LLL -E pr=2147483647/noprompt -H \"%s\" -x -D \"%s\" -w \"%s\" -b \"%s\" \"%s\" %s",
+    "%s -o ldif-wrap=no -LLL -E pr=2147483647/noprompt -H \"%s\" -x -D \"%s\" -w \"%s\" -b \"%s\" \"%s\" %s",
     ldapsearch, cfg$ldap_host, cfg$ldap_user, cfg$ldap_pass, cfg$ldap_base, ldap_query, a
   )
 }
@@ -173,7 +173,7 @@ ldap_search <- function(
           paste0(collapse = " ", ldap_attributes))
   res <- system(cmd, intern = TRUE)
 
-  if (!nzchar(res) && attr(res, "status") == 254)
+  if (!is.null(attr(res, "status")) && attr(res, "status") == 254)
     stop("Cannot contact LDAP server")
 
   message("Parsing LDIF respone w ", length(res), " lines of data.")
@@ -197,7 +197,8 @@ ldap_search <- function(
 #' @importFrom tidyr separate_rows
 ug_orcid_kthid_unit <- function() {
 
-  ugKthid <- ugOrcid <- extensionAttribute15 <- is_multi <- dn <- NULL
+  ugKthid <- ugOrcid <- extensionAttribute15 <- is_multi <- dn <-
+    username <- unit <- dn2 <- un2 <- category <- displayName <- NULL
 
   a <-
     ldap_search(
@@ -206,11 +207,14 @@ ug_orcid_kthid_unit <- function() {
         "displayName", "ugUsername",
         "ugKthid", "ugOrcid",
         "ugPrimaryAffiliation"
-      ))
+      )) |>
+    select(dn, displayName, kthid = ugKthid,
+           username = "ugUsername", category = "ugPrimaryAffiliation",
+           orcid = "ugOrcid")
 
   orcid_kthid_pairs <-
-    a %>%
-    select(ugKthid, ugOrcid) %>%
+    a |>
+    select(kthid, orcid) |>
     distinct()
 
   b <-
@@ -219,28 +223,36 @@ ug_orcid_kthid_unit <- function() {
       ldap_attributes = c(
         "ugKthid", "extensionAttribute15", "ugPrimaryAffiliation"
       )
-    ) %>%
-    mutate(units = gsub("pa.anstallda.", "", extensionAttribute15, fixed = TRUE)) %>%
+    ) |>
+    mutate(units = gsub("pa.anstallda.", "", extensionAttribute15, fixed = TRUE)) |>
     mutate(is_multi = stringr::str_count(units, ",")) %>%
-    mutate(unit = stringr::str_extract(units, "([:alnum:]{3,})"))
+    mutate(unit = stringr::str_extract(units, "([:alnum:]{3,})")) |>
+    mutate(displayName = gsub("CN=(.*?)\\s[(](.*?)[)].*$", "\\1", dn)) |>
+    mutate(username = gsub("CN=(.*?)\\s[(](.*?)[)].*$", "\\2", dn)) |>
+    select(dn, kthid = "ugKthid", username, category = "ugPrimaryAffiliation",
+           unit, units, is_multi)
 
   # people with multiple affiliated units
 
   many_orgs <-
-    b %>%
-    mutate(units = gsub("pa.anstallda.", "", extensionAttribute15, fixed = TRUE)) %>%
-    mutate(is_multi = stringr::str_count(units, ",")) %>%
+    b |>
     filter(is_multi > 0) %>%
-    select(ugKthid, units) %>%
-    tidyr::separate_rows(units, sep = ",") %>%
-    mutate(u1 = stringr::str_extract(units, "([:alnum:]{3,})"))
+    select(kthid, units) |>
+    tidyr::separate_rows(units, sep = ",") |>
+    mutate(unit = stringr::str_extract(units, "([:alnum:]{3,})"))
 
   # counts by unit
   # b %>%
   #   group_by(unit) %>% tally() %>% arrange(desc(n)) %>% View()
 
   fulljoin <-
-    b %>% full_join(a %>% select(-dn), by = "ugKthid")
+    b |> full_join(a |> select(-dn), by = c("kthid", "category", "username")) |>
+    mutate(dn2 = gsub("CN=(.*?)\\s[(](.*?)[)].*$", "\\1", dn)) |>
+    mutate(un2 = gsub("CN=(.*?)\\s[(](.*?)[)].*$", "\\2", dn)) |>
+    mutate(displayName = ifelse(is.na(displayName), dn2, displayName)) |>
+    mutate(username = ifelse(is.na(username), un2, username)) |>
+    select(kthid, username, displayName, category, unit, units, is_multi, orcid) |>
+    arrange(orcid)
 
   list(
     kthid_with_unit = fulljoin,

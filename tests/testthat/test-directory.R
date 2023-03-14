@@ -20,7 +20,7 @@ test_that("query for root works", {
   #   fax, phone, website, version, `description.en`
   # )))
 
-  expect_equal(nrow(t1), 6)
+  expect_equal(nrow(lookup), 6)
 
 })
 
@@ -34,16 +34,16 @@ test_that("query for KTH schools and departments catalog works", {
   expect_true(is_valid)
 })
 
-test_that("query for catalog from slug 's/sa' works", {
+test_that("query for catalog from slug 'a/af' works", {
 
   skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
 
-  sa <- kth_catalog(slug = "s/sa")
-  n_users <- nrow(sa$users)
-  n_catalogs <- nrow(sa$catalogs)
-  is_valid_parent <- sa$parent$slug == "s"
+  af <- kth_catalog(slug = "a/af", lang = "en")
+  n_users <- nrow(af$users)
+  n_catalogs <- nrow(af$catalogs)
+  is_valid_parent <- af$parent$slug == "a"
 
-  is_valid <- n_users > 10 && n_catalogs == 3 && is_valid_parent
+  is_valid <- n_users > 100 && n_catalogs > 5 && is_valid_parent
   expect_true(is_valid)
 })
 

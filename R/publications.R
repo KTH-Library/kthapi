@@ -39,13 +39,14 @@ kth_diva_org_mods_uri <- function(orgid) {
 #' \dontrun{
 #' kth_publications(path = "userstatus", username = "tjep")
 #'
-#' orgid <- tibble::as_tibble(kth_publications(path = "organisations")$content) %>%
+#' orgid <- tibble::as_tibble(kth_publications(path = "organisations")$content) |>
 #'     dplyr::filter(nameLocalized == "Bibliotek") %>% dplyr::pull(id)
 #'
-#' pubs <- kth_publications("organisation", orgid = orgid)$content$publications %>%
+#' pubs <- kth_publications("organisation", orgid = orgid)$content$publications |>
 #'     tibble::as_tibble()
 #'
-#' kth_publications("organisation", divaUri = kth_diva_org_mods_uri(orgid))$content %>% as.character() %>% xml2::read_html() %>% rvest::html_nodes("a") %>% as.character()
+#' kth_publications("organisation", divaUri = kth_diva_org_mods_uri(orgid))$content |>
+#'  as.character() |> xml2::read_html() |> rvest::html_nodes("a") |> as.character()
 #' }
 kth_publications <- function(
   path = c(

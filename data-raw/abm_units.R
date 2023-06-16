@@ -1,3 +1,5 @@
+# !!! DO NOT RUN - abm_org_info table is different now and should not be overwritten !!! ###
+
 # NB: This depends on first having the altmetric_explorer_highlights dataset present!
 # so please first run altmetric_explorer.R script to make sure those are up to date
 

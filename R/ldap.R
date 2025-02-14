@@ -71,6 +71,8 @@ which_rle <- function(bits) {
 #' @importFrom base64enc base64decode
 parse_ldif <- function(text, ldap_attributes = NULL, dn = NULL) {
 
+  data <- group <- n_dn <- NULL
+
   res <- text
 
   # fix linebreaks in ldif response
@@ -95,16 +97,28 @@ parse_ldif <- function(text, ldap_attributes = NULL, dn = NULL) {
   )
 
   # discard commented lines
-  res <- grep("^#", res, value = TRUE, invert = TRUE)
+  res <- grep("^\\s*#", res, value = TRUE, invert = TRUE)
+  res <- res[nchar(res) > 0]
+
+  remove_nuls <- function(msg) {
+    #msg <- "iWNfusvBrUS/No9qgnroWQ=="
+    msg |> base64enc::base64decode() |> as.character() |> 
+      grep(pattern = "[^00]", value = TRUE) |> 
+      purrr::map_chr(\(x) rawToChar(as.raw(strtoi(x, 16L)))) |> 
+      paste(collapse = "") |>
+      stringi::stri_enc_toutf8(is_unknown_8bit = TRUE) |> 
+      #stringi::stri_escape_unicode()
+      gsub(pattern = "[[:print:]]+", replacement = "")
+  }
 
   # decode base64-encoded blobs in ldif text
   res <-
     textclean::fgsub(
       x = res,
       pattern = "::\\s+(.*?)$",
-      fun = function(x) paste0(": ", rawToChar(base64enc::base64decode(x)))
-    )
-
+      fun = function(x) paste0(": ", remove_nuls(x))
+    ) |> suppressWarnings()
+  
   # convert to dataframe
   ldif <- res
   re <- "^(.*?):+\\s{1}(.*?)$"
@@ -112,16 +126,57 @@ parse_ldif <- function(text, ldap_attributes = NULL, dn = NULL) {
   key <- stringr::str_match(out, re)[ ,2]
   value <- stringr::str_match(out, re)[ ,3]
 
-  out <-
-    tibble::tibble(key, value) %>%
-    tidyr::pivot_wider(names_from = key, values_fn = list)
+  a <- 
+    tibble::tibble(key, value) |> 
+    mutate(n_dn = as.integer(key == "dn")) |> 
+    mutate(group = cumsum(n_dn)) |> 
+    group_by(group, key) |> 
+    summarize(value = paste0(collapse = "|", value), .groups = "keep") |> 
+    ungroup() |> 
+    nest_by(group, key) |> 
+    ungroup() |> 
+    tidyr::unnest_wider(data) |> #tidyr::unnest_wider(value, names_sep = "_") |> 
+    tidyr::pivot_wider(names_from = key, values_from = value) |> 
+    ungroup()
 
-  if (is.null(ldap_attributes))
-    ldap_attributes <- setdiff(names(out), "dn")
+  out <- a |> select(-any_of(c("group")))
+  # out <- 
+  #   purrr::map2(a$key, a$data, function(k, v) tibble(v[1] |> unlist()) |> setNames(nm = k[1])) |> 
+  #   bind_cols()
 
-  out %>%
-    tidyr::unnest(cols = c(dn, ldap_attributes))
+#   out <-
+#     tibble::tibble(key, value) |> #nest_by(key) |> tidyr::unnest_wider(data) |> unnest(value)
+# #    unnest(value)
+# #    tidyr::pivot_longer() |> 
+#     group_by(key) |> 
+#     summarize(value = paste0(collapse = "|", value)) |> 
+#     ungroup() |> 
+#    tidyr::pivot_wider(names_from = key)
 
+  #message("Current value for ldap attribs: ", ldap_attributes)
+
+  if (is.null(ldap_attributes)) {
+    ldap_attributes <- 
+      setdiff(names(out), "dn")
+
+  } else if (length(ldap_attributes) == 1 && ldap_attributes == "*") {
+    ldap_attributes <- 
+      names(out)
+  }
+  # if (length(ldap_attributes) == 1 && ldap_attributes == "*") {
+  #   message("Current value for ldap attribs: ", ldap_attributes)
+  #   ldap_attributes <- 
+  #     ldif |> grep(pattern = "^([^#].*?)(:+\\s+.*?)$", value = TRUE) |> 
+  #       gsub(pattern = "^(.*?)(:+\\s+.*?)$", replacement = "\\1") |> 
+  #       unique()
+  # }
+
+  #message("Final value for ldap attribs: ", ldap_attributes)
+
+  out
+
+  # out |> 
+  #   tidyr::unnest(cols = any_of(ldap_attributes))
 }
 
 #' Search Active Directory at KTH
@@ -177,7 +232,7 @@ ldap_search <- function(
     stop("Cannot contact LDAP server")
 
   message("Parsing LDIF respone w ", length(res), " lines of data.")
-  parse_ldif(res, ldap_attributes)
+  parse_ldif(res, ldap_attributes = ldap_attributes)
 }
 
 #' Run ldap search for kthid/orcid pairs
@@ -198,7 +253,9 @@ ldap_search <- function(
 ug_orcid_kthid_unit <- function() {
 
   ugKthid <- ugOrcid <- extensionAttribute15 <- is_multi <- dn <-
-    username <- unit <- dn2 <- un2 <- category <- displayName <- NULL
+    username <- unit <- dn2 <- un2 <- category <- displayName <- 
+      kthOrcidClaimed <- kth_orcid_claimed <- ugOrcidClaimed <- ug_orcid_claimed <-
+    NULL
 
   a <-
     ldap_search(
@@ -206,11 +263,13 @@ ug_orcid_kthid_unit <- function() {
       ldap_attributes = c(
         "displayName", "ugUsername",
         "ugKthid", "ugOrcid",
-        "ugPrimaryAffiliation"
+        "ugPrimaryAffiliation", 
+        "kthOrcidClaimed", "ugOrcidClaimed"
       )) |>
     select(dn, displayName, kthid = ugKthid,
            username = "ugUsername", category = "ugPrimaryAffiliation",
-           orcid = "ugOrcid")
+           orcid = "ugOrcid",  
+           ug_orcid_claimed = ugOrcidClaimed, kth_orcid_claimed = kthOrcidClaimed)
 
   orcid_kthid_pairs <-
     a |>
@@ -225,7 +284,7 @@ ug_orcid_kthid_unit <- function() {
       )
     ) |>
     mutate(units = gsub("pa.anstallda.", "", extensionAttribute15, fixed = TRUE)) |>
-    mutate(is_multi = stringr::str_count(units, ",")) %>%
+    mutate(is_multi = stringr::str_count(units, ",")) |> 
     mutate(unit = stringr::str_extract(units, "([:alnum:]{3,})")) |>
     mutate(displayName = gsub("CN=(.*?)\\s[(](.*?)[)].*$", "\\1", dn)) |>
     mutate(username = gsub("CN=(.*?)\\s[(](.*?)[)].*$", "\\2", dn)) |>
@@ -236,7 +295,7 @@ ug_orcid_kthid_unit <- function() {
 
   many_orgs <-
     b |>
-    filter(is_multi > 0) %>%
+    filter(is_multi > 0) |> 
     select(kthid, units) |>
     tidyr::separate_rows(units, sep = ",") |>
     mutate(unit = stringr::str_extract(units, "([:alnum:]{3,})"))
@@ -251,7 +310,8 @@ ug_orcid_kthid_unit <- function() {
     mutate(un2 = gsub("CN=(.*?)\\s[(](.*?)[)].*$", "\\2", dn)) |>
     mutate(displayName = ifelse(is.na(displayName), dn2, displayName)) |>
     mutate(username = ifelse(is.na(username), un2, username)) |>
-    select(kthid, username, displayName, category, unit, units, is_multi, orcid) |>
+    select(kthid, username, displayName, category, unit, units, is_multi, orcid, 
+      ug_orcid_claimed, kth_orcid_claimed) |>
     arrange(orcid)
 
   list(

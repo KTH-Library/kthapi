@@ -71,7 +71,7 @@ pkgdown::build_site()
 
 # updating embedded data
 
-source("data-raw/altmetric_explorer.R")
+#source("data-raw/altmetric_explorer.R")
 source("data-raw/abm_units.R")
 
 # TODO add function that can be used to update the database...

@@ -8,6 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![R-CMD-check](https://github.com/KTH-Library/kthapi/workflows/R-CMD-check/badge.svg)](https://github.com/KTH-Library/kthapi/actions)
+[![R-CMD-check](https://github.com/KTH-Library/kthapi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KTH-Library/kthapi/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of the `kthapi` R package is to provide an API wrapper for some
@@ -60,12 +61,12 @@ profile %>% glimpse()
 #> $ email              <chr> "tjep@kth.se"
 #> $ image              <chr> "https://www.kth.se/files/avatar/tjep"
 #> $ telephone          <chr> "087907106"
-#> $ jobTitle           <chr> "BIBLIOMETRISK ANALYTIKER"
-#> $ `jobTitle-en`      <chr> "BIBLIOMETRIC ANALYST"
+#> $ jobTitle           <chr> "Bibliometrisk analytiker"
+#> $ `jobTitle-en`      <chr> "Librarian"
 #> $ workLocation       <chr> "OSQUARS BACKE 31"
 #> $ worksFor.url       <chr> "https://www.kth.se/directory/t/tr/trac"
 #> $ worksFor.name      <chr> "PUBLICERINGENS INFRASTRUKTUR"
-#> $ `worksFor.name-en` <chr> ""
+#> $ `worksFor.name-en` <chr> "PUBLICATION INFRASTRUCTURE AND MEDIA"
 
 # pivot into long format and display as a table
 profile %>% t() %>% as.data.frame() %>%  
@@ -75,19 +76,19 @@ profile %>% t() %>% as.data.frame() %>%
 ```
 
 | key              | value                                    |
-|:-----------------|:-----------------------------------------|
+| :--------------- | :--------------------------------------- |
 | givenName        | Tobias                                   |
 | familyName       | Jeppsson                                 |
 | url              | <https://www.kth.se/profile/tjep>        |
 | email            | <tjep@kth.se>                            |
 | image            | <https://www.kth.se/files/avatar/tjep>   |
 | telephone        | 087907106                                |
-| jobTitle         | BIBLIOMETRISK ANALYTIKER                 |
-| jobTitle-en      | BIBLIOMETRIC ANALYST                     |
+| jobTitle         | Bibliometrisk analytiker                 |
+| jobTitle-en      | Librarian                                |
 | workLocation     | OSQUARS BACKE 31                         |
 | worksFor.url     | <https://www.kth.se/directory/t/tr/trac> |
 | worksFor.name    | PUBLICERINGENS INFRASTRUKTUR             |
-| worksFor.name-en |                                          |
+| worksFor.name-en | PUBLICATION INFRASTRUCTURE AND MEDIA     |
 
 ``` r
 
@@ -96,9 +97,9 @@ profile %>% t() %>% as.data.frame() %>%
 tryCatch(kth_profile_legacy("markussk"), error = function(e) e)
 #> <KTH API call for markussk>
 #> # A tibble: 0 × 10
-#> # … with 10 variables: givenName <chr>, familyName <chr>, url <chr>,
-#> #   email <chr>, image <chr>, telephone <chr>, jobTitle <chr>,
-#> #   jobTitle-en <chr>, worksFor <list>, workLocation <chr>
+#> # ℹ 10 variables: givenName <chr>, familyName <chr>, url <chr>, email <chr>,
+#> #   image <chr>, telephone <chr>, jobTitle <chr>, jobTitle-en <chr>,
+#> #   worksFor <list>, workLocation <chr>
 ```
 
 ## More examples
@@ -119,10 +120,10 @@ profile$worksFor$items %>%
   knitr::kable()
 ```
 
-| path      | name                         | nameEn      |
-|:----------|:-----------------------------|:------------|
-| t/tr      | KTH BIBLIOTEKET              | KTH LIBRARY |
-| t/tr/trac | PUBLICERINGENS INFRASTRUKTUR |             |
+| path      | name                         | nameEn                               |
+| :-------- | :--------------------------- | :----------------------------------- |
+| t/tr      | KTH BIBLIOTEKET              | KTH LIBRARY                          |
+| t/tr/trac | PUBLICERINGENS INFRASTRUKTUR | PUBLICATION INFRASTRUCTURE AND MEDIA |
 
 ``` r
 

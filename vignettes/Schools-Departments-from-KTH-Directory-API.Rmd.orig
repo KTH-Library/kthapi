@@ -22,10 +22,10 @@ Given an account name or "kthid", how can we look up the organizational belongin
 library(kthapi)
 library(dplyr)
 
-user <- "hoyce"
+user <- "tjep"
 unit_codes <- kth_profile_school_dep(user)
 
-# organizational belonging for user "hoyce"
+# organizational belonging for user "tjep"
 unit_codes
 
 # use the first two levels of the hierarchy

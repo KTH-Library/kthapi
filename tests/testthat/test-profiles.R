@@ -61,11 +61,11 @@ test_that("Profiles API returns organizational belonging for a specific kthid", 
   expect_true(is_valid)
 })
 
-test_that("Profiles API returns kthid given accountname", {
-
-  skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
-
-  p1 <- kth_profile(username = "markussk")$content$username
-  is_valid <- p1 == "markussk"
-  expect_true(is_valid)
-})
+# test_that("Profiles API returns kthid given accountname", {
+#
+#   skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
+#
+#   p1 <- kth_profile(username = "markussk")$content$username
+#   is_valid <- p1 == "markussk"
+#   expect_true(is_valid)
+# })

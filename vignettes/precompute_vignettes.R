@@ -5,7 +5,6 @@ library(knitr)
 #Sys.chmod("vignettes/precompute_vignettes.R")
 
 scripts <- file.path("vignettes", c(
-  "KTH-Departments-from-Altmetric-Explorer.Rmd",
   "Potential-Heads.Rmd",
   "Publications-API-Usage.Rmd",
   "Schools-Departments-from-KTH-Directory-API.Rmd"

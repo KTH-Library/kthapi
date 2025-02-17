@@ -125,11 +125,16 @@ parse_ldif <- function(text, ldap_attributes = NULL, dn = NULL) {
   out <- grep(re, ldif, value = TRUE, perl = TRUE)
   key <- stringr::str_match(out, re)[ ,2]
   value <- stringr::str_match(out, re)[ ,3]
+  fails <- c(which(is.na(key)), which(is.na(value))) |> unique()
+  if (length(fails) > 0) {
+    key <- key[-fails]
+    value <- value[-fails]
+  }
 
   a <- 
     tibble::tibble(key, value) |> 
     mutate(n_dn = as.integer(key == "dn")) |> 
-    mutate(group = cumsum(n_dn)) |> 
+    mutate(group = cumsum(n_dn)) |>
     group_by(group, key) |> 
     summarize(value = paste0(collapse = "|", value), .groups = "keep") |> 
     ungroup() |> 
@@ -139,7 +144,8 @@ parse_ldif <- function(text, ldap_attributes = NULL, dn = NULL) {
     tidyr::pivot_wider(names_from = key, values_from = value) |> 
     ungroup()
 
-  out <- a |> select(-any_of(c("group")))
+  out <- 
+    a |> select(-any_of(c("group")))
   # out <- 
   #   purrr::map2(a$key, a$data, function(k, v) tibble(v[1] |> unlist()) |> setNames(nm = k[1])) |> 
   #   bind_cols()
@@ -158,7 +164,6 @@ parse_ldif <- function(text, ldap_attributes = NULL, dn = NULL) {
   if (is.null(ldap_attributes)) {
     ldap_attributes <- 
       setdiff(names(out), "dn")
-
   } else if (length(ldap_attributes) == 1 && ldap_attributes == "*") {
     ldap_attributes <- 
       names(out)
@@ -177,7 +182,7 @@ parse_ldif <- function(text, ldap_attributes = NULL, dn = NULL) {
 
   # out |> 
   #   tidyr::unnest(cols = any_of(ldap_attributes))
-}
+  }
 
 #' Search Active Directory at KTH
 #'

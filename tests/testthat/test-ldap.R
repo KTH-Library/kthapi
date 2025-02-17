@@ -62,3 +62,22 @@ test_that("ldap search works - 'star'-search for all attribs - several kthids", 
   expect_true(is_valid)
 
 })
+
+test_that("wildcard search for kallej works", {
+
+  skip_on_ci()
+
+  # NOTE: Needs VPN connection to run!
+
+  kthid <- "u1h0d9k2"
+  query <- sprintf("(&(ugKthid=%s)(ugUsername=*))", kthid)
+  
+  my_search <- 
+    ldap_search(query, cfg = ldap_config(), ldap_attributes = "*") 
+  #my_search |> tidyr::pivot_longer(cols = everything()) |> knitr::kable()
+
+  is_valid <- ncol(my_search) == 110
+  expect_true(is_valid)
+  
+})
+

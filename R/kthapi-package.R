@@ -27,7 +27,6 @@
 #' 
 
 ## usethis namespace: end
-NULL
 
 #' @name globals
 #' @title globals

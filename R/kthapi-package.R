@@ -28,8 +28,8 @@
 
 ## usethis namespace: end
 
-#' @name globals
-#' @title globals
+#' @name kthapi
+#' @title kthapi
 utils::globalVariables(c(".", "description.en", "Name", "PID", "extorg",
 "is_external", "is_remappable_extorg", "kthid", "n2", "n_commas",
 "n_pid", "name", "orcid", "orcid.x", "orcid.y", "orgids", "pids", "pubs"))

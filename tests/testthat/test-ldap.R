@@ -65,6 +65,10 @@ test_that("ldap search works - 'star'-search for all attribs - several kthids", 
 
 test_that("wildcard search for kallej works", {
 
+  skip_on_ci()
+
+  # NOTE: Needs VPN connection to run!
+
   kthid <- "u1h0d9k2"
   query <- sprintf("(&(ugKthid=%s)(ugUsername=*))", kthid)
   

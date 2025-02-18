@@ -343,6 +343,16 @@ ad_search_kthid <- function(kthid) {
 
 }
 
+ad_search_kthid_wildcard <- function(kthid) {
+
+  query <- sprintf("(&(ugKthid=%s)(ugUsername=*))", kthid)
+
+  ldap_search(query, cfg = ldap_config(), ldap_attributes = c("*")
+  ) |> 
+  tidyr::pivot_longer(cols = everything())
+
+}
+
 #ad_search_kthid("u10*")
 
 ad_search_accountname <- function(accountname) {

@@ -81,3 +81,40 @@ test_that("wildcard search for kallej works", {
   
 })
 
+test_that("search for entries having orcid, surname and givenname", {
+
+  skip()
+
+  my_cfg <- ldap_config()
+  my_ldap_query <- "(&(ugOrcid=*)(sn=*)(givenName=*))"
+  
+  my_ldap_attributes <- c("kthOrcid", "kthId", "givenName", "sn", "kthOrcidClaimed")
+  s1 <- ldap_search(my_ldap_query, my_ldap_attributes, my_cfg)
+
+  missing_names <- 
+    s1 |> filter(givenName == "" | sn == "") |> pull(kthOrcid)
+
+  ol <- function(x) swecris::orcid_lookup(x)
+
+  orcid_names <- 
+    missing_names |> purrr::map(ol, .progress = TRUE)
+
+  enriched <- 
+    s1 |> left_join(by = "kthOrcid",
+    orcid_names |> map("person") |> bind_rows() |> 
+      select(-any_of(c("X0"))) |> 
+      select(kthOrcid = "orcId", everything())
+    ) |> 
+    select(-any_of(c("dn"))) |> 
+    select(kthOrcid, kthid, givenName, sn, kthOrcidClaimed, 
+      orcid_firstName = "firstName", orcid_lastName = "lastName", orcid_creditName = "creditName")
+  
+  #readr::write_csv("~/ug_orcid.csv")
+  
+  is_valid <- 
+    ncol(enriched) == 8 && nrow(s1) >= 5268
+  
+  expect_true(is_valid)
+
+})
+

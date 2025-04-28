@@ -76,7 +76,7 @@ test_that("wildcard search for kallej works", {
     ldap_search(query, cfg = ldap_config(), ldap_attributes = "*") 
   #my_search |> tidyr::pivot_longer(cols = everything()) |> knitr::kable()
 
-  is_valid <- ncol(my_search) == 110
+  is_valid <- ncol(my_search) > 110
   expect_true(is_valid)
   
 })

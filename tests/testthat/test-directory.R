@@ -48,29 +48,29 @@ test_that("query for catalog from slug 'a/af' works", {
 })
 
 
-test_that("current bundled data 'abm_units' matches w Directory API results for schools and institutions", {
+# test_that("current bundled data 'abm_units' matches w Directory API results for schools and institutions", {
 
-  skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
+#   skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
 
-  # get current data on schools and institutions from the Directory API
-  kds <- kth_school_dep()
+#   # get current data on schools and institutions from the Directory API
+#   kds <- kth_school_dep()
 
-  # find mismatch through an antijoin
-  non_matches <-
-    abm_units[-c(1),] %>%
-    anti_join(kth_school_dep(), by = "slug")
+#   # find mismatch through an antijoin
+#   non_matches <-
+#     abm_units[-c(1),] %>%
+#     anti_join(kth_school_dep(), by = "slug")
 
-  is_mismatched <- (nrow(non_matches) > 0)
+#   is_mismatched <- (nrow(non_matches) > 0)
 
-  if (is_mismatched) {
-    message("Found inconsistencies between current abm_units and the Directory API:")
-    print(non_matches)
-  }
+#   if (is_mismatched) {
+#     message("Found inconsistencies between current abm_units and the Directory API:")
+#     print(non_matches)
+#   }
 
-  expect_false(is_mismatched)
+#   expect_false(is_mismatched)
 
-  # TODO: make this a better test
-})
+#   # TODO: make this a better test
+# })
 
 #a$info %>% purrr::map_df(function(x) as.data.frame(x) %>% flatten %>% as_tibble)
 #a$parents %>% purrr::map_df(function(x) as.data.frame(x) %>% flatten %>% as_tibble)

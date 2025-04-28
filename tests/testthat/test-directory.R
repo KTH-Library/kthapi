@@ -1,5 +1,5 @@
 # Set to FALSE to test with testthat, set to TRUE before pushing to Github
-skip_api_tests <- FALSE
+skip_api_tests <- TRUE
 
 test_that("query for root slugs works", {
 

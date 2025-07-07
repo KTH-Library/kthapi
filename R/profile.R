@@ -207,10 +207,7 @@ kth_profile_school_dep <- function(kthid, cfg = config()) {
     katalogkey <- kth_profile(username = kthid, config = cfg)$content$worksFor$items$key
   }
   gsub("app\\.katalog[^\\.]*\\.(.*?)$", "\\1", katalogkey) |>
-    str_split("\\.") |>
-    unlist() |>
-    unique() |>
-    tolower()
+    stringr::str_split("\\.") |> unlist() |> unique() |> tolower()
 }
 
 #' Retrieve organizational belonging for a given kthid or accountname at

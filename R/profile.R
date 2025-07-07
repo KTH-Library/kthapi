@@ -201,9 +201,16 @@ kth_displayname <- function(user, type = c("kthid", "username"), cfg = config())
 #' }
 kth_profile_school_dep <- function(kthid, cfg = config()) {
   cfg <- config()
-  profile <- kth_profile_legacy(kthid, cfg)$content
-  units <- gsub("https://www\\.kth\\.se/directory/(.*?)$", "\\1", profile$`worksFor.url`)
-  strsplit(units, "/") %>% unlist()
+  if(substr(kthid, 1, 2) == "u1") {
+    katalogkey <- kth_profile(kthid, config = cfg)$content$worksFor$items$key
+  } else {
+    katalogkey <- kth_profile(username = kthid, config = cfg)$content$worksFor$items$key
+  }
+  gsub("app\\.katalog[^\\.]*\\.(.*?)$", "\\1", katalogkey) |>
+    str_split("\\.") |>
+    unlist() |>
+    unique() |>
+    tolower()
 }
 
 #' Retrieve organizational belonging for a given kthid or accountname at

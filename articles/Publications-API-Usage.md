@@ -1,0 +1,125 @@
+# Publications-API-Usage
+
+The function providing access to KTH Publications API data can provide
+some overview stats, list the active public users, active users with
+publications and more. Some usage examples:
+
+``` r
+library(kthapi)
+library(dplyr)
+```
+
+``` r
+kth_publications("stats")
+#> <KTH API call for stats>
+#> $activeUsers
+#> [1] 3356
+#> 
+#> $publicUsers
+#> [1] 1061
+
+# top 5 active public users with publication counts
+kth_publications("activePublicUsers")$content$users %>% 
+  as_tibble() %>% 
+  setNames(., nm = c("count", "kthid", "username")) %>%
+  arrange(desc(count)) %>%
+  select(-kthid) %>%
+  slice(1:5) %>%
+  knitr::kable()
+```
+
+| count    | username |
+|:---------|---------:|
+| u1zzwffz |        2 |
+| u1zyo9sj |        5 |
+| u1zrx6q1 |      199 |
+| u1zotlxf |       13 |
+| u1znylhw |       10 |
+
+``` r
+
+#kth_publications("activeUsersWithPublications")$content$users %>% 
+#  as_tibble() %>%
+#  slice(1:5)
+  
+# some users provide public access to publications
+fp <- 
+  kth_publications("filteredPublications", username = "pal")$content
+  
+fp$filteredPublications %>% as_tibble() %>% slice(1:5) %>% select(title)
+#> # A tibble: 5 × 1
+#>   title                                                                                                         
+#>   <chr>                                                                                                         
+#> 1 Two Classes of Equatorial Magnetotail Dipolarization Fronts Observed by Magnetospheric Multiscale Mission     
+#> 2 Direct observations of anomalous resistivity and diffusion in collisionless plasma                            
+#> 3 Magnetic Field Annihilation in a Magnetotail Electron Diffusion Region With Electron-Scale Magnetic Island    
+#> 4 Investigation of the homogeneity of energy conversion processes at dipolarization fronts from MMS measurements
+#> 5 Mapping MMS Observations of Solitary Waves in Earth's Magnetic Field
+
+# available fields for publication data
+fp$filteredPublications %>% as_tibble() %>% slice(1:5) %>% names()
+#>  [1] "publicationId"             "createdAt"                 "updatedAt"                 "organizationId"            "topics"                   
+#>  [6] "authors"                   "seriesIssueNr"             "seriesTitle"               "patent"                    "statementOfResponsibility"
+#> [11] "identifierUri"             "bookEdition"               "bookPublisher"             "bookPlace"                 "conferenceName"           
+#> [16] "recordOrigin"              "hostExtentEnd"             "hostExtentStart"           "hostIssue"                 "hostVolume"               
+#> [21] "hostSubTitle"              "hostTitle"                 "contentTypeCode"           "publicationSubTypeCode"    "publicationTypeCode"      
+#> [26] "dateIssued"                "publicationStatus"         "subTitle"                  "title"                     "visible"
+
+# example record
+fp$filteredPublications %>% as_tibble() %>% slice(1:1) %>% glimpse()
+#> Rows: 1
+#> Columns: 30
+#> $ publicationId             <chr> "diva2:1808333"
+#> $ createdAt                 <chr> "2023-11-01T00:10:35.080Z"
+#> $ updatedAt                 <chr> "2025-02-14T00:09:40.054Z"
+#> $ organizationId            <chr> "879235"
+#> $ topics                    <list> [<data.frame[7 x 2]>]
+#> $ authors                   <list> [<data.frame[24 x 4]>]
+#> $ seriesIssueNr             <chr> ""
+#> $ seriesTitle               <chr> ""
+#> $ patent                    <chr> ""
+#> $ statementOfResponsibility <chr> ""
+#> $ identifierUri             <chr> "https://urn.kb.se/resolve?urn=urn:nbn:se:kth:diva-338894"
+#> $ bookEdition               <chr> ""
+#> $ bookPublisher             <chr> "American Geophysical Union (AGU)"
+#> $ bookPlace                 <chr> ""
+#> $ conferenceName            <chr> ""
+#> $ recordOrigin              <chr> "u1wqrs7e"
+#> $ hostExtentEnd             <chr> ""
+#> $ hostExtentStart           <chr> ""
+#> $ hostIssue                 <chr> "10"
+#> $ hostVolume                <chr> "128"
+#> $ hostSubTitle              <chr> ""
+#> $ hostTitle                 <chr> "Journal of Geophysical Research - Space Physics"
+#> $ contentTypeCode           <chr> "refereed"
+#> $ publicationSubTypeCode    <chr> ""
+#> $ publicationTypeCode       <chr> "article"
+#> $ dateIssued                <chr> "2023"
+#> $ publicationStatus         <chr> "Published"
+#> $ subTitle                  <chr> "A Statistical Overview"
+#> $ title                     <chr> "Two Classes of Equatorial Magnetotail Dipolarization Fronts Observed by Magnetospheric Multiscale Mission"
+#> $ visible                   <lgl> TRUE
+
+# whether the user provides public access can be checked with the userstatus call
+kth_publications("userstatus", username = "pal")$public
+#> NULL
+
+# not all users have registered publications
+tryCatch(
+  kth_publications("filteredPublications", username = "mskyttner"), 
+  error = function(e) e)
+#> <simpleError: The API returned an error: Not Found: /api/publications/v1/filteredPublications/mskyttner>
+
+# organisations can be queried
+kth_publications("organisations")$content %>% 
+  as_tibble() %>% 
+  slice(1:5)
+#> # A tibble: 5 × 3
+#>       id name$en                                                                          $sv                                                           nameLocalized
+#>    <int> <chr>                                                                            <chr>                                                         <chr>        
+#> 1    177 KTH                                                                              KTH                                                           KTH          
+#> 2  12851 Centres                                                                          Centra                                                        Centra       
+#> 3 887502 Center for the Advancement of Integrated Medical and Engineering Sciences, AIMES Center for the Advancement of Integrated Medical and Enginee… Center for t…
+#> 4  12850 Nordic Institute for Theoretical Physics NORDITA                                 Nordic Institute for Theoretical Physics NORDITA              Nordic Insti…
+#> 5   5921 Science for Life Laboratory, SciLifeLab                                          Science for Life Laboratory, SciLifeLab                       Science for …
+```

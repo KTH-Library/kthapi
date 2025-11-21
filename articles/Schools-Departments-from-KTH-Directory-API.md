@@ -1,0 +1,161 @@
+# Schools-Departments-from-KTH-Directory-API
+
+## Organizational belonging for a given KTH user account or kthid
+
+Given an account name or “kthid”, how can we look up the organizational
+belonging?
+
+``` r
+library(kthapi)
+library(dplyr)
+
+user <- "tjep"
+unit_codes <- kth_profile_school_dep(user)
+
+# organizational belonging for user "tjep"
+unit_codes
+#> [1] "t"    "tr"   "trac"
+
+# use the first two levels of the hierarchy
+slug <- paste0(collapse = "/", unit_codes[1:2])
+
+# look up the english lang description for this "slug"
+unit2 <- 
+  kth_school_dep() %>% 
+  inner_join(tibble(slug = slug)) %>%
+  select(slug, desc = `description.en`) %>%
+  pull(desc)
+
+unit2
+#> [1] "KTH LIBRARY"
+```
+
+Via the so called “Legacy Profile API v 1.1” we have now looked up that
+**tjep** belongs to the organizational unit **KTH LIBRARY**, at the
+second level (institutional level) of the organizational hierarchy.
+
+A function that wraps the above calls and returns a data frame is
+provided for convenience:
+
+``` r
+kth_belonging_institutional("hoyce")
+#> Error: The API returned an error: Not found
+```
+
+The
+[`kth_profile_legacy()`](https://kth-library.github.io/kthapi/reference/kth_profile_legacy.md)
+function returns a field called `worksFor.name-en` which represents the
+lowest level (often level 4) organizational unit name, sometimes
+provided in Swedish instead of in English, so cannot directly be used to
+determine institutional belonging.
+
+## Level 1 and 2 organizational units
+
+The KTH schools and departments (in this case for the first two levels
+of the org hierarchy) can be retrieved with
+[`kth_school_dep()`](https://kth-library.github.io/kthapi/reference/kth_school_dep.md).
+
+In the listing we exclude the `kthid` identifier, but it exists also for
+organizational units.
+
+``` r
+kth_school_dep() %>% 
+#  filter(is.na(`_id`)) %>%
+  mutate(row = 1:nrow(.)) %>%
+  select(row, slug, desc = `description.en`, website) %>%
+  knitr::kable()
+```
+
+| row | slug    | desc                                                                  | website                                           |
+|----:|:--------|:----------------------------------------------------------------------|:--------------------------------------------------|
+|   1 | a       | SCHOOL OF ARCHITECTURE AND THE BUILT ENVIRONMENT                      | <https://www.kth.se/abe>                          |
+|   2 | c       | SCHOOL OF ENGINEERING SCIENCES IN CHEMISTRY, BIOTECHNOLOGY AND HEALTH | <https://www.kth.se/cbh>                          |
+|   3 | j       | SCHOOL OF ELECTRICAL ENGINEERING AND COMPUTER SCIENCE                 | <https://www.kth.se/eecs>                         |
+|   4 | m       | SCHOOL OF INDUSTRIAL ENGINEERING AND MANAGEMENT                       | <https://www.kth.se/itm>                          |
+|   5 | s       | SCHOOL OF ENGINEERING SCIENCES                                        | <https://www.kth.se/sci>                          |
+|   6 | t       | UNIVERSITY ADMINISTRATION                                             | <https://www.kth.se/om/organisation/gvs-1.887371> |
+|   7 | e       |                                                                       |                                                   |
+|   8 | i       |                                                                       |                                                   |
+|   9 | k       |                                                                       |                                                   |
+|  10 | a/acp   | VIABLE CITIES                                                         |                                                   |
+|  11 | a/ad    | ARCHITECTURE                                                          |                                                   |
+|  12 | a/af    | CIVIL AND ARCHITECTURAL ENGINEERING                                   |                                                   |
+|  13 | a/ag    | URBAN PLANNING AND ENVIRONMENT                                        |                                                   |
+|  14 | a/ai    | REAL ESTATE AND CONSTRUCTION MANAGEMENT                               |                                                   |
+|  15 | a/ak    | PHILOSOPHY AND HISTORY OF TECHNOLOGY                                  |                                                   |
+|  16 | a/al    | SUSTAINABLE DEVELOPMENT, ENVIRONMENTAL SCIENCE AND ENGINEERING        |                                                   |
+|  17 | a/ab    |                                                                       |                                                   |
+|  18 | a/abea  | ANKNUTNA MM ABE/ABEA                                                  |                                                   |
+|  19 | a/aabe  | ANKNUTNA MM ABE/AABE                                                  |                                                   |
+|  20 | c/cb    | GREENHOUSE LABS                                                       |                                                   |
+|  21 | c/cd    | DEPARTMENT OF BIOMEDICAL ENGINEERING AND HEALTH SYSTEMS               |                                                   |
+|  22 | c/ce    | DEPARTMENT OF CHEMISTRY                                               |                                                   |
+|  23 | c/cf    | DEPARTMENT OF CHEMICAL ENGINEERING                                    |                                                   |
+|  24 | c/cg    | DEPARTMENT OF FIBRE AND POLYMER TECHNOLOGY                            |                                                   |
+|  25 | c/ch    | DEPARTMENT OF GENE TECHNOLOGY                                         |                                                   |
+|  26 | c/cj    | DEPARTMENT OF PROTEIN SCIENCE                                         |                                                   |
+|  27 | c/ck    | DEPARTMENT OF INDUSTRIAL BIOTECHNOLOGY                                |                                                   |
+|  28 | c/cl    | DEPARTMENT OF THEORETICAL CHEMISTRY AND BIOLOGY                       |                                                   |
+|  29 | c/cm    | DEPARTMENT OF ENGINEERING PEDAGOGICS                                  |                                                   |
+|  30 | c/cacg  | IT/CACG                                                               |                                                   |
+|  31 | c/ccbh  | ANKNUTNA MM CBH/CCBH                                                  |                                                   |
+|  32 | c/cda   | MEDICINTEKNIK OCH HÄLSOSYSTEM/CDA                                     |                                                   |
+|  33 | c/cgd   | POLYMERTEKNOLOGI/CGD                                                  |                                                   |
+|  34 | c/cge   | POLYMERA MATERIAL/CGE                                                 |                                                   |
+|  35 | c/cgf   | YTBEHANDLINGSTEKNIK/CGF                                               |                                                   |
+|  36 | c/cgg   | TRÄKEMI OCH MASSATEKNOLOGI/CGG                                        |                                                   |
+|  37 | c/cgh   | FIBERTEKNOLOGI/CGH                                                    |                                                   |
+|  38 | c/cgi   | BIOKOMPOSITER/CGI                                                     |                                                   |
+|  39 | c/cgk   | FIBERPROCESSER/CGK                                                    |                                                   |
+|  40 | c/chd   | GENTEKNOLOGI/CHD                                                      |                                                   |
+|  41 | c/cla   | TEORETISK KEMI OCH BIOLOGI/CLA                                        |                                                   |
+|  42 | c/cba   | GREENHOUSE LABS/CBA                                                   |                                                   |
+|  43 | j/jc    | CENTRES                                                               |                                                   |
+|  44 | j/jh    | DEPARTMENT OF COMPUTER SCIENCE                                        |                                                   |
+|  45 | j/jj    | DEPARTMENT OF ELECTRICAL ENGINEERING                                  |                                                   |
+|  46 | j/jm    | DEPARTMENT OF HUMAN CENTERED TECHNOLOGY                               |                                                   |
+|  47 | j/jr    | DEPARTMENT OF INTELLIGENT SYSTEMS                                     |                                                   |
+|  48 | j/jeecs | ANKNUTNA MM EECS/JEECS                                                |                                                   |
+|  49 | m/mab   | ITM SCHOOLS OFFICE OF STUDENT AFFAIRS                                 |                                                   |
+|  50 | m/me    | DEPARTMENT OF INDUSTRIAL ECONOMICS AND MANAGEMENT                     |                                                   |
+|  51 | m/mf    | DEPARTMENT OF ENGINEERING DESIGN                                      |                                                   |
+|  52 | m/mje   | DEPARTMENT OF ENERGY TECHNOLOGY                                       |                                                   |
+|  53 | m/ml    | DEPARTMENT OF PRODUCTION ENGINEERING                                  |                                                   |
+|  54 | m/mv    | DEPARTMENT OF MATERIALS SCIENCE AND ENGINEERING                       |                                                   |
+|  55 | m/mo    | LEARNING IN ENGINEERING SCIENCES                                      |                                                   |
+|  56 | m/mj    |                                                                       |                                                   |
+|  57 | m/maad  | ITM SKOLKANSLI INFRASTR & KOMM/MAAD_ITM                               |                                                   |
+|  58 | m/mitm  | ANKNUTNA MM ITM/MITM                                                  |                                                   |
+|  59 | s/sf    | MATHEMATICS                                                           |                                                   |
+|  60 | s/sh    | PHYSICS                                                               |                                                   |
+|  61 | s/sk    | APPLIED PHYSICS                                                       |                                                   |
+|  62 | s/sm    | TEKNISK MEKANIK                                                       |                                                   |
+|  63 | s/sac   | SCI GEMENSAMT/SAC                                                     |                                                   |
+|  64 | s/sad   | SKOLAN FÖR TEKNIKV. SCI/SAD                                           |                                                   |
+|  65 | s/ssci  | ANKNUTNA MM SCI/SSCI                                                  |                                                   |
+|  66 | t/ta    | PRESIDENT AND MANAGEMENT                                              |                                                   |
+|  67 | t/td    | FINANCE                                                               |                                                   |
+|  68 | t/te    | HUMAN RESOURCES                                                       |                                                   |
+|  69 | t/tf    | MANAGEMENT OFFICE                                                     |                                                   |
+|  70 | t/tg    | EDUCATION OFFICE                                                      |                                                   |
+|  71 | t/th    | RESEARCH SUPPORT OFFICE                                               |                                                   |
+|  72 | t/ti    | COMMUNICATIONS DEPARTMENT                                             |                                                   |
+|  73 | t/tj    | IT                                                                    |                                                   |
+|  74 | t/tk    | SUSTAINABILITY, REAL ESTATE AND FACILITY SERVICE                      |                                                   |
+|  75 | t/tp    | INTERNAL AUDIT                                                        |                                                   |
+|  76 | t/tq    | KTH INNOVATION                                                        |                                                   |
+|  77 | t/tr    | KTH LIBRARY                                                           |                                                   |
+|  78 | t/ts    | OPEN LAB                                                              |                                                   |
+|  79 | t/tt    | SCILIFELAB ADMINISTRATION                                             |                                                   |
+|  80 | t/tv    | SCI UNIVERSITY ADMINISTRATION                                         |                                                   |
+|  81 | t/tl    | ABE UNIVERSITY ADMINISTRATION                                         |                                                   |
+|  82 | t/tm    | CBH UNIVERSITY ADMINISTRATION                                         |                                                   |
+|  83 | t/tn    | EECS UNIVERSITY ADMINISTRATION                                        |                                                   |
+|  84 | t/to    | ITM UNIVERSITY ADMINISTRATION                                         |                                                   |
+|  85 | t/tc    | SÄKERHETSAVDELNINGEN                                                  |                                                   |
+|  86 | t/tw    | CYBERCAMPUS                                                           |                                                   |
+|  87 | t/twaa  | ADMINISTRATION CYBERCAMPUS/TWAA_VS                                    |                                                   |
+|  88 | t/tvs   | ANKNUTNA MM VS/TVS                                                    |                                                   |
+|  89 | e/ee    |                                                                       |                                                   |
+|  90 | i/it    |                                                                       |                                                   |
+|  91 | k/kt    |                                                                       |                                                   |

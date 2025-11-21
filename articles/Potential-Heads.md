@@ -1,0 +1,124 @@
+# Potential-Heads
+
+This example shows how to use the
+[`kth_school_dep()`](https://kth-library.github.io/kthapi/reference/kth_school_dep.md)
+function to enumerate some organizational unit “slugs”.
+
+For these slugs, associated KTH employees with the word “HEAD” in their
+titles are listed.
+
+This creates a list of potentially responsible heads for this set of
+organizational units at KTH.
+
+For most units there are several potential matches.
+
+``` r
+library(kthapi)
+library(dplyr)
+library(stringr)
+library(purrr)
+library(tibble)
+
+# some slugs of relevance
+slugs <- 
+  kth_school_dep() %>% 
+  # we look for schools (ie slugs containing a slash character)
+  mutate(is_dep = stringr::str_detect(slug, "/")) %>% 
+  # we exclude t, vg, zaa and m/m slugs ()
+  mutate(is_excluded = stringr::str_detect(slug, "t/|vg/|zaa/|m/m")) %>%
+  # retain just the deps and non-excluded slugs
+  filter(is_dep, !is_excluded) %>% 
+  pull(slug)
+
+slugs <- setNames(nm = slugs)
+
+# a function to flag potential heads (containing the word HEAD in the english descr)
+dep_heads <- function(slug)
+  kth_catalog(slug = slug)$users %>% 
+  mutate(is_head = grepl("HEAD", `title.en`)) %>%
+  filter(is_head)
+  
+# iterate over all slugs to locate potential heads
+potential_heads <- 
+  slugs %>% purrr::map_dfr(dep_heads, .id = "slug")
+#> Error in `map()`:
+#> ℹ In index: 8.
+#> ℹ With name: a/ab.
+#> Caused by error in `mutate()`:
+#> ℹ In argument: `is_head = grepl("HEAD", title.en)`.
+#> Caused by error:
+#> ! object 'title.en' not found
+
+# display some of the results
+display <- 
+  potential_heads %>% 
+  select(slug, username, title = `title.en`) %>%
+  inner_join(kth_school_dep()) %>%
+  select(slug, slug_id = kthid, desc = `description.en`, username, title)
+#> Error: object 'potential_heads' not found
+
+display <- 
+  display %>% 
+  slice(sample(nrow(display), size = 5))
+#> Error: object 'display' not found
+
+knitr::kable(display)
+#> Error: object 'display' not found
+
+# for each potential head, additional info can be looked up, like this:
+kth_profile_legacy(display$username[1])$content %>% 
+  select(url, worksfor = `worksFor.url`) %>%
+  glimpse()
+#> Error: object 'display' not found
+```
+
+## Division level data
+
+What divisions (KTH -\> School -\> Department (sv: Institution) -\>
+Division (sv: Avdelning)) are there?
+
+``` r
+
+# get some relevant schools and departments
+ksd <- 
+  kth_school_dep()  %>% 
+  mutate(is_excluded = ifelse(nchar(stringr::str_match(slug, "t|vg|zaa")) > 0, TRUE, FALSE)) %>%
+  # retain just the deps and non-excluded slugs
+  filter(is.na(is_excluded)) %>% 
+  arrange(-desc(slug)) %>% 
+  select(slug, desc = `description.en`)
+
+knitr::kable(ksd %>% slice(1:5))
+```
+
+| slug   | desc                                             |
+|:-------|:-------------------------------------------------|
+| a      | SCHOOL OF ARCHITECTURE AND THE BUILT ENVIRONMENT |
+| a/aabe | ANKNUTNA MM ABE/AABE                             |
+| a/ab   |                                                  |
+| a/abea | ANKNUTNA MM ABE/ABEA                             |
+| a/acp  | VIABLE CITIES                                    |
+
+``` r
+
+# use one of the slugs
+
+ai <- 
+  kth_catalog(slug = "a/ai")
+
+# users can now be enumerated, for example:
+#knitr::kable(ai$users %>% slice(1:5))
+
+# divisions can be enumerated for each of the departments, for example:
+
+ai$catalog %>% 
+  select(slug, `description.en`, kthid) %>%
+  knitr::kable()
+```
+
+| slug     | description.en                                         | kthid    |
+|:---------|:-------------------------------------------------------|:---------|
+| a/ai/aib | DIVISION OF REAL ESTATE ECONOMICS AND FINANCE          | u2vce7hj |
+| a/ai/aid | DIVISION OF CONSTRUCTION AND FACILITIES MANAGEMENT     | u2ctw8g8 |
+| a/ai/aie | DIVISION OF REAL ESTATE BUSINESS AND FINANCIAL SYSTEMS | u21evul2 |
+| a/ai/aij | AVD LANTMÄTERI-FASTV. O GEOD                           | u2e9okez |

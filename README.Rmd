@@ -48,15 +48,16 @@ library(knitr)
 suppressPackageStartupMessages(library(dplyr))
 ```
 
-This is a basic example which shows you how to make a lookup using the v 1.1 "legacy" Profiles API, where we get contact information for a KTH employee using an account name:
+This is a basic example which shows you how to make a lookup using the "legacy" Profiles API, where we get contact information for a KTH employee using an account name:
 
 ```{r}
+
 profile <- 
-  kth_profile_legacy("tjep") %>% 
-  .$content 
+  kth_profile_legacy(userid = "tjep") |>
+  getElement("content") 
 
 # inspect this record
-profile %>% glimpse()
+profile |> glimpse()
 
 # pivot into long format and display as a table
 profile %>% t() %>% as.data.frame() %>%  
@@ -66,7 +67,7 @@ profile %>% t() %>% as.data.frame() %>%
 
 
 # NB: some valid account names do not return data
-tryCatch(kth_profile_legacy("markussk"), error = function(e) e)
+tryCatch(kth_profile_legacy("hoyce"), error = function(e) e)
 ```
 
 ## More examples
@@ -76,17 +77,15 @@ This is a basic example which shows how to make a lookup using the authenticated
 ```{r}
 
 profile <- 
-  kth_profile(username = "tjep") %>%
-  .$content
+  kth_profile(username = "tjep") |>
+  _$content
 
 # organizational belonging
-profile$worksFor$items %>% 
-  tibble::as_tibble() %>%
-  select(path, name, nameEn) %>%
+profile$worksFor$items |> 
+  tibble::as_tibble() |> 
+  select(key, name, nameEn) |> 
+  mutate(slug = kthapi:::path_worksFor(key)) |> 
   knitr::kable()
-
-# corresponding "slugs"
-profile$worksFor$items$path
 
 # displayname used in ABM app
 kth_displayname("tjep", type = "username")

@@ -118,3 +118,49 @@ test_that("search for entries having orcid, surname and givenname", {
 
 })
 
+test_that("specific lastnames can be enumerated using star query", {
+
+  skip_on_ci()
+
+  ad_crawl <- function(lastname_filter = NULL) {
+
+    my_cfg <- ldap_config()
+    my_ldap_query <- sprintf("(&(ugOrcid=*)(sn=%s)(givenName=*))", ifelse(!is.null(lastname_filter), "*", lastname_filter))
+    
+    my_ldap_attributes <- c("kthOrcid", "kthId", "givenName", "sn", "kthOrcidClaimed")
+    s1 <- ldap_search(my_ldap_query, my_ldap_attributes, my_cfg)
+    
+    s2 <- 
+      s1 |> 
+      filter(kthOrcidClaimed == "true") |> 
+      select(last_name = sn, first_name = givenName, kthid, orcid = kthOrcid) 
+    
+    if (!is.null(lastname_filter)) 
+      s2 <- s2 |> filter(last_name == lastname_filter)
+    
+    ad_search_kthid_star <- function(kthid) {
+      query <- sprintf("(&(ugKthid=%s))", kthid)
+      ldap_search(query, cfg = ldap_config(), ldap_attributes = "*") |> 
+        suppressMessages()
+    }
+      
+    s3 <- 
+      s2 |> bind_cols(
+        s2 |> purrr::pmap_dfr(\(kthid, ...) ad_search_kthid_star(kthid), .progress = TRUE)
+      )
+    
+    s3
+    
+  }
+  
+  i <- 
+    ad_crawl("Johansson") |> 
+    select(ugOrcid, first_name, last_name, kthAffiliation, kthKatalog, extensionAttribute1, extensionAttribute2, extensionAttribute14, extensionAttribute15) 
+  
+  is_valid <- nrow(i) >= 14
+
+  expect_true(is_valid)
+
+})
+
+

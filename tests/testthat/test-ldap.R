@@ -120,6 +120,8 @@ test_that("search for entries having orcid, surname and givenname", {
 
 test_that("specific lastnames can be enumerated using star query", {
 
+  skip_on_ci()
+
   ad_crawl <- function(lastname_filter = NULL) {
 
     my_cfg <- ldap_config()

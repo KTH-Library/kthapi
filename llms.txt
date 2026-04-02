@@ -31,19 +31,20 @@ library(knitr)
 suppressPackageStartupMessages(library(dplyr))
 ```
 
-This is a basic example which shows you how to make a lookup using the v
-1.1 “legacy” Profiles API, where we get contact information for a KTH
+This is a basic example which shows you how to make a lookup using the
+“legacy” Profiles API, where we get contact information for a KTH
 employee using an account name:
 
 ``` r
+
 profile <- 
-  kth_profile_legacy("tjep") %>% 
-  .$content 
+  kth_profile_legacy(userid = "tjep") |>
+  getElement("content") 
 
 # inspect this record
-profile %>% glimpse()
+profile |> glimpse()
 #> Rows: 1
-#> Columns: 12
+#> Columns: 13
 #> $ givenName          <chr> "Tobias"
 #> $ familyName         <chr> "Jeppsson"
 #> $ url                <chr> "https://www.kth.se/profile/tjep"
@@ -52,10 +53,11 @@ profile %>% glimpse()
 #> $ telephone          <chr> "087907106"
 #> $ jobTitle           <chr> "Bibliometrisk analytiker"
 #> $ `jobTitle-en`      <chr> "Librarian"
-#> $ workLocation       <chr> "OSQUARS BACKE 31"
+#> $ workLocation       <chr> "Osquars Backe 31"
 #> $ worksFor.url       <chr> "https://www.kth.se/directory/t/tr/trac"
-#> $ worksFor.name      <chr> "PUBLICERINGENS INFRASTRUKTUR"
-#> $ `worksFor.name-en` <chr> "PUBLICATION INFRASTRUCTURE AND MEDIA"
+#> $ worksFor.name      <chr> "Publiceringens infrastruktur och media"
+#> $ `worksFor.name-en` <chr> "Publication Infrastructure & Media"
+#> $ path               <chr> "t/tr/trac"
 
 # pivot into long format and display as a table
 profile %>% t() %>% as.data.frame() %>%  
@@ -74,21 +76,18 @@ profile %>% t() %>% as.data.frame() %>%
 | telephone        | 087907106                                |
 | jobTitle         | Bibliometrisk analytiker                 |
 | jobTitle-en      | Librarian                                |
-| workLocation     | OSQUARS BACKE 31                         |
+| workLocation     | Osquars Backe 31                         |
 | worksFor.url     | <https://www.kth.se/directory/t/tr/trac> |
-| worksFor.name    | PUBLICERINGENS INFRASTRUKTUR             |
-| worksFor.name-en | PUBLICATION INFRASTRUCTURE AND MEDIA     |
+| worksFor.name    | Publiceringens infrastruktur och media   |
+| worksFor.name-en | Publication Infrastructure & Media       |
+| path             | t/tr/trac                                |
 
 ``` r
 
 
 # NB: some valid account names do not return data
-tryCatch(kth_profile_legacy("markussk"), error = function(e) e)
-#> <KTH API call for markussk>
-#> # A tibble: 0 × 10
-#> # ℹ 10 variables: givenName <chr>, familyName <chr>, url <chr>, email <chr>,
-#> #   image <chr>, telephone <chr>, jobTitle <chr>, jobTitle-en <chr>,
-#> #   worksFor <list>, workLocation <chr>
+tryCatch(kth_profile_legacy("hoyce"), error = function(e) e)
+#> <simpleError: No (or disabled) username>
 ```
 
 ## More examples
@@ -99,26 +98,24 @@ authenticated Profiles API:
 ``` r
 
 profile <- 
-  kth_profile(username = "tjep") %>%
-  .$content
+  kth_profile(username = "tjep") |>
+  _$content
 
 # organizational belonging
-profile$worksFor$items %>% 
-  tibble::as_tibble() %>%
-  select(path, name, nameEn) %>%
+profile$worksFor$items |> 
+  tibble::as_tibble() |> 
+  select(key, name, nameEn) |> 
+  mutate(slug = kthapi:::path_worksFor(key)) |> 
   knitr::kable()
 ```
 
-| path      | name                         | nameEn                               |
-|:----------|:-----------------------------|:-------------------------------------|
-| t/tr      | KTH BIBLIOTEKET              | KTH LIBRARY                          |
-| t/tr/trac | PUBLICERINGENS INFRASTRUKTUR | PUBLICATION INFRASTRUCTURE AND MEDIA |
+| key                    | name                                   | nameEn                             | slug      |
+|:-----------------------|:---------------------------------------|:-----------------------------------|:----------|
+| app.katalog3.T         | Verksamhetsstöd                        | University Administration          | t         |
+| app.katalog3.T.TR      | KTH Biblioteket                        | KTH Library                        | t/tr      |
+| app.katalog3.T.TR.TRAC | Publiceringens infrastruktur och media | Publication Infrastructure & Media | t/tr/trac |
 
 ``` r
-
-# corresponding "slugs"
-profile$worksFor$items$path
-#> [1] "t/tr"      "t/tr/trac"
 
 # displayname used in ABM app
 kth_displayname("tjep", type = "username")
@@ -168,6 +165,8 @@ For more usage examples, please see the package vignettes.
   : Retrieve data for KTH Profiles
 - [`kth_profile_legacy()`](https://kth-library.github.io/kthapi/reference/kth_profile_legacy.md)
   : Retrieve data for KTH Profiles
+- [`kth_profile_legacy_deprecated()`](https://kth-library.github.io/kthapi/reference/kth_profile_legacy_deprecated.md)
+  : Retrieve data for KTH Profiles
 - [`kth_profile_school_dep()`](https://kth-library.github.io/kthapi/reference/kth_profile_school_dep.md)
   : Retrieve organizational unit for a given kthid or accountname
 - [`kth_projects()`](https://kth-library.github.io/kthapi/reference/kth_projects.md)
@@ -181,6 +180,8 @@ For more usage examples, please see the package vignettes.
 - [`kth_school_dep()`](https://kth-library.github.io/kthapi/reference/kth_school_dep.md)
   : Retrieve units in the KTH Directory for the first two levels
   (school, dep)
+- [`kthapi`](https://kth-library.github.io/kthapi/reference/kthapi.md) :
+  kthapi
 - [`ldap_search()`](https://kth-library.github.io/kthapi/reference/ldap_search.md)
   : Search Active Directory at KTH
 - [`parse_diva_name()`](https://kth-library.github.io/kthapi/reference/parse_diva_name.md)

@@ -35,6 +35,8 @@
   : Retrieve data for KTH Profiles
 - [`kth_profile_legacy()`](https://kth-library.github.io/kthapi/reference/kth_profile_legacy.md)
   : Retrieve data for KTH Profiles
+- [`kth_profile_legacy_deprecated()`](https://kth-library.github.io/kthapi/reference/kth_profile_legacy_deprecated.md)
+  : Retrieve data for KTH Profiles
 - [`kth_profile_school_dep()`](https://kth-library.github.io/kthapi/reference/kth_profile_school_dep.md)
   : Retrieve organizational unit for a given kthid or accountname
 - [`kth_projects()`](https://kth-library.github.io/kthapi/reference/kth_projects.md)
@@ -48,6 +50,8 @@
 - [`kth_school_dep()`](https://kth-library.github.io/kthapi/reference/kth_school_dep.md)
   : Retrieve units in the KTH Directory for the first two levels
   (school, dep)
+- [`kthapi`](https://kth-library.github.io/kthapi/reference/kthapi.md) :
+  kthapi
 - [`ldap_search()`](https://kth-library.github.io/kthapi/reference/ldap_search.md)
   : Search Active Directory at KTH
 - [`parse_diva_name()`](https://kth-library.github.io/kthapi/reference/parse_diva_name.md)

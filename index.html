@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">kthapi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,16 +79,17 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/KTH-Library/kthapi" class="external-link">kthapi</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>This is a basic example which shows you how to make a lookup using the v 1.1 “legacy” Profiles API, where we get contact information for a KTH employee using an account name:</p>
+<p>This is a basic example which shows you how to make a lookup using the “legacy” Profiles API, where we get contact information for a KTH employee using an account name:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">profile</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="fu"><a href="reference/kth_profile_legacy.html">kth_profile_legacy</a></span><span class="op">(</span><span class="st">"tjep"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="va">.</span><span class="op">$</span><span class="va">content</span> </span>
+<code class="sourceCode R"><span></span>
+<span><span class="va">profile</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="reference/kth_profile_legacy.html">kth_profile_legacy</a></span><span class="op">(</span>userid <span class="op">=</span> <span class="st">"tjep"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Extract.html" class="external-link">getElement</a></span><span class="op">(</span><span class="st">"content"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># inspect this record</span></span>
-<span><span class="va">profile</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">profile</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 1</span></span>
-<span><span class="co">#&gt; Columns: 12</span></span>
+<span><span class="co">#&gt; Columns: 13</span></span>
 <span><span class="co">#&gt; $ givenName          &lt;chr&gt; "Tobias"</span></span>
 <span><span class="co">#&gt; $ familyName         &lt;chr&gt; "Jeppsson"</span></span>
 <span><span class="co">#&gt; $ url                &lt;chr&gt; "https://www.kth.se/profile/tjep"</span></span>
@@ -97,10 +98,11 @@
 <span><span class="co">#&gt; $ telephone          &lt;chr&gt; "087907106"</span></span>
 <span><span class="co">#&gt; $ jobTitle           &lt;chr&gt; "Bibliometrisk analytiker"</span></span>
 <span><span class="co">#&gt; $ `jobTitle-en`      &lt;chr&gt; "Librarian"</span></span>
-<span><span class="co">#&gt; $ workLocation       &lt;chr&gt; "OSQUARS BACKE 31"</span></span>
+<span><span class="co">#&gt; $ workLocation       &lt;chr&gt; "Osquars Backe 31"</span></span>
 <span><span class="co">#&gt; $ worksFor.url       &lt;chr&gt; "https://www.kth.se/directory/t/tr/trac"</span></span>
-<span><span class="co">#&gt; $ worksFor.name      &lt;chr&gt; "PUBLICERINGENS INFRASTRUKTUR"</span></span>
-<span><span class="co">#&gt; $ `worksFor.name-en` &lt;chr&gt; "PUBLICATION INFRASTRUCTURE AND MEDIA"</span></span>
+<span><span class="co">#&gt; $ worksFor.name      &lt;chr&gt; "Publiceringens infrastruktur och media"</span></span>
+<span><span class="co">#&gt; $ `worksFor.name-en` &lt;chr&gt; "Publication Infrastructure &amp; Media"</span></span>
+<span><span class="co">#&gt; $ path               &lt;chr&gt; "t/tr/trac"</span></span>
 <span></span>
 <span><span class="co"># pivot into long format and display as a table</span></span>
 <span><span class="va">profile</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  </span>
@@ -147,7 +149,7 @@
 </tr>
 <tr class="odd">
 <td align="left">workLocation</td>
-<td align="left">OSQUARS BACKE 31</td>
+<td align="left">Osquars Backe 31</td>
 </tr>
 <tr class="even">
 <td align="left">worksFor.url</td>
@@ -155,11 +157,15 @@
 </tr>
 <tr class="odd">
 <td align="left">worksFor.name</td>
-<td align="left">PUBLICERINGENS INFRASTRUKTUR</td>
+<td align="left">Publiceringens infrastruktur och media</td>
 </tr>
 <tr class="even">
 <td align="left">worksFor.name-en</td>
-<td align="left">PUBLICATION INFRASTRUCTURE AND MEDIA</td>
+<td align="left">Publication Infrastructure &amp; Media</td>
+</tr>
+<tr class="odd">
+<td align="left">path</td>
+<td align="left">t/tr/trac</td>
 </tr>
 </tbody>
 </table>
@@ -167,12 +173,8 @@
 <code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="co"># NB: some valid account names do not return data</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="reference/kth_profile_legacy.html">kth_profile_legacy</a></span><span class="op">(</span><span class="st">"markussk"</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="va">e</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;KTH API call for markussk&gt;</span></span>
-<span><span class="co">#&gt; # A tibble: 0 × 10</span></span>
-<span><span class="co">#&gt; # ℹ 10 variables: givenName &lt;chr&gt;, familyName &lt;chr&gt;, url &lt;chr&gt;, email &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   image &lt;chr&gt;, telephone &lt;chr&gt;, jobTitle &lt;chr&gt;, jobTitle-en &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   worksFor &lt;list&gt;, workLocation &lt;chr&gt;</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch</a></span><span class="op">(</span><span class="fu"><a href="reference/kth_profile_legacy.html">kth_profile_legacy</a></span><span class="op">(</span><span class="st">"hoyce"</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="va">e</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;simpleError: No (or disabled) username&gt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="more-examples">More examples<a class="anchor" aria-label="anchor" href="#more-examples"></a>
@@ -181,44 +183,51 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">profile</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="fu"><a href="reference/kth_profile.html">kth_profile</a></span><span class="op">(</span>username <span class="op">=</span> <span class="st">"tjep"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="va">.</span><span class="op">$</span><span class="va">content</span></span>
+<span>  <span class="fu"><a href="reference/kth_profile.html">kth_profile</a></span><span class="op">(</span>username <span class="op">=</span> <span class="st">"tjep"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="va">_</span><span class="op">$</span><span class="va">content</span></span>
 <span></span>
 <span><span class="co"># organizational belonging</span></span>
-<span><span class="va">profile</span><span class="op">$</span><span class="va">worksFor</span><span class="op">$</span><span class="va">items</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">path</span>, <span class="va">name</span>, <span class="va">nameEn</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">profile</span><span class="op">$</span><span class="va">worksFor</span><span class="op">$</span><span class="va">items</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">key</span>, <span class="va">name</span>, <span class="va">nameEn</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>slug <span class="op">=</span> <span class="fu">kthapi</span><span class="fu">:::</span><span class="fu">path_worksFor</span><span class="op">(</span><span class="va">key</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="12%">
-<col width="38%">
-<col width="49%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">path</th>
+<th align="left">key</th>
 <th align="left">name</th>
 <th align="left">nameEn</th>
+<th align="left">slug</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">t/tr</td>
-<td align="left">KTH BIBLIOTEKET</td>
-<td align="left">KTH LIBRARY</td>
+<td align="left">app.katalog3.T</td>
+<td align="left">Verksamhetsstöd</td>
+<td align="left">University Administration</td>
+<td align="left">t</td>
 </tr>
 <tr class="even">
+<td align="left">app.katalog3.T.TR</td>
+<td align="left">KTH Biblioteket</td>
+<td align="left">KTH Library</td>
+<td align="left">t/tr</td>
+</tr>
+<tr class="odd">
+<td align="left">app.katalog3.T.TR.TRAC</td>
+<td align="left">Publiceringens infrastruktur och media</td>
+<td align="left">Publication Infrastructure &amp; Media</td>
 <td align="left">t/tr/trac</td>
-<td align="left">PUBLICERINGENS INFRASTRUKTUR</td>
-<td align="left">PUBLICATION INFRASTRUCTURE AND MEDIA</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># corresponding "slugs"</span></span>
-<span><span class="va">profile</span><span class="op">$</span><span class="va">worksFor</span><span class="op">$</span><span class="va">items</span><span class="op">$</span><span class="va">path</span></span>
-<span><span class="co">#&gt; [1] "t/tr"      "t/tr/trac"</span></span>
-<span></span>
 <span><span class="co"># displayname used in ABM app</span></span>
 <span><span class="fu"><a href="reference/kth_displayname.html">kth_displayname</a></span><span class="op">(</span><span class="st">"tjep"</span>, type <span class="op">=</span> <span class="st">"username"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Tobias Jeppsson (tjep)"</span></span>

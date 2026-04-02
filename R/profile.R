@@ -20,9 +20,9 @@
 #' \dontrun{
 #' kth_profile_legacy("agnel")
 #' kth_profile_legacy("tjep")
-#' tryCatch(kth_profile(username = "hoyce"), error = function(e) e, warning("Does not exist?"))
+#' tryCatch(kth_profile("hoyce"), error = function(e) e, warning("Does not exist?"))
 #' }
-kth_profile_legacy <- function(
+kth_profile_legacy_deprecated <- function(
   userid = NULL,
   config = NULL)
 {
@@ -75,6 +75,94 @@ kth_profile_legacy <- function(
   )
 }
 
+path_worksFor <- function(x) {
+  x |> 
+  gsub(pattern = "app\\.katalog3\\.", replacement = "") |> 
+  tolower() |> 
+  gsub(pattern = "\\.", replacement = "/")
+}
+
+#' Retrieve data for KTH Profiles
+#'
+#' This fcn uses the authenticated API endpoint to mimic a previously available legacy endpoint.
+#' 
+#' @param userid a string with the account name or KTH user id
+#' @param config a configuration setting for the KTH APIs including base URL etc, by default from config()
+#'
+#' @importFrom tibble as_tibble
+#' @export
+#'
+#' @return results records returned from the search
+#' @examples
+#' \dontrun{
+#' kth_profile_legacy("agnel")
+#' kth_profile_legacy("tjep")
+#' tryCatch(kth_profile_legacy("hoyce"), error = function(e) e, warning("Does not exist?"))
+#' }
+#' @export 
+#' @importFrom tibble as_tibble add_column
+kth_profile_legacy <- function(
+    userid = NULL, 
+    config = NULL) 
+{
+
+    username <- userid
+    cfg <- config
+    if (missing(config))
+      cfg <- config()  
+  
+    # the legacy api allowed BOTH kthid and username, so we need to see which variant gives a result
+    p_username <- try(kth_profile(username = userid, config = cfg), silent = TRUE)
+    p_kthid <- try(kth_profile(kthid = userid, config = cfg), silent = TRUE)
+  
+    if (inherits(p_kthid, "try-error")) {
+      p <- p_username 
+    } else {
+      p <- p_username  
+    }
+  
+    stop_if(is.null(p) || p$content$ugDisabled, msg = "No (or disabled) username")
+    
+    belongings <- p$content$worksFor
+  
+    if (!is.null(belongings$items) && length(belongings$items)) {
+      belongings$items <-   
+        with(belongings, 
+          add_column(items, path = path_worksFor(items$key), .before = "key")
+        )
+      p$content$worksFor$items <- belongings$items
+    }
+
+    f <- 
+        with(p$content, 
+            list(
+                givenName = firstName,
+                familyName = lastName,
+                url = paste0("https://www.kth.se/profile/", username),
+                email = emailAddress,
+                image = paste0("https://www.kth.se/files/avatar/", username),
+                telephone = telephoneNumber,
+                jobTitle = title$sv,
+                `jobTitle-en` = title$en,
+                workLocation = streetAddress,
+                `worksFor.url` = paste0("https://www.kth.se/directory/", path_worksFor(rev(worksFor$items$key)[1])),
+                `worksFor.name` = rev(worksFor$items$name)[1],
+                `worksFor.name-en` = rev(worksFor$items$nameEn)[1],
+                #`worksFor.items` = rev(worksFor$items),
+                path = rev(worksFor$items$path)[1]
+            )
+        )
+  
+  content <- tibble::as_tibble(f)
+
+  structure(
+    list(
+      content = content,
+      query = p$query
+    ),
+    class = "kthapi"
+  )  
+}
 
 #' Retrieve data for KTH Profiles
 #'

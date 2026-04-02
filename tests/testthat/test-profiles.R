@@ -5,7 +5,9 @@ test_that("Legacy Profiles API returns data", {
 
   skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
 
-  api_email <- kth_profile_legacy("tjep")$content$email
+  profile <- kth_profile_legacy("tjep")
+  api_email <- profile$content$email
+
   expect_equal(api_email, "tjep@kth.se")
 })
 
@@ -45,8 +47,9 @@ test_that("Legacy Profiles API returns institutional belonging for accountid and
 
   t1 <- kth_belonging_institutional("tjep")
   t2 <- kth_belonging_institutional("u1z88syr")
-  t3 <- tryCatch(kth_belonging_institutional("markus"), error = function(e) e)
-  is_valid <- (t1$desc == "KTH LIBRARY" && t2$slug == "t/tr" && t3$message == "The API returned an error: Not found")
+  t3 <- try(kth_belonging_institutional("hoyce"), silent = TRUE)
+
+  is_valid <- (t1$desc == "KTH Library" && t2$slug == "t/tr" && inherits(t3, "try-error"))
 
   expect_true(is_valid)
 
@@ -57,7 +60,19 @@ test_that("Profiles API returns organizational belonging for a specific kthid", 
   skip_if(skip_api_tests, "skipping tests that need authentication in case we're in the cloud")
 
   p1 <- kth_profile(kthid = "u1z88syr")$content$worksFor$items
-  is_valid <- rev(p1$path)[1] == "t/tr/trac"
+
+  path_worksFor <- function(x) {
+    x |> 
+    gsub(pattern = "app\\.katalog3\\.", replacement = "") |> 
+    tolower() |> 
+    gsub(pattern = "\\.", replacement = "/")
+  }
+
+  # $path is gone now (?)
+  #is_valid <- rev(p1$path)[1] == "t/tr/trac"
+  is_valid <- 
+    rev(p1$key)[1] |> path_worksFor() == "t/tr/trac"
+
   expect_true(is_valid)
 })
 

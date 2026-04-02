@@ -15,15 +15,12 @@ kth_profile_legacy(userid = NULL, config = NULL)
 results records returned from the search
 }
 \description{
-This API does supports the existing profile api, version 1.1 and has no access key requirements.
-}
-\details{
-See details at \url{https://api.kth.se/api/profile/swagger/?url=/api/profile/swagger.json#/v1.1/getPublicProfile_v11}
+This fcn uses the authenticated API endpoint to mimic a previously available legacy endpoint.
 }
 \examples{
 \dontrun{
 kth_profile_legacy("agnel")
 kth_profile_legacy("tjep")
-tryCatch(kth_profile(username = "hoyce"), error = function(e) e, warning("Does not exist?"))
+tryCatch(kth_profile_legacy("hoyce"), error = function(e) e, warning("Does not exist?"))
 }
 }

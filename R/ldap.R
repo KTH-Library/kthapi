@@ -231,6 +231,7 @@ ldap_search <- function(
 
   message("Running LDAP query for ", ldap_query, " w attribs: \n",
           paste0(collapse = " ", ldap_attributes))
+  #message(cmd)
   res <- system(cmd, intern = TRUE)
 
   if (!is.null(attr(res, "status")) && attr(res, "status") == 254)

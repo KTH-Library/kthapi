@@ -17,6 +17,7 @@ interfaces with the API, making data available to use directly from R.
 You can install the development version of kthapi from GitHub with:
 
 ``` r
+
 #install.packages("devtools)
 devtools::install_github("KTH-Library/kthapi", dependencies = TRUE)
 ```
@@ -26,6 +27,7 @@ devtools::install_github("KTH-Library/kthapi", dependencies = TRUE)
 This API wrapper / client is pre-configured with a set of API endpoints:
 
 ``` r
+
 library(kthapi)
 library(knitr)
 suppressPackageStartupMessages(library(dplyr))
@@ -36,6 +38,7 @@ This is a basic example which shows you how to make a lookup using the
 employee using an account name:
 
 ``` r
+
 
 profile <- 
   kth_profile_legacy(userid = "tjep") |>
@@ -85,6 +88,7 @@ profile %>% t() %>% as.data.frame() %>%
 ``` r
 
 
+
 # NB: some valid account names do not return data
 tryCatch(kth_profile_legacy("hoyce"), error = function(e) e)
 #> <simpleError: No (or disabled) username>
@@ -96,6 +100,7 @@ This is a basic example which shows how to make a lookup using the
 authenticated Profiles API:
 
 ``` r
+
 
 profile <- 
   kth_profile(username = "tjep") |>
@@ -109,13 +114,14 @@ profile$worksFor$items |>
   knitr::kable()
 ```
 
-| key                    | name                                   | nameEn                             | slug      |
-|:-----------------------|:---------------------------------------|:-----------------------------------|:----------|
-| app.katalog3.T         | Verksamhetsstöd                        | University Administration          | t         |
-| app.katalog3.T.TR      | KTH Biblioteket                        | KTH Library                        | t/tr      |
+| key | name | nameEn | slug |
+|:---|:---|:---|:---|
+| app.katalog3.T | Verksamhetsstöd | University Administration | t |
+| app.katalog3.T.TR | KTH Biblioteket | KTH Library | t/tr |
 | app.katalog3.T.TR.TRAC | Publiceringens infrastruktur och media | Publication Infrastructure & Media | t/tr/trac |
 
 ``` r
+
 
 # displayname used in ABM app
 kth_displayname("tjep", type = "username")

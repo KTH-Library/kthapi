@@ -13,6 +13,7 @@ organizational units at KTH.
 For most units there are several potential matches.
 
 ``` r
+
 library(kthapi)
 library(dplyr)
 library(stringr)
@@ -79,6 +80,7 @@ Division (sv: Avdelning)) are there?
 
 ``` r
 
+
 # get some relevant schools and departments
 ksd <- 
   kth_school_dep()  %>% 
@@ -100,6 +102,7 @@ knitr::kable(ksd %>% slice(1:5))
 | a/acp  | VIABLE CITIES                                    |
 
 ``` r
+
 
 # use one of the slugs
 

@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Data from KTH APIs • kthapi</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Data from KTH APIs">
 <meta name="description" content="The KTH APIs provides information about employee profiles, published web content, places, course schemas and program catalogues. This R package interfaces with the API, making data available to use from R.">
@@ -110,60 +110,60 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">key</span>, <span class="va">value</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
-<thead><tr class="header">
+<thead><tr>
 <th align="left">key</th>
 <th align="left">value</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left">givenName</td>
 <td align="left">Tobias</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">familyName</td>
 <td align="left">Jeppsson</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">url</td>
 <td align="left"><a href="https://www.kth.se/profile/tjep" class="external-link uri">https://www.kth.se/profile/tjep</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">email</td>
 <td align="left"><a href="mailto:tjep@kth.se" class="email">tjep@kth.se</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">image</td>
 <td align="left"><a href="https://www.kth.se/files/avatar/tjep" class="external-link uri">https://www.kth.se/files/avatar/tjep</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">telephone</td>
 <td align="left">087907106</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">jobTitle</td>
 <td align="left">Bibliometrisk analytiker</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">jobTitle-en</td>
 <td align="left">Librarian</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">workLocation</td>
 <td align="left">Osquars Backe 31</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">worksFor.url</td>
 <td align="left"><a href="https://www.kth.se/directory/t/tr/trac" class="external-link uri">https://www.kth.se/directory/t/tr/trac</a></td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">worksFor.name</td>
 <td align="left">Publiceringens infrastruktur och media</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">worksFor.name-en</td>
 <td align="left">Publication Infrastructure &amp; Media</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">path</td>
 <td align="left">t/tr/trac</td>
 </tr>
@@ -199,26 +199,26 @@
 <col width="25%">
 <col width="25%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th align="left">key</th>
 <th align="left">name</th>
 <th align="left">nameEn</th>
 <th align="left">slug</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left">app.katalog3.T</td>
 <td align="left">Verksamhetsstöd</td>
 <td align="left">University Administration</td>
 <td align="left">t</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left">app.katalog3.T.TR</td>
 <td align="left">KTH Biblioteket</td>
 <td align="left">KTH Library</td>
 <td align="left">t/tr</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left">app.katalog3.T.TR.TRAC</td>
 <td align="left">Publiceringens infrastruktur och media</td>
 <td align="left">Publication Infrastructure &amp; Media</td>
@@ -289,7 +289,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

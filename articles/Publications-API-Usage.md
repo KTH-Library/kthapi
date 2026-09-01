@@ -5,11 +5,13 @@ some overview stats, list the active public users, active users with
 publications and more. Some usage examples:
 
 ``` r
+
 library(kthapi)
 library(dplyr)
 ```
 
 ``` r
+
 kth_publications("stats")
 #> <KTH API call for stats>
 #> $activeUsers
@@ -37,6 +39,7 @@ kth_publications("activePublicUsers")$content$users %>%
 | u1znylhw |       10 |
 
 ``` r
+
 
 #kth_publications("activeUsersWithPublications")$content$users %>% 
 #  as_tibble() %>%
